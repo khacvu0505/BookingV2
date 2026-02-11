@@ -25,9 +25,7 @@ const Checkbox = ({
         {...rest}
         type={isRadio ? "radio" : "checkbox"}
         name={name}
-        {...(rest.onChange || register
-          ? { checked }
-          : { defaultChecked: checked })}
+        {...(checked !== undefined ? { checked } : {})}
         {...(register && register(name, { required }))}
       />
       {isRadio ? (

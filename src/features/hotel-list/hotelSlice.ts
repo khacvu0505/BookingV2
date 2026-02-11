@@ -97,6 +97,10 @@ export const hotelSlice = createSlice({
       });
       state.recommendHotels = newData;
     },
+    setRecommendHotels: (state, { payload }: PayloadAction<Hotel[]>) => {
+      state.recommendHotels = payload;
+      state.isLoadingRecommendHotels = false;
+    },
   },
   extraReducers: (builder) => {
     // recommend hotels
@@ -122,6 +126,7 @@ export const {
   setFilterHotels,
   updateHotelList,
   updateHotelRecommendList,
+  setRecommendHotels,
 } = hotelSlice.actions as any;
 
 export default hotelSlice.reducer;

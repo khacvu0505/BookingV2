@@ -6,16 +6,17 @@ import { getVoucherCategory } from "@/api/promotion.api";
 import Skeleton from "react-loading-skeleton";
 import classNames from "classnames";
 
-const Promotion = () => {
+const Promotion = ({ initialVouchers }: { initialVouchers?: any[] }) => {
   const navigate = useNavigate();
 
   const [swiperData, setSwiperData] = useState({
     activeIndex: 0,
     isEnd: false,
   });
-  const [vouchers, setVouchers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [vouchers, setVouchers] = useState(initialVouchers || []);
+  const [loading, setLoading] = useState(!initialVouchers);
   useEffect(() => {
+    if (initialVouchers && initialVouchers.length > 0) return;
     setLoading(true);
     getVoucherCategory()
       .then((res) => {

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import HotelList from "./HotelList";
 import { fetchRecommendHotels } from "@/features/hotel-list/reducers";
+import { setRecommendHotels } from "@/features/hotel-list/hotelSlice";
 import { useAppDispatch } from "@/store/hooks";
 
 import RecommentIcon1 from "./components/RecommentIcon1";
@@ -11,7 +12,7 @@ import RecommentIcon5 from "./components/RecommentIcon5";
 import TabRecomment from "@/apps/TabRecomment";
 import { useTranslation } from "react-i18next";
 
-const RecommentHotel = () => {
+const RecommentHotel = ({ initialHotels }: { initialHotels?: any[] }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -52,8 +53,12 @@ const RecommentHotel = () => {
   );
 
   useEffect(() => {
-    const params = { type: 3 };
-    dispatch(fetchRecommendHotels(params) as any);
+    if (initialHotels && initialHotels.length > 0) {
+      dispatch(setRecommendHotels(initialHotels));
+    } else {
+      const params = { type: 3 };
+      dispatch(fetchRecommendHotels(params) as any);
+    }
   }, []);
 
   const handleRecommentItem = (value: any) => {

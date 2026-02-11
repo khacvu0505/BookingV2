@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./TopDestination.styles.scss";
 
-const TopDestinations = () => {
-  const { regions } = useSelector((state) => state.hotels);
+const TopDestinations = ({ initialRegions }: { initialRegions?: any[] }) => {
+  const { regions: reduxRegions } = useSelector((state) => state.hotels);
+  const regions = reduxRegions?.length > 0 ? reduxRegions : (initialRegions || []);
 
   return (
     <>

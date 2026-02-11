@@ -57,7 +57,7 @@ const Languages = () => {
                 type="checkbox"
                 name="language"
                 checked={selected ? selected === language.id : false}
-                onClick={() => handleChooseLanguage(language.id)}
+                onChange={() => handleChooseLanguage(language.id)}
               />
               <div className="form-checkbox__mark">
                 <div className="form-checkbox__icon icon-check" />

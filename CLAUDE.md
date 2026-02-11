@@ -5,35 +5,53 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build and Development Commands
 
 ```bash
-npm run dev      # Start development server with HMR (opens browser automatically)
+npm run dev      # Start Next.js development server
 npm run build    # Production build
-npm run lint     # ESLint check (zero warnings enforced)
-npm run preview  # Preview production build
+npm run start    # Start production server
+npm run lint     # ESLint check
 ```
 
 ## Architecture Overview
 
-This is a **React + Vite** booking platform (OKdimall) for hotels and tours, using:
+This is a **Next.js 15** booking platform (OKdimall) for hotels and tours, migrated from Vite + React Router to Next.js App Router. Uses:
+- **Framework**: Next.js 15 with App Router (`/app/` directory)
 - **State Management**: Redux Toolkit with slices in `/src/features/`
-- **Routing**: React Router v6 in `/src/useRouteElement.jsx`
-- **HTTP Client**: Axios with interceptors in `/src/utils/http.js`
+- **Routing**: Next.js App Router (with React Router compatibility layer in `/src/lib/router-compat.tsx`)
+- **HTTP Client**: Axios with interceptors in `/src/utils/http.ts` (client-side), `fetch` in `/src/lib/server-fetch.ts` (server-side SSR)
 - **Forms**: React Hook Form + Yup validation schemas in `/src/schemas/`
 - **i18n**: i18next with translations in `/public/locales/{lang}/translation.json`
+- **Styling**: SCSS + Bootstrap
 
 ### Directory Structure
 
 ```
+app/                  # Next.js App Router pages
+├── (auth)/           # Auth pages (login, signup)
+├── (protected)/      # Authenticated pages (profile, bookings)
+├── hotels/           # Hotel listing and detail ([slug])
+├── tour/             # Tour listing and detail ([slug])
+├── news/             # News listing and detail ([slug])
+├── blogs/            # Blog listing
+├── booking/          # Booking flows (hotel, tour)
+├── layout.tsx        # Root layout
+├── page.tsx          # Home page
+└── not-found.tsx     # 404 page
+
 src/
-├── api/          # API functions (auth, hotel, tours, booking, user)
-├── apps/         # Reusable UI components (Input, Button, Header, etc.)
-├── components/   # Feature-specific components
-├── features/     # Redux slices (app, hotels, hotel, tours, tour, blogs)
-├── screens/      # Main page components (preferred over /pages/)
-├── hooks/        # Custom hooks (useFetchData, useMutate, useQueryParams)
-├── schemas/      # Yup validation schemas
-├── store/        # Redux store configuration
-├── utils/        # Utilities (http.js, helpers)
-└── constants/    # Application constants
+├── api/              # API functions (auth, hotel, tours, booking, user, blogs)
+├── apps/             # Reusable UI components (Input, Button, Header, etc.)
+├── components/       # Feature-specific components
+├── features/         # Redux slices (app, hotels, hotel, tours, tour, blogs)
+├── screens/          # Legacy page components (used by App Router pages)
+├── hooks/            # Custom hooks (useFetchData, useMutate, useQueryParams)
+├── lib/              # Next.js utilities (server-fetch.ts, router-compat.tsx)
+├── schemas/          # Yup validation schemas
+├── store/            # Redux store configuration
+├── styles/           # Global SCSS styles
+├── types/            # TypeScript type definitions
+├── utils/            # Utilities (http.ts, helpers)
+├── data/             # Static data
+└── constants/        # Application constants
 ```
 
 ### Key Redux Slices
@@ -48,10 +66,10 @@ src/
 
 ### API Pattern
 
-All API requests include language and currency headers. Base URL: `https://extapi.okdimall.com/api`
+All API requests include language and currency headers. Base URL is configured via `NEXT_PUBLIC_API_BASE_URL` env variable.
 
+**Client-side (Axios):**
 ```javascript
-// Request format
 http.post(URL, {
   page: number,
   pagesize: number,
@@ -60,7 +78,28 @@ http.post(URL, {
 })
 ```
 
-Token refresh is handled automatically on 401 responses via interceptors.
+**Server-side (SSR with caching):**
+```typescript
+import { serverFetch } from "@/lib/server-fetch";
+
+// Default: cached for 300s (ISR)
+const data = await serverFetch("/endpoint");
+
+// Custom revalidation
+const data = await serverFetch("/endpoint", { revalidate: 600 });
+
+// No cache (user-specific data)
+const data = await serverFetch("/endpoint", { revalidate: false });
+```
+
+Token refresh is handled automatically on 401 responses via Axios interceptors (client-side).
+
+### Environment Variables
+
+Configured in `.env`:
+```
+NEXT_PUBLIC_API_BASE_URL=https://extapi.okdimall.com/api
+```
 
 ### Custom Hooks
 
@@ -87,15 +126,16 @@ return <p>{t("HOTEL_BOOKING.PAYMENT_METHOD")}</p>
 
 ### Path Aliases
 
-`@/` maps to `src/` (configured in vite.config.js and jsconfig.json)
+`@/` maps to `src/` (configured in `next.config.mjs` and `tsconfig.json`)
 
 ### Adding New Features
 
 1. Create API function in `/src/api/`
 2. Add Redux slice/actions in `/src/features/` if needed
 3. Create screen component in `/src/screens/FeatureName/`
-4. Add route in `/src/useRouteElement.jsx`
-5. Add translation keys to `/public/locales/{lang}/translation.json`
+4. Add App Router page in `/app/feature-name/page.tsx` that renders the screen component
+5. For SSR data, add server fetch function in `/src/lib/server-fetch.ts`
+6. Add translation keys to `/public/locales/{lang}/translation.json`
 
 ### Form Implementation
 
@@ -108,3 +148,9 @@ const { control, handleSubmit, formState: { errors } } = useForm({
   resolver: yupResolver(schema)
 });
 ```
+
+### Next.js Config Notes
+
+- `sassOptions.silenceDeprecations` suppresses Sass `@import` and `global-builtin` deprecation warnings
+- `devIndicators: false` is applied only in production via conditional spread
+- Webpack aliases provide React Router compatibility layer and Vite-style `/images/*` imports

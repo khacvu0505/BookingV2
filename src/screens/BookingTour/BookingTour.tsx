@@ -577,6 +577,7 @@ const BookingTour = () => {
                     <Checkbox
                       name={"paymentMethod"}
                       checked={payment.code === paymentType}
+                      onChange={() => {}}
                       label={payment.title}
                       isRadio
                     />

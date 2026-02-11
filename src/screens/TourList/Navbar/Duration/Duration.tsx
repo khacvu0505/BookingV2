@@ -66,7 +66,7 @@ const Duration = () => {
                 checked={
                   selected ? Number(selected) === Number(option.id) : false
                 }
-                onClick={() => handleChooseDuration(option.id)}
+                onChange={() => handleChooseDuration(option.id)}
               />
               <div className="form-checkbox__mark">
                 <div className="form-checkbox__icon icon-check" />

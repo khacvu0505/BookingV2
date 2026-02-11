@@ -464,6 +464,7 @@ const Booking = () => {
                             <Checkbox
                               name={"smokingRoom"}
                               checked={item.code === smokingRoom}
+                              onChange={() => {}}
                               label={
                                 <div className="d-flex items-center">
                                   <img src={item.img} alt="Booking" />
@@ -494,6 +495,7 @@ const Booking = () => {
                             <Checkbox
                               name={"bigBed"}
                               checked={item.code === bigBed}
+                              onChange={() => {}}
                               label={
                                 <div className="d-flex items-center">
                                   <img src={item.img} alt="Booking" />
@@ -652,6 +654,7 @@ const Booking = () => {
                     <Checkbox
                       name={"paymentMethod"}
                       checked={payment.code === paymentType}
+                      onChange={() => {}}
                       label={payment.title}
                       isRadio
                     />

@@ -103,7 +103,7 @@ const RatingByCustomer = () => {
                   name="ratingByCustomer"
                   value={item.value}
                   checked={selected === item.value}
-                  onClick={() => handleChoose(item.value)}
+                  onChange={() => handleChoose(item.value)}
                 />
                 <div className="text-16 lg:text-15 md:text-14 ml-10">
                   {/* <span className="fw-600 mr-10">{item.value} +</span> */}

@@ -29,8 +29,9 @@ const SocialWrap = () => {
   }, [isVisible]);
 
   useEffect(() => {
-    // eslint-disable-next-line no-undef
-    ZaloSocialSDK.reload();
+    if (typeof ZaloSocialSDK !== "undefined") {
+      ZaloSocialSDK.reload();
+    }
   }, []);
 
   return (

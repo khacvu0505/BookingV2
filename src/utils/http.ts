@@ -29,7 +29,7 @@ export class Http {
     this.refreshToken = "";
     this.refreshTokenQuest = null;
     this.instance = axios.create({
-      baseURL: "https://extapi.okdimall.com/api",
+      baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
       timeout: 60000,
       headers: {
         "Content-Type": "application/json",

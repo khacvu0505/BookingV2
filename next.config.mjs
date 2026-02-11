@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   sassOptions: {
-    silenceDeprecations: ["legacy-js-api"],
+    silenceDeprecations: ["legacy-js-api", "import", "global-builtin"],
   },
   images: {
     remotePatterns: [
@@ -26,6 +26,7 @@ const nextConfig = {
     // These should be fixed gradually after migration
     ignoreDuringBuilds: true,
   },
+  ...(process.env.NODE_ENV === "production" && { devIndicators: false }),
   webpack: (config) => {
     // Alias react-router-dom to our compatibility layer
     config.resolve.alias["react-router-dom"] = path.resolve(

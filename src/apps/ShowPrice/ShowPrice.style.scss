@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: end;
+    justify-content: flex-end;
     .listed_price-text {
       font-family: Be Vietnam Pro;
       font-size: 15px;
@@ -62,7 +62,7 @@
   }
   .promotion_price {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     .promotion_price-tag {
       background-color: #f52549;
       color: #fff;
@@ -85,7 +85,7 @@
   .member_price {
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
     margin-top: 18px;
     .member_price-title {
       font-family: Be Vietnam Pro;

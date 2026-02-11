@@ -1,7 +1,7 @@
 import { getVoteSupplier } from "@/api/hotel.api";
 import RatingComponent from "@/apps/Rating";
 import { converObjectToArray } from "@/utils/utils";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Skeleton from "react-loading-skeleton";
 
@@ -13,6 +13,7 @@ const ReviewProgress = ({ hotel }: ReviewProgressProps) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [voteSupplier, setVoteSupplier] = useState<any>({});
+  const lastFetchedCode = useRef<string | null>(null);
 
   const voteSupplierInfo = useMemo(
     () => ({
@@ -29,10 +30,15 @@ const ReviewProgress = ({ hotel }: ReviewProgressProps) => {
   );
 
   useEffect(() => {
+    if (!hotel?.hotelCode || hotel.hotelCode === lastFetchedCode.current) return;
+    lastFetchedCode.current = hotel.hotelCode;
+    let cancelled = false;
+
     const fetchVoteSupplier = async () => {
       setIsLoading(true);
       try {
-        const voteSupplierData = await getVoteSupplier(hotel?.hotelCode);
+        const voteSupplierData = await getVoteSupplier(hotel.hotelCode);
+        if (cancelled) return;
         const data = voteSupplierData?.data;
         if (data && typeof data === "object" && voteSupplierData?.success) {
           setVoteSupplier(data);
@@ -40,14 +46,14 @@ const ReviewProgress = ({ hotel }: ReviewProgressProps) => {
           setVoteSupplier(null);
         }
       } catch (error) {
-        console.error("Uncaught error: ", error);
+        if (!cancelled) console.error("Uncaught error: ", error);
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
     };
-    if (hotel?.hotelCode) {
-      fetchVoteSupplier();
-    }
+
+    fetchVoteSupplier();
+    return () => { cancelled = true; };
   }, [hotel?.hotelCode]);
 
   return (

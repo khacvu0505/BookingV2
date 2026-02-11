@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import OffCanvasComponent from "../OffCanvasComponent";
 import Input from "../Input";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import SearchContent from "./SearchContent";
 import Hashtag from "@/apps/SearchAll/Hashtag";
 import Regions from "@/apps/SearchAll/Regions";

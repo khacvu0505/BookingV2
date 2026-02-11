@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "@/api/user.api";
@@ -110,7 +111,13 @@ const Header = () => {
           <div className="row justify-between items-center pb-2 px-0">
             <div className="col-auto d-flex align-center px-0">
               <Link to="/" className="header-logo sm:mr-0">
-                <img src="/img/general/logo-okdimall.svg" alt="logo icon" />
+                <Image
+                  src="/img/general/logo-okdimall.svg"
+                  alt="logo icon"
+                  width={150}
+                  height={40}
+                  priority
+                />
               </Link>
 
               <div className="header-menu">

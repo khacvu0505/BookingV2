@@ -1,6 +1,12 @@
 "use client";
 
 import Aos from "aos";
+import "aos/dist/aos.css";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css/scrollbar";
+import "swiper/css/effect-cards";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { usePathname } from "next/navigation";

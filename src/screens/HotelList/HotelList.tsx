@@ -41,11 +41,11 @@ const HotelList = () => {
 
   const {
     location: locationParam = "DN",
-    checkIn: checkInParam,
-    checkOut: checkOutParam,
-    adults: adultsParam,
-    children: childrenParam,
-    room: roomParam,
+    checkIn: checkInParam = formatDate(new Date()),
+    checkOut: checkOutParam = addDate(new Date(), 3),
+    adults: adultsParam = 2,
+    children: childrenParam = 0,
+    room: roomParam = 1,
     minPrice: minPriceParam = 0,
     maxPrice: maxPriceParam = 20000000,
     page: pageParam = 1,

@@ -21,7 +21,7 @@ import Swal from "sweetalert2";
 import "./BookingOverview.style.scss";
 import Policy from "./Policy";
 import BookingTourInfo from "../BookingTourInfo";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 

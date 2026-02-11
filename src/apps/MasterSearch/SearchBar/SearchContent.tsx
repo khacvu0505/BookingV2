@@ -8,7 +8,7 @@ import {
   tour_search_history,
 } from "@/utils/constants";
 import { getFromLocalStorage, removeLocalStorage } from "@/utils/utils";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import useWindowSize from "@/utils/useWindowSize";
 import { useTranslation } from "react-i18next";
 

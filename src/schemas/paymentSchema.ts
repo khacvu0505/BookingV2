@@ -1,4 +1,4 @@
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import * as yup from "yup";
 
 export const paymentSchema = yup.object({

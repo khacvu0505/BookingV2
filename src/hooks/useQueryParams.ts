@@ -22,23 +22,27 @@ export default function useQueryParams(): [Record<string, any>, SetSearchParamsF
 
   const setSearchParams: SetSearchParamsFn = useCallback(
     (newParams) => {
+      let newSearch: string;
+
       if (newParams instanceof URLSearchParams) {
-        router.push(`${pathname}?${newParams.toString()}`);
-        return;
-      }
-      if (typeof newParams === "function") {
+        newSearch = newParams.toString();
+      } else if (typeof newParams === "function") {
         const prev = new URLSearchParams(searchParams.toString());
-        const result = newParams(prev);
-        router.push(`${pathname}?${result.toString()}`);
-        return;
+        newSearch = newParams(prev).toString();
+      } else {
+        const urlParams = new URLSearchParams();
+        Object.entries(newParams).forEach(([key, value]) => {
+          if (value !== undefined && value !== null && value !== "") {
+            urlParams.set(key, String(value));
+          }
+        });
+        newSearch = urlParams.toString();
       }
-      const urlParams = new URLSearchParams();
-      Object.entries(newParams).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== "") {
-          urlParams.set(key, String(value));
-        }
-      });
-      router.push(`${pathname}?${urlParams.toString()}`);
+
+      // Skip navigation if params haven't changed
+      if (newSearch === searchParams.toString()) return;
+
+      router.push(`${pathname}?${newSearch}`);
     },
     [router, pathname, searchParams]
   );

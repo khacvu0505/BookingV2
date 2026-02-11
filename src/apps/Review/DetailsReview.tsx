@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReviewGallery from "./ReviewGallery";
 import { getListComments } from "@/api/hotel.api";
 import Skeleton from "react-loading-skeleton";
@@ -16,33 +16,37 @@ const DetailsReview = ({ hotel }: DetailsReviewProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [infoComments, setInfoComments] = useState<any>({});
   const [currentPage, setCurrentPage] = useState(1);
+  const lastFetchKey = useRef<string | null>(null);
 
-  const fetchListComments = useCallback(
-    async ({ Page }: { Page: number }) => {
+  useEffect(() => {
+    if (!hotel?.hotelCode) return;
+    const fetchKey = `${hotel.hotelCode}_${currentPage}`;
+    if (fetchKey === lastFetchKey.current) return;
+    lastFetchKey.current = fetchKey;
+    let cancelled = false;
+
+    const fetchComments = async () => {
       setIsLoading(true);
       try {
         const data = await getListComments({
-          Page,
+          Page: currentPage,
           PageSize: 5,
-          Entity: hotel?.hotelCode,
+          Entity: hotel.hotelCode,
         });
+        if (cancelled) return;
         if (data?.success) {
           setInfoComments(data);
         }
       } catch (error) {
-        console.error("Uncaught error: ", error);
+        if (!cancelled) console.error("Uncaught error: ", error);
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
-    },
-    [hotel?.hotelCode, setInfoComments]
-  );
+    };
 
-  useEffect(() => {
-    if (hotel?.hotelCode) {
-      fetchListComments({ Page: currentPage });
-    }
-  }, [fetchListComments, hotel?.hotelCode, currentPage]);
+    fetchComments();
+    return () => { cancelled = true; };
+  }, [hotel?.hotelCode, currentPage]);
 
   if (infoComments?.data?.length === 0) return;
 

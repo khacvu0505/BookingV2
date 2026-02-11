@@ -9,7 +9,6 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
 
 ChartJS.register(
   CategoryScale,
@@ -55,7 +54,7 @@ export const data = {
   datasets: [
     {
       label: "Dataset",
-      data: labels.map(() => faker.number.int({ min: 100, max: 400 })),
+      data: labels.map(() => Math.floor(Math.random() * 301) + 100),
       borderColor: "#1967d2",
       backgroundColor: "#1967d2",
       // data: [196, 132, 215, 362, 210, 252],

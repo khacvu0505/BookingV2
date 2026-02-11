@@ -1,4 +1,4 @@
-import { groupBy } from "lodash";
+import groupBy from "lodash/groupBy";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 

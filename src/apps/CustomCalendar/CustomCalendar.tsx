@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./CustomCalendar.css";
 import { clearSessionStorage, getDaysBetween } from "@/utils/utils";
-import moment from "moment";
 import DateTimeCustom from "./DateTimeCustom";
 import { useDispatch, useSelector } from "react-redux";
 import { setTourBookingInfo } from "@/features/tour/tourSlice";
@@ -17,12 +16,15 @@ const CustomCalendar = ({ locale }: CustomCalendarProps) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const today = moment(new Date()).add(1, "day");
-    renderListDay(today as any, locale);
+    const today = new Date();
+    today.setDate(today.getDate() + 1);
+    renderListDay(today, locale);
   }, [locale]);
 
   const renderListDay = (date: any, locale: string, isFirst = true) => {
-    const listDate = getDaysBetween(date, moment(date).add(6, "days") as any, locale);
+    const endDate = new Date(date);
+    endDate.setDate(endDate.getDate() + 6);
+    const listDate = getDaysBetween(date, endDate, locale);
     setDateArray(listDate);
     dispatch(
       setTourBookingInfo({

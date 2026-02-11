@@ -10,7 +10,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@faker-js/faker": "^8.2.0",
     "@hookform/resolvers": "^3.3.4",
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^1.9.7",
@@ -62,6 +61,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.2.0",
     "@types/aos": "^3.0.7",
     "@types/lodash": "^4.17.23",
     "@types/node": "25.2.2",

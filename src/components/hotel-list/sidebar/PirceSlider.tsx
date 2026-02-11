@@ -1,6 +1,6 @@
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject, formatCurrency } from "@/utils/utils";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import { useCallback, useEffect, useState } from "react";
 import InputRange from "react-input-range";
 import { useDispatch } from "react-redux";

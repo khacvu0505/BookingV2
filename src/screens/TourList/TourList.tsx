@@ -72,7 +72,21 @@ const TourList = () => {
     dispatch(setRequestingTours());
 
     fetchData();
-  }, [params]);
+  }, [
+    regionIDParam,
+    minPriceParam,
+    maxPriceParam,
+    votesParam,
+    categoryTypeParam,
+    durationParam,
+    pageParam,
+    pageSizeParam,
+    sortParam,
+    ratingParam,
+    ratingByCustomerParam,
+    searchParam,
+    dispatch,
+  ]);
 
   useEffect(() => {
     clearSessionStorage(info_booking_tour);

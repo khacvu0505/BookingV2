@@ -11,7 +11,8 @@ import {
 import useQueryParams from "@/hooks/useQueryParams";
 import { getFromSessionStorage } from "@/utils/utils";
 import { useFetchData } from "@/hooks/useFetchData";
-import { isNil, omitBy } from "lodash";
+import isNil from "lodash/isNil";
+import omitBy from "lodash/omitBy";
 import { useMutate } from "@/hooks/useMutateData";
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
@@ -46,15 +47,18 @@ const TourDetail = () => {
 
   const [tour, isTourLoading] = useFetchData<any, any>(getTourBySlug, { Slug: slug });
   const [policiesTour] = useFetchData<any, any>(getTourPoliciesBySlug, { Slug: slug });
+  const serviceParams = tourBookingInfo?.supplierCode
+    ? omitBy(
+        {
+          Date: tourBookingInfo.date,
+          supplierCode: tourBookingInfo.supplierCode,
+        },
+        (v) => isNil(v)
+      )
+    : {};
   const [services, serviceLoading] = useFetchData<any, any>(
     getTourServices,
-    omitBy(
-      {
-        Date: tourBookingInfo.date,
-        supplierCode: tourBookingInfo?.supplierCode,
-      },
-      (v) => isNil(v)
-    )
+    serviceParams
   );
   const offCanvasRef = useRef<any>();
 

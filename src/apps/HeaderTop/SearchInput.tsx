@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import React, { useCallback, useState } from "react";
 import Hashtag from "@/apps/SearchAll/Hashtag";
 import Regions from "@/apps/SearchAll/Regions";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import SearchContent from "../OffCanvasHeaderSearch/SearchContent";
 
 const SearchInput = () => {

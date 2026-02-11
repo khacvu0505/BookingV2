@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import ShowQuantity from "@/apps/ShowQuantity";
 import ShowPrice from "@/apps/ShowPrice";
 import ReturnPolicy from "@/apps/ReturnPolicy";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 
 const ServiceDetail = ({
   service,

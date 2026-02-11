@@ -6,7 +6,7 @@ import ShowMoreModal from "./ShowMoreModal";
 import Button from "@/apps/Button";
 import ReturnPolicy from "@/apps/ReturnPolicy";
 import NeedApproval from "@/apps/ReturnPolicy/NeedApproval";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import RadomText from "./RadomText";
 import classNames from "classnames";
 import ShowQuantity from "@/apps/ShowQuantity";

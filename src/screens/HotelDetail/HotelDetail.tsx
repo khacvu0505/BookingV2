@@ -111,21 +111,6 @@ const HotelDetail = () => {
       .catch(() => {
         setHotelPolicies([]);
       });
-
-    //set default active room
-    if (!searchParams.roomActive) {
-      navigate(
-        {
-          pathname,
-          search: createSearchParams({
-            ...searchParams,
-            roomActive: 1,
-          } as any).toString(),
-        }
-        // { replace: true }
-      );
-      dispatch(setRoomActive(1));
-    }
   }, [slug]);
 
   useEffect(() => {

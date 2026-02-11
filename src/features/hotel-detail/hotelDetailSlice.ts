@@ -47,6 +47,9 @@ export const hotelDetailSlice = createSlice({
     },
     clearHotelInfo: (state) => {
       state.hotelInfo = null;
+      state.isLoadingHotelInfo = true;
+      state.roomInfos = [];
+      state.isLoadingRoomList = false;
     },
     updateRelatedHotels: (state, { payload }: PayloadAction<{ supplierCode: string; wishListID: string | null }>) => {
       const newData = state.relatedHotels.map((hotel) => {

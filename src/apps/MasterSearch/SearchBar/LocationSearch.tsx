@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../MasterSearch.styles.scss";
 import SearchContent from "./SearchContent";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import { useLocation } from "react-router-dom";
 import qs from "query-string";
 import {

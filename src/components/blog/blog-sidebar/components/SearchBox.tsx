@@ -1,5 +1,5 @@
 import { fetchGetSearchBlogs } from "@/features/blogs/reducers";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

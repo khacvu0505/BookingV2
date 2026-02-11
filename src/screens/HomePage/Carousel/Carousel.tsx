@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
+import Image from "next/image";
 import MasterSearch from "@/apps/MasterSearch";
 import "./Carousel.styles.scss";
 import { useTranslation } from "react-i18next";
@@ -30,7 +31,14 @@ const Carousel = ({ banners }) => {
                   <div className="col-auto">
                     <div className="masthead__content">
                       <div className="masthead__bg">
-                        <img src={banner} alt="image-banner" />
+                        <Image
+                          src={banner}
+                          alt="image-banner"
+                          fill
+                          sizes="100vw"
+                          style={{ objectFit: "cover" }}
+                          priority={index === 0}
+                        />
                       </div>
                       <div className="carouselTitle">
                         <h1

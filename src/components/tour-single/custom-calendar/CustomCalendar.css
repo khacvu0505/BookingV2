@@ -1,0 +1,23 @@
+.is-active-date {
+  border: 1px solid var(--color-primary-500) !important;
+  color: var(--color-primary-500);
+  background-color: var(--color-primary-50);
+}
+
+.date-item {
+  transition: all 0.2s;
+}
+
+.date-item:hover {
+  border: 1px solid var(--color-primary-500) !important;
+  color: var(--color-primary-500);
+  background-color: var(--color-primary-50);
+}
+
+.date-item:hover i {
+  color: var(--color-primary-500) !important;
+}
+
+.date-item:hover p {
+  color: var(--color-primary-500) !important;
+}

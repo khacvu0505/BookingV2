@@ -1,0 +1,24 @@
+.navbar_hotel_list {
+  .navbar_head {
+    display: flex;
+    align-items: center;
+    padding: 24px 0;
+    border-bottom: 1px solid #ededf4;
+    margin-bottom: 24px;
+    .navbar_head-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+    .navbar_head-title {
+      font-family: Be Vietnam Pro;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 24px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #000;
+    }
+  }
+}

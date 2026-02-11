@@ -1,0 +1,37 @@
+/* Breadcrumb.style.scss */
+.breadcrum_list {
+  .breadcrum_list_item-title {
+    font-family: Be Vietnam Pro;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #5c6379;
+  }
+
+  .breadcrumb-ellipsis {
+    cursor: pointer;
+    padding: 0 8px;
+    font-size: 14px;
+    color: #5c6379;
+  }
+}
+
+@media (max-width: 768px) {
+  .breadcrum_list
+    > div:not(:first-child):not(:last-child):not(.breadcrumb-ellipsis) {
+    display: none;
+  }
+
+  .breadcrum_list.show-all > div {
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+
+  .breadcrumb-ellipsis {
+    display: flex;
+    flex-wrap: wrap !important;
+  }
+}

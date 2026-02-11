@@ -1,0 +1,22 @@
+.rating_by_customer {
+  .rating_by_customer-title {
+    font-family: Be Vietnam Pro;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #3a3e4d;
+    margin-bottom: 24px;
+  }
+
+  .rating_by_customer-content {
+    .rating_by_customer_item {
+      margin-bottom: 16px;
+    }
+    .rating_by_customer_last-item {
+      margin-bottom: 0;
+    }
+  }
+}

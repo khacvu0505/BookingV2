@@ -1,0 +1,16 @@
+.journey-path {
+  position: relative;
+  width: 100%;
+  height: 250%;
+
+  .path-svg {
+    width: 100%;
+    height: 250px;
+
+    .step {
+      text {
+        font-family: Arial, sans-serif;
+      }
+    }
+  }
+}

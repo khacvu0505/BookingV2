@@ -1,0 +1,55 @@
+.contactContainer {
+  .contactInfo {
+    background-color: #e3f0ff;
+    border-top-left-radius: 32px;
+    border-bottom-left-radius: 32px;
+
+    .inputEmail {
+      position: relative;
+
+      input {
+        background-color: white;
+        border-radius: 50px;
+        padding: 15px 15px !important;
+      }
+
+      button {
+        position: absolute;
+        background-color: var(--color-action-secondary);
+        color: white;
+        padding: 17.5px 45px !important;
+        bottom: 0;
+        right: 0;
+        font-size: 18px;
+        font-weight: 400;
+      }
+    }
+
+    .contactInfoContent {
+      @media (max-width: 992px) {
+        gap: 20px !important;
+      }
+    }
+  }
+
+  .contactImage {
+    .contactImage_img {
+      border-top-right-radius: 32px;
+      border-bottom-right-radius: 32px;
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .contactContainer {
+    .contactImage {
+      .contactImage_img {
+        border-radius: 0;
+      }
+    }
+
+    .contactInfo {
+      border-radius: 0;
+    }
+  }
+}

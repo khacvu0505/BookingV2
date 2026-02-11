@@ -1,0 +1,28 @@
+@keyframes fadeInToCenter {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.menu-container {
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.menu-item {
+  opacity: 1;
+  flex-shrink: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+
+  &.fade {
+    animation: fadeInToCenter 0.4s ease forwards;
+  }
+}

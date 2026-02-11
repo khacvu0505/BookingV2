@@ -1,0 +1,31 @@
+.cardItem {
+  .cardContent {
+    margin-top: -17px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    position: relative;
+  }
+
+  .swiper-pagination {
+    bottom: 35px !important;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    top: 45% !important;
+  }
+
+  .cardRating {
+    position: absolute;
+    top: -16px;
+    right: 12px;
+    box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
+  }
+  .btn-wishlist {
+    transition: all 0.3s;
+    &:hover {
+      .icon-heart {
+        color: #fff !important;
+      }
+    }
+  }
+}

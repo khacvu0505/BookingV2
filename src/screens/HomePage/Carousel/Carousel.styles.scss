@@ -1,0 +1,32 @@
+.carouselContainer {
+  .carouselTitle {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -25%);
+    width: 100%;
+
+    @media screen and (max-width: 992px) {
+      top: 17%;
+    }
+    @media screen and (max-width: 768px) {
+      top: 13%;
+    }
+  }
+
+  .carouselMasterSearch {
+    position: absolute;
+    bottom: 25%;
+    left: 50%;
+    transform: translate(-50%, 25%);
+    z-index: 1;
+    padding: 0px;
+
+    @media screen and (max-width: 992px) {
+      bottom: 30%;
+    }
+    @media screen and (max-width: 768px) {
+      width: 90%;
+    }
+  }
+}

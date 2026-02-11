@@ -1,0 +1,60 @@
+.skeleton-card {
+  //   width: 360px;
+  //   background-color: #fff;
+  background-color: #ebebeb;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  // Header Section
+  &__header {
+    position: relative;
+    height: 200px;
+    background: linear-gradient(to right, #e0e0e0, #f8f8f8);
+    border-bottom-left-radius: 16px; // Bo góc dưới trái
+    border-bottom-right-radius: 16px; // Bo góc dưới phải
+
+    .skeleton-card__icon {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+    }
+
+    .skeleton-card__dots {
+      position: absolute;
+      bottom: 11px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+
+      .dot {
+        background-color: #e0e0e0;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+    }
+
+    .skeleton-card__box {
+      position: absolute;
+      bottom: -22px;
+      right: 2px;
+      background: #fff;
+      padding: 6px;
+      padding-top: 0;
+      width: 50%;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+    }
+  }
+
+  // Content Section
+  &__content {
+    background-color: #fff;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 16px;
+    margin-top: 6px;
+  }
+}

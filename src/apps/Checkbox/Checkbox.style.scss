@@ -1,0 +1,58 @@
+.okdimall_checkbox {
+  display: flex;
+  align-items: center;
+
+  // input {
+  //   display: none; // Ẩn input mặc định
+  // }
+
+  // Giao diện cho checkbox mặc định
+  .form-checkbox__mark {
+    // border: 1px solid #3a3e4d;
+    &:hover {
+      border: none !important;
+    }
+    &:focus {
+      border: none !important;
+    }
+  }
+
+  &.radio {
+    .form-checkbox__mark {
+      border-radius: 50%; // Bo tròn để tạo radio
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      background-color: transparent !important;
+      .form-checkbox__mark_radio_item {
+        width: 18px;
+        height: 18px;
+        // min-width: 18px;
+        &::before {
+          top: -19% !important;
+          left: 10% !important;
+        }
+        @media screen and (max-width: 1200px) {
+          &::before {
+            top: -20% !important;
+            left: 8% !important;
+          }
+        }
+      }
+
+      .form-checkbox__mark_radio_item.form-checkbox__icon {
+        margin-left: 1px;
+        margin-bottom: 1px;
+      }
+    }
+  }
+
+  input:checked + .form-checkbox__mark::after {
+    display: block; // Hiển thị dấu check hoặc chấm bên trong khi chọn
+  }
+
+  label {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}

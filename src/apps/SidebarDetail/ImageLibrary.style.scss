@@ -1,0 +1,78 @@
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); // 5 cột mặc định
+  grid-gap: 12px;
+  max-width: 100%;
+  margin: 0 auto;
+
+  .grid-item {
+    border-radius: 10px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  // Điều chỉnh chiều cao dựa trên index để tạo hiệu ứng Masonry
+  .grid-item:nth-child(5n + 1) {
+    grid-row: span 2;
+  }
+
+  .grid-item:nth-child(5n + 2) {
+    grid-row: span 3;
+  }
+
+  .grid-item:nth-child(5n + 3) {
+    grid-row: span 1;
+  }
+
+  .grid-item:nth-child(5n + 4) {
+    grid-row: span 2;
+  }
+
+  .grid-item:nth-child(5n + 5) {
+    grid-row: span 4;
+  }
+}
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xlarge {
+    @media (max-width: 1200px) {
+      @content;
+    }
+  } @else if $breakpoint == large {
+    @media (max-width: 1024px) {
+      @content;
+    }
+  } @else if $breakpoint == medium {
+    @media (max-width: 768px) {
+      @content;
+    }
+  } @else if $breakpoint == small {
+    @media (max-width: 576px) {
+      @content;
+    }
+  }
+}
+
+.masonry-grid {
+  @include respond-to(xlarge) {
+    grid-template-columns: repeat(3, 1fr); // 4 cột trên màn hình lớn hơn 1200px
+  }
+
+  @include respond-to(large) {
+    grid-template-columns: repeat(2, 1fr); // 3 cột trên màn hình vừa
+  }
+
+  @include respond-to(medium) {
+    grid-template-columns: repeat(2, 1fr); // 2 cột trên màn hình nhỏ
+  }
+
+  @include respond-to(small) {
+    grid-template-columns: 1fr; // 1 cột trên màn hình rất nhỏ
+  }
+}

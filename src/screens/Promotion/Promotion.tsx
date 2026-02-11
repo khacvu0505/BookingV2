@@ -1,0 +1,290 @@
+import React, { useEffect, useRef, useState } from "react";
+import MetaComponent from "@/components/common/MetaComponent";
+import Header3 from "@/components/header/header-3";
+import PromotionBanner from "@/components/promotion/PromotonBanner/PromotionBanner";
+import PromotionDetailModal from "@/components/promotion/PromotionDetailModal";
+import Footer2 from "@/components/footer/footer-2";
+import {
+  getPromotionList,
+  getSupplierType,
+  getVoucherCategory,
+} from "@/api/promotion.api";
+import useQueryParams from "@/hooks/useQueryParams";
+import { cleanedObject } from "@/utils/utils";
+import Skeleton from "react-loading-skeleton";
+import { useNavigate } from "react-router-dom";
+import Pagination from "@/components/hotel-list/common/Pagination";
+
+const metadata = {
+  title: "Promotions || Travel & Tour",
+  description: "Travel & Tour",
+};
+
+const Promotion = () => {
+  const [params, setSearchParams] = useQueryParams();
+  const navigate = useNavigate();
+  const refModalDetail = useRef(null);
+  const [selected, setSelected] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [supplierList, setSupplierList] = useState([]);
+  const [voucherCategoryList, setVoucherCategoryList] = useState([]);
+  const [promotionList, setPromotionList] = useState([]);
+  const [supplierTypeSelected, setSupplierTypeSelected] = useState([]);
+  const [voucherGroupSelected, setVoucherGroupSelected] = useState([]);
+  const [totalPage, setTotalPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const {
+    page: pageParam,
+    pageSize: pageSizeParam,
+    supplierType: supplierTypeParam,
+    voucherGroup: voucherGroupParam,
+  } = params;
+
+  const handleClickGetCode = (value) => {
+    // eslint-disable-next-line no-undef
+    navigator.clipboard.writeText(value?.voucherCode);
+    setSelected(value);
+    setIsVisible(true);
+  };
+
+  const handleClickDetail = (value) => {
+    setSelected(value);
+    // eslint-disable-next-line no-undef
+    setTimeout(() => {
+      refModalDetail.current.setIsVisible(true);
+    }, 300);
+    setIsVisible(false);
+  };
+
+  const handleClickFilterSupplierType = (value) => {
+    const isExisted = supplierTypeSelected.includes(value);
+    const data = isExisted
+      ? [...supplierTypeSelected].filter((item) => item !== value)
+      : [...supplierTypeSelected, value];
+
+    setSupplierTypeSelected(data);
+    if (data?.length > 0) {
+      setSearchParams({
+        ...params,
+        supplierType: data.join(","),
+      });
+    } else {
+      setSearchParams(
+        cleanedObject({
+          ...params,
+          supplierType: "",
+        })
+      );
+    }
+  };
+
+  const handleClickFilterVoucherGroup = (value) => {
+    const isExisted = voucherGroupSelected.includes(value);
+    const data = isExisted
+      ? [...voucherGroupSelected].filter((item) => item !== value)
+      : [...voucherGroupSelected, value];
+
+    setVoucherGroupSelected(data);
+    if (data?.length > 0) {
+      setSearchParams({
+        ...params,
+        voucherGroup: data.join(","),
+      });
+    } else {
+      setSearchParams(
+        cleanedObject({
+          ...params,
+          voucherGroup: "",
+        })
+      );
+    }
+  };
+
+  useEffect(() => {
+    const handleFetchData = async () => {
+      // eslint-disable-next-line no-undef
+      const [supplierType, voucherCategory] = await Promise.all([
+        getSupplierType(),
+        getVoucherCategory(),
+      ]);
+      setSupplierList(supplierType.data);
+      setVoucherCategoryList(voucherCategory.data);
+    };
+    handleFetchData();
+  }, []);
+
+  useEffect(() => {
+    let defaultParams = {
+      ...params,
+    };
+    if (!pageParam) {
+      defaultParams = { ...defaultParams, page: 1 };
+    }
+    if (!pageSizeParam) {
+      defaultParams = { ...defaultParams, pageSize: 10 };
+    }
+    if (!supplierTypeParam) {
+      defaultParams = { ...defaultParams, supplierType: "" };
+    }
+    if (!voucherGroupParam) {
+      defaultParams = { ...defaultParams, voucherGroup: "" };
+    }
+
+    setSearchParams(cleanedObject(defaultParams));
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    if (supplierTypeParam) {
+      setSupplierTypeSelected(supplierTypeParam.split(","));
+    } else {
+      setSupplierTypeSelected([]);
+    }
+    if (voucherGroupParam) {
+      setVoucherGroupSelected(voucherGroupParam.split(","));
+    } else {
+      setVoucherGroupSelected([]);
+    }
+
+    getPromotionList({
+      Page: Number(pageParam) || 1,
+      PageSize: Number(pageSizeParam) || 10,
+      "Entity.SupplierType": supplierTypeParam || "",
+      "Entity.VoucherGroup": voucherGroupParam || "",
+    })
+      .then((res) => {
+        setIsLoading(false);
+
+        if (res.success) {
+          setPromotionList(res.data);
+          setTotalPage(res.totalPage || 0);
+          return;
+        }
+        setTotalPage(0);
+        setPromotionList([]);
+      })
+      .catch(() => {
+        setPromotionList([]);
+        setTotalPage(1);
+        setIsLoading(false);
+      });
+  }, [pageParam, pageSizeParam, supplierTypeParam, voucherGroupParam]);
+
+  useEffect(() => {
+    const handleBackNavigation = (event) => {
+      navigate("/", { replace: true });
+    };
+
+    // eslint-disable-next-line no-undef
+    window.addEventListener("popstate", handleBackNavigation);
+
+    return () => {
+      // eslint-disable-next-line no-undef
+      window.removeEventListener("popstate", handleBackNavigation);
+    };
+  }, [navigate]);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-undef
+    window.scroll({ top: 0, behavior: "smooth" });
+  }, []);
+
+  return (
+    <div className="mt-100">
+      <MetaComponent meta={metadata} />
+      <div className="header-margin"></div>
+
+      <PromotionBanner />
+      <section className="layout-pt-sm layout-pb-sm">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-3">
+              <div className="sectionTitle -md">
+                <p className="text-dark fw-500">Sản phẩm áp dụng được</p>
+                {supplierList.map((item, idx) => (
+                  <div className="form-checkbox d-flex items-center" key={idx}>
+                    <input
+                      type="checkbox"
+                      checked={supplierTypeSelected.includes(item.value)}
+                      onChange={() => handleClickFilterSupplierType(item.value)}
+                    />
+                    <div className="form-checkbox__mark">
+                      <div className="form-checkbox__icon icon-check" />
+                    </div>
+                    <div className="text-15 ml-10">{item.text}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="sectionTitle -md mt-10">
+                <p className="text-dark fw-500">Ưu đãi</p>
+                {voucherCategoryList.map((item, idx) => (
+                  <div className="form-checkbox d-flex items-center" key={idx}>
+                    <input
+                      type="checkbox"
+                      checked={voucherGroupSelected.includes(item.value)}
+                      onChange={() => handleClickFilterVoucherGroup(item.value)}
+                    />
+                    <div className="form-checkbox__mark">
+                      <div className="form-checkbox__icon icon-check" />
+                    </div>
+                    <div className="text-15 ml-10">{item.text}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="col-md-9">
+              {isLoading ? (
+                <Skeleton count={10} />
+              ) : (
+                <div>
+                  {promotionList.length > 0 && (
+                    <>
+                      <div className="d-flex gap-2 cursor-pointer flex-wrap promotion_list">
+                        {promotionList.map((item, idx) => (
+                          <div className="card promotion_item" key={idx}>
+                            <img
+                              src={item.thumbnailURL}
+                              className="card-img-top"
+                              alt="promotion"
+                              onClick={() => handleClickDetail(item)}
+                            />
+                            <div className="card-body">
+                              <h5
+                                className="card-title text-truncate-2 promotion_item_title"
+                                onClick={() => handleClickDetail(item)}
+                              >
+                                {item.voucherName}
+                              </h5>
+                              <p className="card-text text-truncate">
+                                {item.description}
+                              </p>
+                              <button
+                                className="button py-10 px-2 -dark-1 bg-blue-1 text-white w-100 mt-20"
+                                onClick={() => handleClickGetCode(item)}
+                              >
+                                {selected?.voucherCode === item.voucherCode &&
+                                isVisible
+                                  ? "Đã sao chép"
+                                  : "Lấy mã"}
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <Pagination totalPage={totalPage || 0} />
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <PromotionDetailModal ref={refModalDetail} selected={selected} />
+    </div>
+  );
+};
+
+export default Promotion;

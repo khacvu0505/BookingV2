@@ -1,0 +1,34 @@
+.sectionTitle {
+  &__title {
+  }
+
+  &__text {
+    @include media-below(xl) {
+      font-size: var(--text-14);
+    }
+  }
+
+  &.-md {
+    .sectionTitle {
+      &__title {
+        font-size: var(--text-30);
+
+        @include media-below(xl) {
+          font-size: var(--text-26);
+        }
+
+        @include media-below(lg) {
+          font-size: var(--text-24);
+        }
+      }
+    }
+  }
+
+  &.-lg {
+    .sectionTitle {
+      &__title {
+        font-size: var(--text-40);
+      }
+    }
+  }
+}

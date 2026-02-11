@@ -1,0 +1,24 @@
+.banner_hotel_list {
+  background-image: url(/images/HotelList/banner.webp);
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: 650px;
+  background-size: cover;
+
+  // .banner_hotel_content {
+  //   width: 90%;
+  //   margin: auto;
+  // }
+}
+
+@media only screen and (max-width: 992px) {
+  .banner_hotel_list {
+    min-height: 550px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .banner_hotel_list {
+    min-height: 500px;
+  }
+}

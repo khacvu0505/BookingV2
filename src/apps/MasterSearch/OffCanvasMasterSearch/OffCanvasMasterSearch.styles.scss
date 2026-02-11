@@ -1,0 +1,20 @@
+.calendarContainer {
+  width: 90% !important;
+  transform: scale(1.2) !important;
+  margin-top: 280px !important;
+  box-shadow: none !important;
+  padding-left: 8% !important;
+
+  @media screen and (max-width: 767px) {
+    margin-top: 230px !important;
+  }
+
+  .rmdp-top-class {
+    justify-content: center !important;
+  }
+
+  .rmdp-day-picker.rmdp-full-year {
+    display: flex !important;
+    flex-direction: column;
+  }
+}

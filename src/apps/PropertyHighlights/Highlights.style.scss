@@ -1,0 +1,33 @@
+.highlightContainer {
+  .iconHighlight {
+    width: 96px;
+    height: 96px;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  .highlightContainer {
+    .iconHighlight {
+      width: 80px;
+      height: 80px;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .highlightContainer {
+    .iconHighlight {
+      width: 70px;
+      height: 70px;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .highlightContainer {
+    .iconHighlight {
+      width: 50px;
+      height: 50px;
+    }
+  }
+}

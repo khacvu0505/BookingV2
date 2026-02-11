@@ -1,0 +1,50 @@
+.register_member {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f74967;
+  padding: 8px 0;
+  margin-top: 16px;
+  .register_member-img {
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    margin-right: 6px;
+  }
+  .register_member-title {
+    font-family: Be Vietnam Pro;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 28px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #fff;
+    margin-right: 6px;
+  }
+  .register_member-text {
+    font-family: Be Vietnam Pro;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 28px;
+    text-align: left;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .register_member {
+    .register_member-img {
+      width: 16px;
+      height: 16px;
+      object-fit: cover;
+      margin-right: 2px;
+    }
+  }
+}

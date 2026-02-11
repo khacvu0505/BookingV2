@@ -1,0 +1,13 @@
+.booking_tour_info_table {
+  width: 100%;
+  // border-collapse: collapse;
+  width: 100%; /* Hoặc tùy ý */
+  // border-radius: 10px 10px 0 0; /* Bo góc trên trái và phải */
+  overflow: hidden; /* Để nội dung bên trong không vượt ra ngoài */
+  .booking_tour_thead {
+    background-color: var(--color-secondary-500);
+    // border-radius: 10px 10px 0 0; /* Áp dụng cùng giá trị */
+    overflow: hidden; /* Đảm bảo góc được cắt đúng */
+    color: #fff;
+  }
+}

@@ -1,0 +1,13 @@
+.promotion_banner {
+  .promotion_banner_img {
+    min-height: 250px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .promotion_banner {
+    .promotion_banner_img {
+      object-fit: cover;
+    }
+  }
+}

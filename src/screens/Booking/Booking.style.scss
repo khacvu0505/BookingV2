@@ -1,0 +1,44 @@
+.booking_page {
+  margin-top: 100px;
+  .booking_page_customer-info {
+    .booking_page_customer-info-input {
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      margin-bottom: 24px;
+      border-radius: 8px;
+    }
+    .booking_page_customer-info-payment-method {
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      border-radius: 8px;
+      .payment-method-title {
+        //styleName: Body 1/Medium - size 16px;
+        font-family: Be Vietnam Pro;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        color: #000;
+        margin-bottom: 20px;
+      }
+    }
+    .booking_page_customer-info-title {
+      font-family: Be Vietnam Pro;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #000;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .payment-method-img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+  }
+}

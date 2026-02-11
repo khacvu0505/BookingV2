@@ -1,0 +1,15 @@
+.authen_modal {
+  width: 600px;
+  max-width: 600px;
+}
+
+@media screen and (max-width: 600px) {
+  .authen_modal {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .authen_modal {
+    width: 92%;
+  }
+}

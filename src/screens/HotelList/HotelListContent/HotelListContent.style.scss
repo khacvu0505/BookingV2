@@ -1,0 +1,13 @@
+.hotel_list_content {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  background-color: #fff;
+
+  // position: relative;
+  // overflow: auto; // Tạo vùng cuộn
+  // // max-height: 100vh;
+  // // max-height: calc(100vh); // Giới hạn chiều cao (nếu cần)
+  // scroll-behavior: smooth; // Tùy chọn: Cuộn mượt
+
+  position: relative; // Đảm bảo là ngữ cảnh của sticky
+  overflow: visible; // Không giới hạn cuộn
+}

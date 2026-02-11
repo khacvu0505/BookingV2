@@ -1,0 +1,37 @@
+.banner_destinations {
+  background-image: url(/images/Destinations/destination_banner.webp);
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 60vh;
+  background-size: cover;
+  .banner_destinations_content {
+    padding-top: 10%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .banner_destinations {
+    height: 50vh;
+    .banner_destinations_content {
+      padding-top: 20%;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .banner_destinations {
+    height: 30vh;
+    .banner_destinations_content {
+      padding-top: 20%;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .banner_destinations {
+    height: 35vh;
+    .banner_destinations_content {
+      padding-top: 20%;
+    }
+  }
+}

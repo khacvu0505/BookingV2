@@ -1,0 +1,17 @@
+.promotion_list {
+  .promotion_item {
+    width: calc((100% / 3) - 10px);
+    margin-bottom: 20px;
+    .promotion_item_title {
+      min-height: 58px;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .promotion_list {
+    .promotion_item {
+      width: calc((100% / 2) - 8px);
+    }
+  }
+}

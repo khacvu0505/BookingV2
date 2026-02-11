@@ -1,0 +1,57 @@
+.okdimall_input {
+  .okdimall_input-label {
+    //styleName: Small/Medium - size 14px;
+    font-family: Be Vietnam Pro;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #3a3e4d;
+  }
+  .okdimall_input-wrapper {
+    display: flex;
+    align-items: center;
+    .okdimall_input-prefix {
+      font-size: 14px;
+      border-radius: 4px;
+      padding: 11px 12px;
+      border: 1px solid #ededf4;
+      border-right: none;
+      color: #3a3e4d;
+    }
+    .okdimall_input-field-prefix {
+      border-left: 0 !important;
+      padding-left: 0 !important;
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+    }
+
+    .okdimall_input-field {
+      border: 1px solid #ededf4;
+      padding: 10px 12px;
+      border-radius: 4px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
+.okdimall_input-wrapper {
+  position: relative;
+
+  .okdimall_input-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
+
+    &:hover {
+      color: #000;
+    }
+  }
+}

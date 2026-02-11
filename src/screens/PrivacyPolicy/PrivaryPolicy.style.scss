@@ -1,0 +1,21 @@
+.privary_policy-list {
+  list-style-type: none; /* Xóa dấu chấm mặc định của ul */
+  padding-left: 0; /* Tùy chỉnh khoảng cách nếu cần */
+  li {
+    position: relative; /* Để định vị dấu + */
+    padding-left: 20px; /* Tạo khoảng cách cho dấu + */
+    font-size: 16;
+    @media screen and (max-width: 992px) {
+      font-size: 15px;
+    }
+    @media screen and (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
+  li::before {
+    content: "+"; /* Thêm dấu + */
+    position: absolute;
+    left: 0; /* Đặt dấu + ở bên trái */
+    color: black; /* Màu của dấu +, có thể thay đổi */
+  }
+}

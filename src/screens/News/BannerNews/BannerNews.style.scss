@@ -1,0 +1,40 @@
+.banner_news {
+  background-image: url(/images/News/news_banner.webp);
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 60vh;
+  background-size: cover;
+  .banner_news_content {
+    padding-top: 10%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .banner_news {
+    height: 50vh;
+
+    .banner_news_content {
+      padding-top: 20%;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .banner_news {
+    height: 30vh;
+
+    .banner_news_content {
+      padding-top: 20%;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .banner_news {
+    height: 35vh;
+
+    .banner_news_content {
+      padding-top: 20%;
+    }
+  }
+}

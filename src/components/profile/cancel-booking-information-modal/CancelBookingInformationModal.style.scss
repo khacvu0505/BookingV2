@@ -1,0 +1,34 @@
+.table-cancel-booking-info {
+  width: 100%;
+  thead {
+    background-color: rgb(24, 94, 193);
+    color: #fff;
+    th {
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 0;
+      padding-left: 5px;
+    }
+  }
+  tbody {
+    tr {
+      td {
+        padding: 10px 0;
+        padding-left: 5px;
+        font-size: 14px;
+        font-weight: 400;
+        border-bottom: 1px solid #e0e0e0;
+      }
+    }
+  }
+  tfood {
+    div {
+      text-align: right;
+    }
+  }
+  .hide-border-bottom {
+    td {
+      border-bottom: none !important;
+    }
+  }
+}

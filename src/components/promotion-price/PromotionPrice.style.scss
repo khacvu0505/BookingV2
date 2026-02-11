@@ -1,0 +1,12 @@
+.promotion-price {
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  padding: 0px 5px;
+  .promotion-price-tag {
+    background-color: #00b6f3;
+    color: #fff;
+    border-radius: 4px;
+    padding: 0px 2px;
+    font-size: 12px;
+  }
+}

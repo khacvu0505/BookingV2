@@ -1,0 +1,81 @@
+.sidebar_right_booking_hotel {
+  .sidebar_right_booking_hotel-header {
+    background-color: #f52549;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    .sidebar_right_booking_hotel-header-title {
+      font-family: Be Vietnam Pro;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 28px;
+      text-align: center;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #fff;
+    }
+  }
+  .side_bar_right_booking_info {
+    .side_bar_right_booking_info_hotel-name {
+      font-family: Be Vietnam Pro;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      text-align: center;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #f52549;
+      text-align: left;
+      margin-bottom: 4px;
+    }
+    .side_bar_right_booking_info_booking-date {
+      font-family: Be Vietnam Pro;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #6a718a;
+    }
+    .side_bar_right_booking_info_room-name {
+      font-family: Be Vietnam Pro;
+      font-size: 14px;
+      line-height: 20px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #000;
+    }
+    .side_bar_right_booking_info_service-name {
+      //styleName: Smaller/Regular - size 12;
+      font-family: Be Vietnam Pro;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #6a718a;
+    }
+    .side_bar_right_booking_info_service-price {
+      font-family: Be Vietnam Pro;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      text-align: right;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #f52549;
+    }
+    .side_bar_right_booking_info-title {
+      font-family: Be Vietnam Pro;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #6a718a;
+    }
+  }
+}

@@ -10,10 +10,10 @@ import { info_booking } from "@/utils/constants";
 import { setRoomActive } from "@/features/hotel-detail/hotelDetailSlice";
 import useQueryParams from "@/hooks/useQueryParams";
 
-const ServiceList = ({ roomID, roomName, source, roomIdButtonChoose }: { roomID: any; roomName: any; source: any; roomIdButtonChoose?: any }) => {
+const ServiceList = ({ roomID, roomName, source, roomIdButtonChoose, servicesRoom = [] }: { roomID: any; roomName: any; source: any; roomIdButtonChoose?: any; servicesRoom?: any[] }) => {
   const [isViewMore, setIsViewMore] = useState(false);
   const [searchParams, setSearchParams] = useQueryParams();
-  const { servicesRoom, roomActive } =
+  const { roomActive } =
     useSelector((state) => state.hotel) || {};
   const dispatch = useDispatch();
 

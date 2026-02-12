@@ -1,28 +1,26 @@
 import { info_booking } from "@/utils/constants";
 import { getFromSessionStorage } from "@/utils/utils";
 import Services from "./Services";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { fetchAddOnServices } from "@/features/hotel-detail/reducers";
-import { useAppDispatch } from "@/store/hooks";
+import { getAddOnServices } from "@/api/hotel.api";
 import SidebarRight from "@/components/Sidebar/SidebarRight";
 import SkeletonCard from "@/components/Skeleton/SkeletonCard";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import { hotelKeys } from "@/lib/query-keys";
 
 const AddonList = () => {
   const { t } = useTranslation();
   const infoBooking = getFromSessionStorage(info_booking);
-  const dispatch = useAppDispatch();
-  const { isLoadingAddon, addonServices } = useSelector((state: any) => state.hotel);
   const services = infoBooking?.services || [];
 
-  useEffect(() => {
-    if (infoBooking) {
-      dispatch(
-        fetchAddOnServices({ supplierCode: infoBooking?.hotelInfo?.hotelCode }) as any
-      );
-    }
-  }, []);
+  const { data: addonServices = [], isLoading: isLoadingAddon } = useQuery({
+    queryKey: hotelKeys.addonServices(infoBooking?.hotelInfo?.hotelCode ?? ""),
+    queryFn: async () => {
+      const res = await getAddOnServices({ supplierCode: infoBooking?.hotelInfo?.hotelCode });
+      return res.data;
+    },
+    enabled: !!infoBooking?.hotelInfo?.hotelCode,
+  });
 
   return (
     <div

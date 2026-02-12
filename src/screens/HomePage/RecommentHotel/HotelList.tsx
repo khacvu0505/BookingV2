@@ -1,15 +1,13 @@
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-import { useSelector } from "react-redux";
 import { addDate, formatDate } from "@/utils/utils";
 import { handleSetDefaultBooking } from "@/utils/handleSetDefaultBooking";
 import CardItem from "@/components/CardItem";
 import classNames from "classnames";
 import { useState } from "react";
 
-const HotelList = () => {
-  const { recommendHotels } = useSelector((state) => state.hotels);
+const HotelList = ({ hotels: recommendHotels = [] }: { hotels?: any[] }) => {
   const navigate = useNavigate();
   const [swiperData, setSwiperData] = useState({
     activeIndex: 0,

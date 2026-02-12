@@ -1,4 +1,4 @@
-import { fetchGetSearchBlogs } from "@/features/blogs/reducers";
+import { setFilter } from "@/features/blogs/blogSlice";
 import debounce from "lodash/debounce";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +14,7 @@ const SearchBox = () => {
         ...filter,
         Entity: { ...filter.Entity, Keyword: searchTerm },
       };
-      (dispatch as any)(fetchGetSearchBlogs(dataFilter));
+      dispatch(setFilter(dataFilter));
     }, 500),
     []
   );

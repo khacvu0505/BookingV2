@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getListCategory } from "@/api/blogs.api";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchGetSearchBlogs } from "@/features/blogs/reducers";
+import { setFilter } from "@/features/blogs/blogSlice";
 
 const CategoryList = () => {
   const [listCategory, setListCategory] = useState([]);
@@ -19,7 +19,7 @@ const CategoryList = () => {
               ...filter,
               Entity: { ...filter.Entity, CateID: 0 },
             };
-            (dispatch as any)(fetchGetSearchBlogs(dataFilter));
+            dispatch(setFilter(dataFilter));
           }
         } else {
           setListCategory([]);
@@ -33,7 +33,7 @@ const CategoryList = () => {
       ...filter,
       Entity: { ...filter.Entity, CateID: categoryCode },
     };
-    (dispatch as any)(fetchGetSearchBlogs(dataFilter));
+    dispatch(setFilter(dataFilter));
   };
 
   return (

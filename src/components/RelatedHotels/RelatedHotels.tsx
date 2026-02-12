@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import useQueryParams from "@/hooks/useQueryParams";
-import { useSelector } from "react-redux";
 import { addDate, clearSessionStorage, formatDate } from "@/utils/utils";
 import { handleSetDefaultBooking } from "@/utils/handleSetDefaultBooking";
 import CardItem from "@/components/CardItem";
-import SkeletonCard from "@/components/Skeleton/SkeletonCard";
 import { info_booking, info_booking_tour } from "@/utils/constants";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
@@ -13,14 +11,12 @@ import classNames from "classnames";
 
 interface RelatedHotelsProps {
   isTour?: boolean;
+  relatedHotels?: any[];
 }
 
-const RelatedHotels = ({ isTour = false }: RelatedHotelsProps) => {
+const RelatedHotels = ({ isTour = false, relatedHotels = [] }: RelatedHotelsProps) => {
   const [searchParams] = useQueryParams();
   const navigate = useNavigate();
-  const { relatedHotels, isLoadingRelatedHotels } = useSelector(
-    (state) => state.hotel
-  );
   const [swiperData, setSwiperData] = useState({
     activeIndex: 0,
     isEnd: false,
@@ -52,18 +48,6 @@ const RelatedHotels = ({ isTour = false }: RelatedHotelsProps) => {
       searchParams,
     });
   };
-
-  if (isLoadingRelatedHotels) {
-    return (
-      <div className="row mt-16">
-        {[...Array(4)].map((_, index) => (
-          <div className="col-md-6 col-lg-4 col-xl-3 mb-16" key={index}>
-            <SkeletonCard />
-          </div>
-        ))}
-      </div>
-    );
-  }
 
   return (
     <div className="relative">

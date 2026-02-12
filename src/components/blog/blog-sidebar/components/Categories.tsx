@@ -1,4 +1,4 @@
-import { fetchGetSearchBlogs } from "@/features/blogs/reducers";
+import { setFilter } from "@/features/blogs/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Categories = () => {
@@ -21,7 +21,7 @@ const Categories = () => {
         SupplierType: filter.Entity.SupplierType === value ? "" : value,
       },
     };
-    (dispatch as any)(fetchGetSearchBlogs(dataFilter));
+    dispatch(setFilter(dataFilter));
   };
   return (
     <>

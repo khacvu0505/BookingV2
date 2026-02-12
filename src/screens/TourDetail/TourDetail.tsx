@@ -8,6 +8,7 @@ import {
   getTourPrices,
   getTourServices,
 } from "@/api/tours.api";
+import { getRelatedHotels } from "@/api/hotel.api";
 import useQueryParams from "@/hooks/useQueryParams";
 import { getFromSessionStorage } from "@/utils/utils";
 import isNil from "lodash/isNil";
@@ -17,9 +18,8 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/store/hooks";
 import { setTourBookingInfo } from "@/features/tour/tourSlice";
 import { info_booking_tour } from "@/utils/constants";
-import { fetchRelatedHotels } from "@/features/hotel-detail/reducers";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { tourKeys } from "@/lib/query-keys";
+import { hotelKeys, tourKeys } from "@/lib/query-keys";
 
 import MetaComponent from "@/components/MetaComponent";
 import Breadcrumb from "@/components/Breadcrumb";
@@ -43,7 +43,6 @@ const TourDetail = () => {
   useQueryParams();
   const dispatch = useAppDispatch();
   const { tourBookingInfo } = useSelector((state: any) => state.tour);
-  const { relatedHotels } = useSelector((state: any) => state.hotel);
 
   const { data: tour, isLoading: isTourLoading } = useQuery({
     queryKey: tourKeys.detail(String(slug ?? "")),
@@ -149,15 +148,22 @@ const TourDetail = () => {
     }
   }, [dispatch, tourPrices]);
 
-  useEffect(() => {
-    if (!(tour as any)?.hotelCode || !(tour as any)?.regionID) return;
-    const params = {
-      regionID: (tour as any)?.regionID || "",
-      supplierType: "Tour",
-      currentCode: (tour as any)?.hotelCode,
-    };
-    dispatch(fetchRelatedHotels(params) as any);
-  }, [(tour as any)?.hotelCode, (tour as any)?.regionID]);
+  const { data: relatedHotels = [] } = useQuery({
+    queryKey: hotelKeys.related(
+      (tour as any)?.regionID || "",
+      "Tour",
+      (tour as any)?.hotelCode ?? ""
+    ),
+    queryFn: async () => {
+      const res = await getRelatedHotels({
+        regionID: (tour as any)?.regionID || "",
+        supplierType: "Tour",
+        currentCode: (tour as any)?.hotelCode,
+      });
+      return res.data;
+    },
+    enabled: !!(tour as any)?.hotelCode && !!(tour as any)?.regionID,
+  });
 
   const handleChooseService = (tourItem: any) => {
     getTourServicePrice(
@@ -309,7 +315,7 @@ const TourDetail = () => {
                 </h2>
 
                 <div className="pt-20 lg:pt-10 item_gap-x10 ">
-                  <RelatedHotels isTour />
+                  <RelatedHotels isTour relatedHotels={relatedHotels} />
                 </div>
               </div>
             </section>

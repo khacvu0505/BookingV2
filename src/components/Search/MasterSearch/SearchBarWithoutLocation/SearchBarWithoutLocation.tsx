@@ -16,7 +16,6 @@ import {
 } from "@/utils/utils";
 import useQueryParams from "@/hooks/useQueryParams";
 import { DateObject } from "react-multi-date-picker";
-import { fetchRoomList } from "@/features/hotel-detail/reducers";
 import { setRoomActive } from "@/features/hotel-detail/hotelDetailSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -73,8 +72,6 @@ const SearchBarWithoutLocation = () => {
       children: searchValue.children,
       totalRoom: rooms,
     };
-
-    dispatch(fetchRoomList(params) as any);
 
     // clear data sidebar cart and set default after triggering search
     clearSessionStorage(info_booking);

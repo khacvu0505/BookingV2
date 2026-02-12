@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getRegions } from "@/api/category.api";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchGetSearchBlogs } from "@/features/blogs/reducers";
+import { setFilter } from "@/features/blogs/blogSlice";
 
 const Destinations = () => {
   const [regions, setRegions] = useState([]);
@@ -35,7 +35,7 @@ const Destinations = () => {
         RegionFID: idRegion === filter.Entity.RegionFID ? "" : idRegion,
       },
     };
-    (dispatch as any)(fetchGetSearchBlogs(dataFilter));
+    dispatch(setFilter(dataFilter));
   };
   if (loading) {
     return <Skeleton count={3} />;

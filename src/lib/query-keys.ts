@@ -45,6 +45,18 @@ export const hotelKeys = {
   all: ["hotel"] as const,
   list: (params: Record<string, unknown>) =>
     [...hotelKeys.all, "list", params] as const,
+  detail: (slug: string) =>
+    [...hotelKeys.all, "detail", slug] as const,
+  rooms: (params: Record<string, unknown>) =>
+    [...hotelKeys.all, "rooms", params] as const,
+  services: (roomID: string, fromDate: string, toDate: string) =>
+    [...hotelKeys.all, "services", roomID, fromDate, toDate] as const,
+  addonServices: (supplierCode: string) =>
+    [...hotelKeys.all, "addonServices", supplierCode] as const,
+  related: (regionID: string, supplierType: string, currentCode: string) =>
+    [...hotelKeys.all, "related", regionID, supplierType, currentCode] as const,
+  recommended: (type: number) =>
+    [...hotelKeys.all, "recommended", type] as const,
   voteSupplier: (hotelCode: string) =>
     [...hotelKeys.all, "voteSupplier", hotelCode] as const,
   comments: (hotelCode: string, page: number) =>
@@ -63,6 +75,12 @@ export const bookingKeys = {
     [...bookingKeys.all, "detail", id] as const,
   detailTour: (id: string) =>
     [...bookingKeys.all, "detailTour", id] as const,
+};
+
+export const blogKeys = {
+  all: ["blog"] as const,
+  search: (filter: Record<string, unknown>) =>
+    [...blogKeys.all, "search", filter] as const,
 };
 
 export const tourKeys = {

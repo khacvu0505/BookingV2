@@ -28,9 +28,9 @@ import { getProfile } from "@/utils/auth";
 import { saveFavourite, removeFavourite } from "@/api/user.api";
 import {
   updateHotelList,
-  updateHotelRecommendList,
 } from "@/features/hotel-list/hotelSlice";
 import { updateTourList } from "@/features/tour-list/tourList.slice";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   BREAKPOINT_XL,
   current_currency,
@@ -47,6 +47,18 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   const pathname = usePathname();
   const [isTablet, setIsTablet] = useState(false);
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
+  // Helper to update recommend hotels in TQ cache
+  const updateRecommendCache = (supplierCode: string, wishListID: any) => {
+    queryClient.setQueriesData(
+      { queryKey: ["hotel", "recommended"] },
+      (old: any[] | undefined) =>
+        old?.map((h: any) =>
+          h.supplierCode === supplierCode ? { ...h, wishListID } : h
+        )
+    );
+  };
 
   // Check responsive breakpoint
   useEffect(() => {
@@ -98,17 +110,12 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
         }).then((res: { success?: boolean; data?: unknown }) => {
           if (res?.success) {
             if (e.detail.isRecommend) {
-              dispatch(
-                updateHotelRecommendList({
-                  wishListID: res?.data,
-                  supplierCode: e?.detail?.supplierCode,
-                })
-              );
+              updateRecommendCache(e?.detail?.supplierCode, res?.data);
               return;
             }
             dispatch(
               updateHotelList({
-                wishListID: res?.data,
+                wishListID: res?.data as string,
                 supplierCode: e?.detail?.supplierCode,
               })
             );
@@ -117,17 +124,12 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       } else {
         removeFavourite(String(e.detail.wishListID)).then(() => {
           if (e.detail.isRecommend) {
-            dispatch(
-              updateHotelRecommendList({
-                wishListID: 0,
-                supplierCode: e?.detail?.supplierCode,
-              })
-            );
+            updateRecommendCache(e?.detail?.supplierCode, 0);
             return;
           }
           dispatch(
             updateHotelList({
-              wishListID: 0,
+              wishListID: null,
               supplierCode: e?.detail?.supplierCode,
             })
           );

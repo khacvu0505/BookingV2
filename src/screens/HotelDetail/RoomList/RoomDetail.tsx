@@ -13,14 +13,10 @@ import Button from "@/components/Button";
 import NeedApproval from "@/components/ReturnPolicy/NeedApproval";
 import { useTranslation } from "react-i18next";
 
-const RoomDetail = ({ hotel, handleChoose }) => {
+const RoomDetail = ({ hotel, handleChoose, servicesRoom = [], isLoadingService = false }) => {
   const { t } = useTranslation();
   const refAmenitiedModal = useRef(null);
-  const {
-    servicesRoom = [],
-    roomActive,
-    isLoadingService,
-  } = useSelector((state: any) => state.hotel) || {};
+  const { roomActive } = useSelector((state: any) => state.hotel) || {};
   const infoBooking = getFromSessionStorage(info_booking);
   const [roomIdButtonChoose, setRoomIdButtonChoose] = useState(null);
 
@@ -243,6 +239,7 @@ const RoomDetail = ({ hotel, handleChoose }) => {
             roomID={hotel?.roomID}
             roomName={hotel?.roomName}
             source={hotel?.source}
+            servicesRoom={servicesRoom}
           />
         </>
       )}

@@ -1,5 +1,5 @@
 import React from "react";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { SkeletonTheme } from "react-loading-skeleton";
 import "./SkeletonList.style.scss";
 import SkeletonItem from "../SkeletonItem";
 

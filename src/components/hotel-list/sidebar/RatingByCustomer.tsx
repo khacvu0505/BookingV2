@@ -6,7 +6,7 @@ const RatingByCustomer = () => {
   const [params, setSearchParams] = useQueryParams();
   const { ratingByCustomer: ratingByCustomerParam } = params;
 
-  const [dataList, setDataList] = useState([
+  const [dataList, _setDataList] = useState([
     {
       id: 1,
       value: 10,

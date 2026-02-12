@@ -8,7 +8,7 @@ import { newsKeys } from "@/lib/query-keys";
 
 const TopPosts = ({ selected }) => {
   const navigate = useNavigate();
-  const [params, setSearchParams] = useQueryParams();
+  const [params] = useQueryParams();
   const pageParam = Number(params.page) || 1;
 
   const { data: queryData } = useQuery({

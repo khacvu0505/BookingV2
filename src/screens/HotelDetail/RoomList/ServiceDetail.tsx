@@ -35,7 +35,7 @@ const ServiceDetail = ({
     );
   }, [infoBooking, roomActive, service]);
 
-  const setAddServiceToLocal = (location) => {
+  const _setAddServiceToLocal = (location) => {
     const services = arrayWithUniqueObject(
       infoBooking.services,
       {
@@ -57,7 +57,7 @@ const ServiceDetail = ({
     // eslint-disable-next-line no-undef
     window.dispatchEvent(event);
   };
-  const setMoveServiceToLocal = () => {
+  const _setMoveServiceToLocal = () => {
     const numberRoomsFilled =
       infoBooking?.services?.filter((item) => item.roomID)?.length || 0;
     const services = infoBooking?.services?.map((item, index) =>

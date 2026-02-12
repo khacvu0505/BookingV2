@@ -20,7 +20,6 @@ import { useLocation } from "react-router-dom";
 import classNames from "classnames";
 import useStorageListener from "@/hooks/useStorageListener";
 import { useTranslation } from "react-i18next";
-import { formatDate } from "@/utils/utils";
 import type { BookingInfo, AddonService } from "@/types";
 
 interface SidebarRightProps {
@@ -33,7 +32,7 @@ const SidebarRight = ({ isOffcanvas = false }: SidebarRightProps) => {
   const [searchParams, setSearchParams] = useQueryParams();
   const dispatch = useDispatch();
   const infoBookingFromSession = getFromSessionStorage(info_booking) as BookingInfo | null;
-  const firstVoucher = infoBookingFromSession?.voucherApplies;
+  const _firstVoucher = infoBookingFromSession?.voucherApplies;
   const taxInclude = Boolean(!getFromSessionStorage(tax_include));
   const createInvoice = useStorageListener<boolean>(create_invoice);
 

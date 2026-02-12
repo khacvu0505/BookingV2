@@ -1,6 +1,5 @@
-import { formatCurrency, formatStringToDate } from "@/utils/utils";
+import { formatStringToDate } from "@/utils/utils";
 import React from "react";
-import { useSelector } from "react-redux";
 import "./Invoice.style.scss";
 import useWindowSize from "@/utils/useWindowSize";
 import { useTranslation } from "react-i18next";
@@ -8,7 +7,6 @@ import PriceWithVND from "@/components/PriceWithVND/PriceWithVND";
 
 export default function InvoiceComponent({ bookingInfo }) {
   const { t } = useTranslation();
-  const { currentCurrency } = useSelector((state) => state.app);
   const isMobile = useWindowSize().width < 768;
 
   const contactData = [

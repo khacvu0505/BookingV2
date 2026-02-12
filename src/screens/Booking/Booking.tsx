@@ -36,7 +36,6 @@ const TextArea = lazy(() => import("@/components/Form/TextArea"));
 const Checkbox = lazy(() => import("@/components/Form/Checkbox"));
 const Button = lazy(() => import("@/components/Button"));
 const SidebarRight = lazy(() => import("@/components/Sidebar/SidebarRight"));
-const VerifyOTPModal = lazy(() => import("./VerifyOTPModal"));
 const BookingOverView = lazy(() => import("./BookingOverview"));
 import { reset as resetApp } from "@/features/app/appSlice";
 import Swal from "sweetalert2";
@@ -119,7 +118,6 @@ const Booking = () => {
     setFocus,
     control,
     setValue,
-    getValues,
     watch,
   } = useForm<any>({
     defaultValues: {

@@ -10,7 +10,6 @@ import {
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
 import Skeleton from "react-loading-skeleton";
-import { useNavigate } from "react-router-dom";
 import Pagination from "@/components/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { promotionKeys } from "@/lib/query-keys";
@@ -22,7 +21,6 @@ const metadata = {
 
 const Promotion = () => {
   const [params, setSearchParams] = useQueryParams();
-  const navigate = useNavigate();
   const refModalDetail = useRef(null);
   const [selected, setSelected] = useState(null);
   const [isVisible, setIsVisible] = useState(false);

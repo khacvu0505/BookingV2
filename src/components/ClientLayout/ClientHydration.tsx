@@ -13,7 +13,6 @@ import {
 } from "@/utils/auth";
 import {
   current_currency,
-  DEFAULT_CURRENCY,
 } from "@/utils/constants";
 import {
   getFromLocalStorage,

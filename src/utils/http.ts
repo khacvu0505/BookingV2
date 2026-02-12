@@ -21,12 +21,12 @@ import { current_currency } from "./constants";
 export class Http {
   instance: AxiosInstance;
   private accessToken: string;
-  private refreshToken: string;
+  private _refreshToken: string;
   private refreshTokenQuest: Promise<string> | null;
 
   constructor() {
     this.accessToken = getAccessTokenFromLocalStorage();
-    this.refreshToken = "";
+    this._refreshToken = "";
     this.refreshTokenQuest = null;
     this.instance = axios.create({
       baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -70,7 +70,7 @@ export class Http {
 
         if (url === URL_LOGOUT) {
           this.accessToken = "";
-          this.refreshToken = "";
+          this._refreshToken = "";
 
           clearAccessTokenFromLocalStorage();
         }
@@ -101,7 +101,7 @@ export class Http {
 
           clearAccessTokenFromLocalStorage();
           this.accessToken = "";
-          this.refreshToken = "";
+          this._refreshToken = "";
         }
         if (error) return Promise.reject(error);
       }

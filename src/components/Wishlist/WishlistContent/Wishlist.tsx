@@ -1,4 +1,4 @@
-import React, { lazy, useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   getCategoryTypeFavourite,
@@ -6,24 +6,19 @@ import {
   removeFavourite,
 } from "@/api/user.api";
 import useQueryParams from "@/hooks/useQueryParams";
-import debounce from "lodash/debounce";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import WishlistItem from "@/components/Wishlist/WishlistItemComponent";
 import Pagination from "@/components/Pagination";
 
 const Wishlist = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [params, setSearchParams] = useQueryParams();
   const { page: pageParam = 1, type = "Hotel" } = params;
-
-  const [search, setSearch] = useState("");
 
   const [category, setCategory] = useState<any[]>([]);
   const [favourites, setFavourites] = useState<any[]>([]);
   const [totalPage, setTotalPage] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
 
   const handleTabClick = (tab: string) => {
     setSearchParams({ ...params, type: tab, page: 1 });
@@ -36,43 +31,6 @@ const Wishlist = () => {
       );
     });
   };
-
-  const debouncedSearch = useCallback(
-    debounce((searchTerm: string) => {
-      getFavouriteList({
-        page: 1,
-        pageSize: 10,
-
-        entity: {
-          keyword: searchTerm,
-          supplierType: type,
-        },
-      })
-        .then((res: any) => {
-          const { success = false, data } = res || {};
-          if (success) {
-            setFavourites(data);
-          } else {
-            setFavourites([]);
-          }
-          setIsLoading(false);
-        })
-        .catch(() => {
-          setIsLoading(false);
-          setFavourites([]);
-        });
-    }, 500),
-    []
-  );
-
-  const handleChangeValue = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearch(event.target.value);
-
-      debouncedSearch(event.target.value);
-    },
-    [debouncedSearch]
-  );
 
   useEffect(() => {
     getCategoryTypeFavourite()

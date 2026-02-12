@@ -1,13 +1,6 @@
 import React from "react";
-import CallToActions from "@/components/common/CallToActions";
-import DefaultHeader from "@/components/header-variants/default-header";
-import DefaultFooter from "@/components/footer/default";
-import LocationTopBar from "@/components/common/LocationTopBar";
-import Blog2 from "@/components/blog/Blog2";
 import BlogSidebar from "@/components/blog/blog-sidebar";
 import BlogPagination from "@/components/blog/BlogPagination";
-import Header3 from "@/components/header-variants/header-3";
-import Footer2 from "@/components/footer/footer-2";
 
 import MetaComponent from "@/components/common/MetaComponent";
 import BannerBlogs from "@/components/blog/Banner";

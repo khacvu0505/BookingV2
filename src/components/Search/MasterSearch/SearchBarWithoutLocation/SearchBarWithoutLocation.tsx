@@ -1,5 +1,5 @@
 import DateSearch from "@/components/Form/DateSearch";
-import React, { useState } from "react";
+import React from "react";
 import "../MasterSearch.styles.scss";
 import Button from "@/components/Button";
 import classNames from "classnames";
@@ -24,8 +24,6 @@ import { setSearchValue } from "@/features/app/appSlice";
 
 const SearchBarWithoutLocation = () => {
   const { t } = useTranslation();
-  const today = new DateObject(new Date());
-
   const [searchParams, setSearchParams] = useQueryParams();
   const { searchValue } = useSelector((state) => state.app);
   // const [searchValue, setSearchValue] = useState({

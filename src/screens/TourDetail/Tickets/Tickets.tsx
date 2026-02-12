@@ -20,7 +20,7 @@ const Tickets = ({
 }) => {
   const { t } = useTranslation();
   const showMoreModalRef = useRef();
-  const [modalDetail, setModalDetail] = useState(undefined);
+  const [modalDetail] = useState(undefined);
   const { tourBookingInfo } = useSelector((state) => state.tour);
   const previousTour = useRef(tourBookingInfo?.tourID);
   const [showMoreIds, setShowMoreIds] = useState([]);

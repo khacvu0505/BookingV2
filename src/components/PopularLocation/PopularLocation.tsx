@@ -22,7 +22,7 @@ const PopularNews = ({ handleChangeLocation, title, description }: PopularNewsPr
       return res?.success ? res.data : [];
     },
   });
-  const [params, setSearchParams] = useQueryParams();
+  const [params, _setSearchParams] = useQueryParams();
   const { region } = params;
 
   useEffect(() => {

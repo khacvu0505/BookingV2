@@ -1,7 +1,5 @@
-import Tag from "@/components/Tag";
 import { HighlightedText } from "@/utils/utils";
 import React from "react";
-import { useTranslation } from "react-i18next";
 
 const imgDefault = (
   <div className="px-12 py-6 rounded-8 bg-neutral-50">
@@ -19,7 +17,6 @@ interface ResultSearchItemProps {
 }
 
 export const ResultSearchItem = ({ data, handleOptionClick, searchValue }: ResultSearchItemProps) => {
-  const { t } = useTranslation();
   return (
     <div
       className="d-flex gap-3 items-center border-bottom-light py-12 cursor-pointer"

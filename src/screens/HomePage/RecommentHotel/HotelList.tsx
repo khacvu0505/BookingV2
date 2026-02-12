@@ -36,11 +36,6 @@ const HotelList = () => {
       searchParams,
     });
   };
-  const handleVoucher = (e, value) => {
-    e.preventDefault();
-    navigate(`/promotions?page=1&pageSize=10&voucherGroup=${value}`);
-  };
-
   if (!recommendHotels?.length) {
     return <div className="text-center"></div>;
   }

@@ -4,7 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { formatCurrency } from "@/utils/utils";
 import Skeleton from "react-loading-skeleton";
 import useQueryParams from "@/hooks/useQueryParams";
 import { handleSetDefaultBooking } from "@/utils/handleSetDefaultBooking";
@@ -12,7 +11,6 @@ import ShowPrice from "@/components/price/ShowPrice";
 import RatingComponent from "@/components/ratings/RatingSvg";
 import { setWishlistInfo, reset } from "@/features/app/appSlice";
 import { useDispatch } from "react-redux";
-import { localStorageEventTarget } from "@/utils/auth";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import ShowQuantity from "@/components/price/ShowQuantity";
@@ -22,12 +20,12 @@ import { Gallery, Item } from "react-photoswipe-gallery";
 const HotelProperties = () => {
   const [searchParams] = useQueryParams();
   const { checkIn, checkOut, adults, children, room, location } = searchParams;
-  const navigate = useNavigate();
+  const _navigate = useNavigate();
   const hotelList = useSelector((state) => state.hotels.hotels) || [];
   const isLoadingHotels =
     useSelector((state) => state.hotels.isLoadingHotels) || false;
 
-  const dispatch = useDispatch();
+  const _dispatch = useDispatch();
   const paramsRedirect = createSearchParams({
     checkIn,
     checkOut,

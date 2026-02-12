@@ -2,7 +2,6 @@ import Categories from "./components/Categories";
 import RecentPost from "./components/RecentPost";
 import RecommendPost from "./components/RecommendPost";
 import SearchBox from "./components/SearchBox";
-import Tags from "./components/Tags";
 
 const index = () => {
   return (

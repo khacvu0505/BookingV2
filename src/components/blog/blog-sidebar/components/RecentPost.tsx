@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import blogsData from "../../../../data/blogs";
 import { useEffect, useState } from "react";
 import { getRecentBlogs } from "@/api/blogs.api";
 import { formatDate } from "@/utils/utils";

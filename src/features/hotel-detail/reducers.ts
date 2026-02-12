@@ -5,9 +5,8 @@ import {
   getRoomList,
   getServicesByRoom,
 } from "@/api/hotel.api";
-import { defaultServices, info_booking } from "@/utils/constants";
+import { info_booking } from "@/utils/constants";
 import {
-  arrayWithUniqueObject,
   cleanedObject,
   fillArrayWithObject,
   getFromSessionStorage,

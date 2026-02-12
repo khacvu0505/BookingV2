@@ -1,9 +1,5 @@
 // import Social from "@/components/common/social/Social";
-import { BREAKPOINT_MD } from "@/utils/constants";
-import useWindowSize from "@/utils/useWindowSize";
-
 const Copyright = () => {
-  const isMobile = useWindowSize().width < BREAKPOINT_MD;
   return (
     <div className="row justify-between items-center y-gap-10 w-100">
       <div className="col-auto w-100">

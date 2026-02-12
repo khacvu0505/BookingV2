@@ -3,8 +3,7 @@ import axios, { AxiosError, HttpStatusCode } from "axios";
 import escapeRegExp from "lodash/escapeRegExp";
 import pickBy from "lodash/pickBy";
 import { DateObject } from "react-multi-date-picker";
-import { CURRENCY, DEFAULT_CURRENCY, DEFAULT_LANGUAGE } from "./constants";
-import i18n from "@/i18n";
+import { CURRENCY, DEFAULT_LANGUAGE } from "./constants";
 import classNames from "classnames";
 import React from "react";
 

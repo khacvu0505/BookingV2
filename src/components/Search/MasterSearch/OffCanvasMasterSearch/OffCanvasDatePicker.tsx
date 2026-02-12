@@ -10,7 +10,7 @@ import {
   getFromSessionStorage,
   setToSessionStorage,
 } from "@/utils/utils";
-import { defaultDateRange, info_booking } from "@/utils/constants";
+import { info_booking } from "@/utils/constants";
 import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 import useQueryParams from "@/hooks/useQueryParams";

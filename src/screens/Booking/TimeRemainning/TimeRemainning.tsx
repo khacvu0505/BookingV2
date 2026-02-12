@@ -10,7 +10,6 @@ import {
   booking_id,
   create_invoice,
 } from "@/utils/constants";
-import { handleRenderNoti } from "@/utils/handleRenderNoti";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";

@@ -69,7 +69,6 @@ const Timelines = ({ steps = [], handleMoreClick }: TimelinesProps) => {
       // Use cubic Bézier curve to smoothly connect the points
       const prevPoint = wavePoints[i - 1];
       const controlX = (prevPoint.x + x) / 2; // Control point for smooth curve
-      const controlY = prevPoint.y + y / 2;
 
       // Smooth line using cubic Bézier curve
       path += ` C${controlX},${prevPoint.y} ${controlX},${y} ${x},${y}`;

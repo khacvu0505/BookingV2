@@ -1,6 +1,6 @@
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState } from "react";
 import RatingComponent from "@/components/ratings/RatingSvg";
 import "./RatingHotelList.style.scss";
 import classNames from "classnames";

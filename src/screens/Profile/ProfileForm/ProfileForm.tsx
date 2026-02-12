@@ -17,14 +17,8 @@ const ProfileForm = ({ dataUser }) => {
 
   const {
     handleSubmit,
-    reset,
     register,
     formState: { errors },
-    setFocus,
-    control,
-    setValue,
-    getValues,
-    watch,
   } = useForm<any>({
     defaultValues: {
       firstName: dataUser?.firstName || "",

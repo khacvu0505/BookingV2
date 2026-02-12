@@ -1,6 +1,5 @@
 import { feedbackBooking } from "@/api/booking.api";
 import FileUpload from "@/components/upload-file/UploadFile";
-import { handleRenderMessageError } from "@/utils/handleRenderMessageError";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
 import React, { useImperativeHandle, useMemo, useRef, useState } from "react";
 import Rating from "react-rating";
@@ -126,14 +125,14 @@ const RatingModal = (
 
   const {
     handleSubmit,
-    reset,
+    reset: _reset,
     register,
     formState: { errors },
-    setFocus,
-    control,
-    setValue,
-    getValues,
-    watch,
+    setFocus: _setFocus,
+    control: _control,
+    setValue: _setValue,
+    getValues: _getValues,
+    watch: _watch,
   } = useForm({
     defaultValues: {
       title: "",

@@ -1,6 +1,5 @@
 import { fetchGetSearchBlogs } from "@/features/blogs/reducers";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 const Categories = () => {
   const { filter } = useSelector((state) => state.blogs);

@@ -1,6 +1,5 @@
 import React from "react";
 import { formatCurrency } from "@/utils/utils";
-import classNames from "classnames";
 import "./ShowPrice.style.scss";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";

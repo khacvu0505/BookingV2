@@ -1,8 +1,4 @@
 import { Link } from "react-router-dom";
-
-import {
-  isActiveLink,
-} from "../../utils/linkActiveChecker";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { addDate, formatDate } from "@/utils/utils";
@@ -12,7 +8,7 @@ import { useSelector } from "react-redux";
 const MainMenu = ({ style = "" }) => {
   const [params] = useQueryParams();
   const { pathname } = useLocation();
-  const [isActiveParent, setIsActiveParent] = useState(false);
+  const [isActiveParent] = useState(false);
   const regions = useSelector((state: any) => state.hotels.regions) || [];
   const defaultLocation = regions[0]?.id || "";
 

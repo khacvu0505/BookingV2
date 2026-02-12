@@ -1,7 +1,6 @@
 import React, { lazy, useMemo, useRef, useState } from "react";
 import {
   clearSessionStorage,
-  formatCurrency,
   formatStringToDate,
 } from "@/utils/utils";
 import { getBookingDetail, getBookingDetailTour } from "@/api/user.api";

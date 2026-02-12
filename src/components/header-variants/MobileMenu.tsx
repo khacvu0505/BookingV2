@@ -4,7 +4,6 @@ import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import {
   categorieMegaMenuItems,
 } from "../../data/mainMenuData";
-import { isActiveLink } from "../../utils/linkActiveChecker";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +11,6 @@ import isEmpty from "lodash/isEmpty";
 import { logout } from "@/api/auth.api";
 import { reset } from "@/features/app/appSlice";
 import { clearAccessTokenFromLocalStorage } from "@/utils/auth";
-import { toast } from "react-toastify";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
 
 const MobileMenu = () => {
@@ -25,8 +23,6 @@ const MobileMenu = () => {
   const dispatch = useDispatch();
 
   const [isActiveParent, setIsActiveParent] = useState<any>(false);
-  const [isActiveNestedParentTwo, setisActiveNestedParentTwo] = useState<any>(false);
-  const [isActiveNestedParent, setisActiveNestedParent] = useState<any>(false);
 
   const handleClickLogout = () => {
     logout()
@@ -47,8 +43,6 @@ const MobileMenu = () => {
           item?.menuList?.map((list) => {
             if (list.routePath?.split("/")[1] == pathname.split("/")[1]) {
               setIsActiveParent(true);
-              setisActiveNestedParentTwo(item?.title);
-              setisActiveNestedParent(megaMenu?.id);
             }
           });
         });

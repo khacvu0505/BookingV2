@@ -1,7 +1,7 @@
 import DateSearch from "@/components/Form/DateSearch";
 import React, { useEffect } from "react";
 import LocationSearch from "./LocationSearch";
-import { createSearchParams, useNavigate, useParams } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import "../MasterSearch.styles.scss";
 import Button from "@/components/Button";
 import classNames from "classnames";
@@ -29,7 +29,7 @@ interface SearchBarProps {
 
 const SearchBar = ({ activeTab, showTab, type = "hotel" }: SearchBarProps) => {
   const { t } = useTranslation();
-  const [params, setSearchParams] = useQueryParams();
+  const [params, _setSearchParams] = useQueryParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

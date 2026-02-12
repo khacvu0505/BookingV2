@@ -1,7 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import isEmpty from "lodash/isEmpty";
 import { logout } from "@/api/auth.api";
@@ -13,9 +12,7 @@ import classNames from "classnames";
 import {
   displayAuthenButton,
   displayDestinationIcon,
-  displayFlightTicketIcon,
   displayNewsIcon,
-  displayPromotionIcon,
   displayTourIcon,
 } from "./Header.config";
 import avatarIcon from "/images/Profile/info.png";

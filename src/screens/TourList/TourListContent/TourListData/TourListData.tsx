@@ -11,7 +11,7 @@ interface TourListDataProps {
 const TourListData = ({ tours }: TourListDataProps) => {
   const navigate = useNavigate();
   const [params] = useQueryParams();
-  const { location: regionIDParam = "NT" } = params || {};
+  const { location: _regionIDParam = "NT" } = params || {};
 
   return (
     <div className="row mt-24">

@@ -1,9 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
-import { useNavigate } from "react-router-dom";
 
 const HotPlaces = () => {
-  const navigate = useNavigate();
   const placesContent = [
     {
       id: 1,

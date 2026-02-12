@@ -34,7 +34,7 @@ const PirceSlider = () => {
     [debouncedFilterPrice, params]
   );
 
-  const dispatch = useDispatch();
+  const _dispatch = useDispatch();
 
   useEffect(() => {
     const newParams = cleanedObject({

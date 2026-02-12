@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import HotelList from "./HotelList";
 import { fetchRecommendHotels } from "@/features/hotel-list/reducers";
 import { setRecommendHotels } from "@/features/hotel-list/hotelSlice";

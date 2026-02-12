@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { checkEmailExist } from "@/api/auth.api";
-import { handleRenderMessageError } from "@/utils/handleRenderMessageError";
 import { STEPS } from "../authen/AuthenModal";
 import Input from "@/components/Form/Input";
 import Button from "@/components/Button";

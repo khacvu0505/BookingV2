@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import MainMenu from "../MainMenu";
-import CurrenctyMegaMenu from "../CurrenctyMegaMenu";
 import LanguageMegaMenu from "../LanguageMegaMenu";
 import HeaderSearch from "../HeaderSearch";
 import MobileMenu from "../MobileMenu";
@@ -14,7 +13,6 @@ import {
   setProfile as saveProfileToLocalStorage,
 } from "@/utils/auth";
 import { logout } from "@/api/auth.api";
-import { toast } from "react-toastify";
 import isEmpty from "lodash/isEmpty";
 import AuthenModal from "@/components/authen/AuthenModal";
 import useWindowSize from "@/utils/useWindowSize";

@@ -1,10 +1,4 @@
-import CallToActions from "@/components/common/CallToActions";
-import DefaultHeader from "@/components/header-variants/default-header";
-import Header3 from "@/components/header-variants/header-3";
-
-import DefaultFooter from "@/components/footer/default";
 import NotFound from "@/components/common/NotFound";
-import Footer2 from "@/components/footer/footer-2";
 
 import MetaComponent from "@/components/common/MetaComponent";
 

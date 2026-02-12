@@ -40,7 +40,7 @@ import { useTranslation } from "react-i18next";
 const TourDetail = () => {
   const { t } = useTranslation();
   const { slug } = useParams();
-  const [searchParams] = useQueryParams();
+  useQueryParams();
   const dispatch = useAppDispatch();
   const { tourBookingInfo } = useSelector((state: any) => state.tour);
   const { relatedHotels } = useSelector((state: any) => state.hotel);

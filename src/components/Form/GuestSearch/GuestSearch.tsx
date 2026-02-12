@@ -103,7 +103,7 @@ const GuestSearch = ({
   },
 }: GuestSearchProps) => {
   const { t } = useTranslation();
-  const [params, setSearchParams] = useQueryParams();
+  const [params] = useQueryParams();
   const [guestCounts, setGuestCounts] = useState({
     adults: Number(params?.adults) || 2,
     children: Number(params?.children) || 0,

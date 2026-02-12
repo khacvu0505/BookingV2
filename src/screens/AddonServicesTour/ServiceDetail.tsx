@@ -1,7 +1,6 @@
 import {
   formatCurrency,
   getFromSessionStorage,
-  setToSessionStorage,
 } from "@/utils/utils";
 import { useEffect, useRef, useState } from "react";
 import DetailModal from "@/components/AddonServicesPage/DetailModal";

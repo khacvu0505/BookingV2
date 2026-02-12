@@ -18,7 +18,6 @@ import { handleRenderNoti } from "@/utils/handleRenderNoti";
 import useStorageListener from "@/hooks/useStorageListener";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
-import type { BookingInfo } from "@/types";
 
 interface BookNowButtonProps {
   isOffcanvas?: boolean;

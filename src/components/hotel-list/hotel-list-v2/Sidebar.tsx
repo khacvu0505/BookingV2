@@ -1,13 +1,6 @@
 import { memo } from "react";
-import DealsFilter from "../sidebar/DealsFilter";
-import Map from "../sidebar/Map";
 import SearchBox from "../sidebar/SearchBox";
-import PopularFilters from "../sidebar/PopularFilters";
-import AminitesFilter from "../sidebar/AminitesFilter";
 import RatingsFilter from "../sidebar/RatingsFilter";
-import GuestRatingFilters from "../sidebar/GuestRatingFilters";
-import StyleFilter from "../sidebar/StyleFilter";
-import NeighborhoddFilter from "../sidebar/NeighborhoddFilter";
 import PirceSlider from "../sidebar/PirceSlider";
 import MainFilterSearchBox from "../hotel-list-v2/MainFilterSearchBox";
 import BenefitGroup from "../sidebar/BenefitGroup";

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import blogsData from "../../data/blogs";
 import { useSelector } from "react-redux";
 import { formatDate } from "@/utils/utils";
 

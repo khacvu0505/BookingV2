@@ -5,7 +5,6 @@ import {
   tax_include,
 } from "@/utils/constants";
 import {
-  calculateNights,
   formatCurrency,
   getFromSessionStorage,
 } from "@/utils/utils";

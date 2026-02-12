@@ -1,21 +1,19 @@
 import { useState } from "react";
 import ServiceDetail from "./ServiceDetail";
 import { useDispatch, useSelector } from "react-redux";
-import Skeleton from "react-loading-skeleton";
 import {
-  arrayWithUniqueObject,
   fillArrayWithObject,
   getFromSessionStorage,
   setToSessionStorage,
 } from "@/utils/utils";
-import { defaultServices, info_booking } from "@/utils/constants";
+import { info_booking } from "@/utils/constants";
 import { setRoomActive } from "@/features/hotel-detail/hotelDetailSlice";
 import useQueryParams from "@/hooks/useQueryParams";
 
 const ServiceList = ({ roomID, roomName, source, roomIdButtonChoose }: { roomID: any; roomName: any; source: any; roomIdButtonChoose?: any }) => {
   const [isViewMore, setIsViewMore] = useState(false);
   const [searchParams, setSearchParams] = useQueryParams();
-  const { servicesRoom, roomActive, isLoadingService } =
+  const { servicesRoom, roomActive } =
     useSelector((state) => state.hotel) || {};
   const dispatch = useDispatch();
 

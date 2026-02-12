@@ -7,7 +7,7 @@ const RatingsFilter = () => {
   const [params, setSearchParams] = useQueryParams();
   const { rating: ratingParam } = params;
 
-  const [dataList, setDataList] = useState([
+  const [dataList, _setDataList] = useState([
     {
       id: 1,
       value: 3,

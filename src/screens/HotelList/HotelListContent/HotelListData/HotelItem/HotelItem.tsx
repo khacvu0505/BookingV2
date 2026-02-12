@@ -2,13 +2,11 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
-import ShowPrice from "@/components/price/ShowPrice";
 import RatingComponent from "@/components/ratings/RatingSvg";
 
 import classNames from "classnames";
 import { createSearchParams, Link } from "react-router-dom";
 import ShowQuantity from "@/components/ShowQuantity";
-import PromotionPrice from "@/components/promotion-price";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import { handleSetDefaultBooking } from "@/utils/handleSetDefaultBooking";
 import useQueryParams from "@/hooks/useQueryParams";

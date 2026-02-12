@@ -1,11 +1,8 @@
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
-import { useSelector } from "react-redux";
 import { addDate, formatCurrency, formatDate } from "@/utils/utils";
-import { handleSetDefaultBooking } from "@/utils/handleSetDefaultBooking";
 import classNames from "classnames";
-import PromotionPrice from "@/components/promotion-price";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import RatingComponent from "@/components/ratings/Rating";
 import "./CardItem.styles.scss";

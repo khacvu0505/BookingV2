@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { checkEmailExist } from "@/api/auth.api";
 import Input from "@/components/Form/Input";
 import Button from "@/components/Button";
 import { forgotPassword } from "@/api/user.api";

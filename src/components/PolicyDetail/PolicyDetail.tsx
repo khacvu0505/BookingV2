@@ -1,6 +1,5 @@
 import { getPolicyBySupplier } from "@/api/booking.api";
 import Button from "@/components/Button";
-import { groupBy } from "@/utils/utils";
 import React, {
   forwardRef,
   useEffect,

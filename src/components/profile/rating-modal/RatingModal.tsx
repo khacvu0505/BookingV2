@@ -1,6 +1,5 @@
 import { feedbackBooking } from "@/api/booking.api";
 import FileUpload from "@/components/upload-file/UploadFile";
-import { handleRenderMessageError } from "@/utils/handleRenderMessageError";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
 import React, { useImperativeHandle, useRef, useState } from "react";
 import Rating from "react-rating";

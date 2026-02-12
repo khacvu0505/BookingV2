@@ -18,7 +18,6 @@ import {
   BREAKPOINT_XL,
   create_invoice,
   info_booking_tour,
-  previous_item,
   hold_code,
   tax_include,
 } from "@/utils/constants";
@@ -119,7 +118,6 @@ const BookingTour = () => {
     setFocus,
     control,
     setValue,
-    getValues,
     watch,
   } = useForm<any>({
     defaultValues: {

@@ -34,7 +34,7 @@ const TourList = () => {
     votes: votesParam,
     category: categoryTypeParam = "",
     duration: durationParam,
-    language: languageParam = "",
+    language: _languageParam = "",
     sort: sortParam,
     search: searchParam,
     rating: ratingParam,

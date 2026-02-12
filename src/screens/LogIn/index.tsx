@@ -1,4 +1,3 @@
-import CallToActions from "@/components/common/CallToActions";
 import LoginForm from "@/components/common/LoginForm";
 
 import MetaComponent from "@/components/common/MetaComponent";

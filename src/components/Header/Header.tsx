@@ -25,7 +25,7 @@ import { commonKeys } from "@/lib/query-keys";
 const Header = () => {
   const { t } = useTranslation();
   const { isAuthenticated, profile } = useSelector((state) => state.app) || {};
-  const { fullName = "", thumb = "", firstName, lastName } = profile || {};
+  const { thumb = "", firstName, lastName } = profile || {};
 
   const refSignInModal = useRef<any>(null);
 

@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signUpSchema } from "@/schemas/signUpSchema";
-import { handleRenderMessageError } from "@/utils/handleRenderMessageError";
 import { registerAccount } from "@/api/auth.api";
-import { toast } from "react-toastify";
 import { setIsAuthenticated } from "@/features/app/appSlice";
 import { useDispatch } from "react-redux";
 import { STEPS } from "@/components/authen/AuthenModal";
@@ -23,7 +20,6 @@ interface SignUpFormProps {
 const SignUpForm = ({ setStep, emailVerify, handleCloseModal }: SignUpFormProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const {
     handleSubmit,
     reset,
@@ -64,7 +60,7 @@ const SignUpForm = ({ setStep, emailVerify, handleCloseModal }: SignUpFormProps)
 
       //     setIsSubmmitting(false);
       //   });
-      const result = await registerAccount(data as any);
+      await registerAccount(data as any);
       reset();
       dispatch(setIsAuthenticated(true));
       handleCloseModal();

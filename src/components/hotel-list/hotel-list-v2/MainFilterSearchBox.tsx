@@ -3,7 +3,7 @@ import DateSearch from "../common/DateSearch";
 import GuestSearch from "./GuestSearch";
 import LocationSearch from "./LocationSearch";
 import useQueryParams from "@/hooks/useQueryParams";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const MainFilterSearchBox = () => {
   const [params, setSearchParams] = useQueryParams();

@@ -77,10 +77,7 @@ export class Http {
         return response.data;
       },
       (error) => {
-        console.log("error", error);
-
         if (isAxiosUnauthorizeError(error)) {
-          console.log("is error 401");
           const config = error.response?.config || { headers: {} };
           const url = config?.url || "";
           if (url !== URL_REFRESH_TOKEN) {

@@ -1,3 +1,5 @@
+import { sanitizeHtml } from "@/utils/sanitize";
+
 interface QnAProps {
   listQnA: any[];
 }
@@ -39,7 +41,7 @@ const QnA = ({ listQnA }: QnAProps) => {
                 <p
                   className="text-15 lg:text-14"
                   dangerouslySetInnerHTML={{
-                    __html: item?.text?.replaceAll("\n", "<br/>") || "",
+                    __html: sanitizeHtml(item?.text?.replaceAll("\n", "<br/>") || ""),
                   }}
                 />
               </div>

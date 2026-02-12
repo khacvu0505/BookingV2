@@ -50,8 +50,8 @@ const RoomList = ({ hotelsData, isLoadingRoomList = false }) => {
       let servicesRoomRes: any = null;
       try {
         servicesRoomRes = await getServicesByRoom(cleanedObject(params));
-      } catch (error) {
-        console.log("error", error);
+      } catch {
+        // silently handle error — room services fetch failed
       }
       if (!isRefreshServiceRoom) {
         const rootData =

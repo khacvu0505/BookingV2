@@ -2,6 +2,7 @@
 import axios, { AxiosError, HttpStatusCode } from "axios";
 import escapeRegExp from "lodash/escapeRegExp";
 import pickBy from "lodash/pickBy";
+import { sanitizeIframe } from "@/utils/sanitize";
 import { DateObject } from "react-multi-date-picker";
 import { CURRENCY, DEFAULT_LANGUAGE } from "./constants";
 import classNames from "classnames";
@@ -277,7 +278,7 @@ export function insertIframe(iframeString: string, idContainer: string, width = 
   if (iframeString && !iframeContainerTempDiv) {
     const tempDiv = document.createElement("div");
     tempDiv.setAttribute("id", "iframeContainerTempDiv");
-    tempDiv.innerHTML = iframeString;
+    tempDiv.innerHTML = sanitizeIframe(iframeString);
 
     const iframe = tempDiv.querySelector("iframe");
     if (iframe) {

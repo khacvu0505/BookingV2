@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { sanitizeHtml } from "@/utils/sanitize";
 
 const Policy = ({ item }) => {
   const { t } = useTranslation();
@@ -34,7 +35,7 @@ const Policy = ({ item }) => {
           <div
             className="text-16 lg:text-15 md:text-14 fw-400 text-neutral-800"
             dangerouslySetInnerHTML={{
-              __html: item?.cancelPolicyDetail?.replaceAll("\n", "<br/>") || "",
+              __html: sanitizeHtml(item?.cancelPolicyDetail?.replaceAll("\n", "<br/>") || ""),
             }}
           />
         </div>
@@ -63,7 +64,7 @@ const Policy = ({ item }) => {
           <div
             className="text-16 lg:text-15 md:text-14 fw-400 text-neutral-800"
             dangerouslySetInnerHTML={{
-              __html: item?.refundPolicyDetail?.replaceAll("\n", "<br/>") || "",
+              __html: sanitizeHtml(item?.refundPolicyDetail?.replaceAll("\n", "<br/>") || ""),
             }}
           />
         </div>

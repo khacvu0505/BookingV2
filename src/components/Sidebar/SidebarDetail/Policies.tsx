@@ -1,3 +1,5 @@
+import { sanitizeHtml } from "@/utils/sanitize";
+
 interface PoliciesProps {
   policies: any[];
 }
@@ -23,7 +25,7 @@ const Policies = ({ policies }: PoliciesProps) => {
               <div
                 className="text-15 lg:text-15"
                 dangerouslySetInnerHTML={{
-                  __html: item.text?.replaceAll("\n", "<br />") || "",
+                  __html: sanitizeHtml(item.text?.replaceAll("\n", "<br />") || ""),
                 }}
               />
             </div>

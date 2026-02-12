@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { sanitizeHtml } from "@/utils/sanitize";
 
 const ItineraryContent = ({ data }) => {
   const { t } = useTranslation();
@@ -44,7 +45,7 @@ const ItineraryContent = ({ data }) => {
                     <div
                       className="text-14  lg:text-13 mt-10"
                       dangerouslySetInnerHTML={{
-                        __html: item?.text?.replaceAll("\n", "<br/>") || "",
+                        __html: sanitizeHtml(item?.text?.replaceAll("\n", "<br/>") || ""),
                       }}
                     />
                   </div>

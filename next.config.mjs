@@ -22,6 +22,36 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200],
   },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000; includeSubDomains",
+          },
+          {
+            key: "Content-Security-Policy",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://sp.zalo.me",
+              "style-src 'self' 'unsafe-inline'",
+              "img-src 'self' data: blob: https://*.okdimall.com",
+              "font-src 'self' data:",
+              "connect-src 'self' https://extapi.okdimall.com",
+              "frame-src 'self' https://www.youtube.com https://www.google.com https://*.okdimall.com",
+              "media-src 'self'",
+            ].join("; "),
+          },
+        ],
+      },
+    ];
+  },
   reactStrictMode: false,
   eslint: {
     // Allow build to succeed with pre-existing ESLint warnings/errors

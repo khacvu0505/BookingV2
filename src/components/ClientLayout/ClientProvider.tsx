@@ -85,7 +85,7 @@ export default function ClientProvider({ children }: { children: ReactNode }) {
           <ClientLayout>{children}</ClientLayout>
         </Suspense>
       </Provider>
-      <ReactQueryDevtools />
+      {process.env.NODE_ENV === "development" && <ReactQueryDevtools />}
     </QueryClientProvider>
   );
 }

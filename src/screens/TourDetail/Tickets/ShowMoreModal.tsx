@@ -1,4 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
+import { sanitizeHtml } from "@/utils/sanitize";
 
 const ShowMoreModal = (props, ref) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -37,7 +38,7 @@ const ShowMoreModal = (props, ref) => {
         <div className="h-500 overflow-y-scroll mt-5">
           <div
             dangerouslySetInnerHTML={{
-              __html: description?.replaceAll("\n", "<br/>") || "",
+              __html: sanitizeHtml(description?.replaceAll("\n", "<br/>") || ""),
             }}
           ></div>
         </div>

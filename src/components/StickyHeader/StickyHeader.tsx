@@ -36,8 +36,10 @@ const StickyHeader = ({
   };
 
   useEffect(() => {
-    // eslint-disable-next-line no-undef
     window.addEventListener("scroll", changeBackground);
+    return () => {
+      window.removeEventListener("scroll", changeBackground);
+    };
   }, []);
 
   const handleChooseRoom = () => {

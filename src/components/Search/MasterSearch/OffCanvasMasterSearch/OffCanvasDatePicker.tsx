@@ -60,28 +60,28 @@ const OffCanvasLocation = () => {
   };
 
   useEffect(() => {
-    // Wait until the offcanvas is shown and calendar is rendered
     const offcanvasElement = offcanvasRef.current.offcanvasRef?.current;
 
-    if (offcanvasElement) {
-      offcanvasElement.addEventListener("shown.bs.offcanvas", () => {
-        // Focus or scroll to current date
-        if (calendarRef.current) {
-          const activeDate = calendarRef.current.querySelector(".start");
-          if (activeDate) {
-            activeDate.scrollIntoView({ behavior: "smooth", block: "center" });
-          }
+    const handleShown = () => {
+      if (calendarRef.current) {
+        const activeDate = calendarRef.current.querySelector(".start");
+        if (activeDate) {
+          activeDate.scrollIntoView({ behavior: "smooth", block: "center" });
         }
-        setCurrentDate({
-          checkIn: searchValue.checkIn,
-          checkOut: searchValue.checkOut,
-        });
+      }
+      setCurrentDate({
+        checkIn: searchValue.checkIn,
+        checkOut: searchValue.checkOut,
       });
+    };
+
+    if (offcanvasElement) {
+      offcanvasElement.addEventListener("shown.bs.offcanvas", handleShown);
     }
 
     return () => {
       if (offcanvasElement) {
-        offcanvasElement.removeEventListener("shown.bs.offcanvas", () => {});
+        offcanvasElement.removeEventListener("shown.bs.offcanvas", handleShown);
       }
     };
   }, [searchValue.checkIn, searchValue.checkOut]);

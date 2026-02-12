@@ -37,7 +37,7 @@ const UpdateCustomerReceiveModal = (props, ref) => {
   });
 
   const handleSubmitForm = (data) => {
-    console.log("data form", data);
+    // TODO: implement form submission
   };
 
   useEffect(() => {

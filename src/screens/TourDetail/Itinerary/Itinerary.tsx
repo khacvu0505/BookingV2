@@ -4,6 +4,7 @@ import Timelines from "@/components/Timelines";
 import Modal from "@/components/Modal";
 import ItineraryContent from "./ItineraryContent";
 import { useTranslation } from "react-i18next";
+import { sanitizeHtml } from "@/utils/sanitize";
 
 const Itinerary = ({ data }) => {
   const { t } = useTranslation();
@@ -69,7 +70,7 @@ const Itinerary = ({ data }) => {
             <p
               className="text-16 fw-400 w-100 mt-10"
               dangerouslySetInnerHTML={{
-                __html: stepChoose?.text?.replaceAll("\n", "<br/>") || "",
+                __html: sanitizeHtml(stepChoose?.text?.replaceAll("\n", "<br/>") || ""),
               }}
             />
           </>

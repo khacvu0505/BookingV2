@@ -3,6 +3,7 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
+import { sanitizeHtml } from "@/utils/sanitize";
 
 const PromotionDetailModal = (props, ref) => {
   const { selected } = props;
@@ -61,7 +62,7 @@ const PromotionDetailModal = (props, ref) => {
               <p
                 className="text-dark"
                 dangerouslySetInnerHTML={{
-                  __html: selected?.condition?.replaceAll("\n", "<br/>") || "",
+                  __html: sanitizeHtml(selected?.condition?.replaceAll("\n", "<br/>") || ""),
                 }}
               />
             </div>

@@ -23,7 +23,7 @@ const TagComponent = ({ type, text }: TagComponentProps) => {
         );
 
       default:
-        console.log("Option không xác định");
+        return null;
     }
   };
 

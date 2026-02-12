@@ -1,8 +1,5 @@
 import "photoswipe/dist/photoswipe.css";
 import {
-  createSearchParams,
-  useLocation,
-  useNavigate,
   useParams,
 } from "react-router-dom";
 
@@ -64,8 +61,6 @@ const HotelDetail = () => {
   const dispatch = useAppDispatch();
   const { hotelInfo, isLoadingHotelInfo, relatedHotels, roomInfos } =
     useSelector((state: any) => state.hotel);
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
   const offCanvasRef = useRef<any>();
 
   const { checkIn, checkOut, adults, children, room, location, roomActive } =
@@ -179,30 +174,6 @@ const HotelDetail = () => {
       });
     }
   }, []);
-
-  useEffect(() => {
-    const handleBackNavigation = (event: any) => {
-      navigate({
-        pathname: "/hotels",
-        search: createSearchParams({
-          checkIn: searchParams?.checkIn || formatDate(new Date()),
-          checkOut: searchParams?.checkOut || addDate(new Date(), 3),
-          adults: searchParams?.adults || 2,
-          children: searchParams?.children || 0,
-          room: searchParams?.room || 1,
-          location: searchParams?.location || "",
-        } as any).toString(),
-      });
-    };
-
-    // eslint-disable-next-line no-undef, no-restricted-globals
-    window.addEventListener("popstate", handleBackNavigation);
-
-    return () => {
-      // eslint-disable-next-line no-restricted-globals, no-undef
-      window.removeEventListener("popstate", handleBackNavigation);
-    };
-  }, [navigate]);
 
   useEffect(() => {
     let infoBooking = getFromSessionStorage(info_booking);

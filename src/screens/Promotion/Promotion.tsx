@@ -172,20 +172,6 @@ const Promotion = () => {
   }, [supplierTypeParam, voucherGroupParam]);
 
   useEffect(() => {
-    const handleBackNavigation = (event) => {
-      navigate("/", { replace: true });
-    };
-
-    // eslint-disable-next-line no-undef
-    window.addEventListener("popstate", handleBackNavigation);
-
-    return () => {
-      // eslint-disable-next-line no-undef
-      window.removeEventListener("popstate", handleBackNavigation);
-    };
-  }, [navigate]);
-
-  useEffect(() => {
     // eslint-disable-next-line no-undef
     window.scroll({ top: 0, behavior: "smooth" });
   }, []);

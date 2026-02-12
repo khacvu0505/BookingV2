@@ -1,6 +1,3 @@
-import { useNavigate } from "react-router-dom";
-
-import { useEffect } from "react";
 import HotelItem from "./HotelItem";
 
 import "./HotelListData.style.scss";
@@ -12,21 +9,6 @@ interface HotelListDataProps {
 
 const HotelListData = ({ hotels }: HotelListDataProps) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const handleBackNavigation = (event: any) => {
-      navigate("/", { replace: true });
-    };
-
-    // eslint-disable-next-line no-undef
-    window.addEventListener("popstate", handleBackNavigation);
-
-    return () => {
-      // eslint-disable-next-line no-undef
-      window.removeEventListener("popstate", handleBackNavigation);
-    };
-  }, [navigate]);
 
   if (hotels.length === 0) {
     return (

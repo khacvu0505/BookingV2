@@ -38,20 +38,6 @@ const Promotion = ({ initialVouchers }: { initialVouchers?: any[] }) => {
     navigate(`/promotions?page=1&pageSize=10&voucherGroup=${value}`);
   };
 
-  useEffect(() => {
-    const handleBackNavigation = (event) => {
-      navigate("/", { replace: true });
-    };
-
-    // eslint-disable-next-line no-undef
-    window.addEventListener("popstate", handleBackNavigation);
-
-    return () => {
-      // eslint-disable-next-line no-undef
-      window.removeEventListener("popstate", handleBackNavigation);
-    };
-  }, [navigate]);
-
   if (loading) {
     return (
       <div className="row">

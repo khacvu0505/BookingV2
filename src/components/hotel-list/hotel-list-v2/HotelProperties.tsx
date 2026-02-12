@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { formatCurrency } from "@/utils/utils";
 import Skeleton from "react-loading-skeleton";
 import useQueryParams from "@/hooks/useQueryParams";
-import { useEffect } from "react";
 import { handleSetDefaultBooking } from "@/utils/handleSetDefaultBooking";
 import ShowPrice from "@/components/price/ShowPrice";
 import RatingComponent from "@/components/rating";
@@ -71,20 +70,6 @@ const HotelProperties = () => {
     // eslint-disable-next-line no-undef
     document.dispatchEvent(selectionFired);
   };
-
-  useEffect(() => {
-    const handleBackNavigation = (event) => {
-      navigate("/", { replace: true });
-    };
-
-    // eslint-disable-next-line no-undef
-    window.addEventListener("popstate", handleBackNavigation);
-
-    return () => {
-      // eslint-disable-next-line no-undef
-      window.removeEventListener("popstate", handleBackNavigation);
-    };
-  }, [navigate]);
 
   if (isLoadingHotels) {
     return <Skeleton count={7} />;

@@ -1,13 +1,14 @@
 /* eslint-disable no-undef */
-import React, { lazy } from "react";
+import React from "react";
+import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import RegisterMember from "@/components/RegisterMember";
 
-const Pagination = lazy(() => import("@/components/Pagination"));
-const TourListContentHeader = lazy(() => import("./TourListContentHeader"));
-const TourListData = lazy(() => import("./TourListData"));
-const SkeletonHeader = lazy(() => import("@/components/Skeleton/SkeletonHeader"));
-const SkeletonCard = lazy(() => import("@/components/Skeleton/SkeletonCard"));
+const Pagination = dynamic(() => import("@/components/Pagination"));
+const TourListContentHeader = dynamic(() => import("./TourListContentHeader"));
+const TourListData = dynamic(() => import("./TourListData"));
+const SkeletonHeader = dynamic(() => import("@/components/Skeleton/SkeletonHeader"));
+const SkeletonCard = dynamic(() => import("@/components/Skeleton/SkeletonCard"));
 
 interface TourListContentProps {
   tours: any[];

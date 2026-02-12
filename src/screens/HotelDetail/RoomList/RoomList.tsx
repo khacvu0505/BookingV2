@@ -3,13 +3,14 @@ import { getFromSessionStorage } from "@/utils/utils";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/store/hooks";
 import { info_booking } from "@/utils/constants";
-import { lazy, useEffect } from "react";
+import { useEffect } from "react";
+import dynamic from "next/dynamic";
 import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { fetchServicesByRoom } from "@/features/hotel-detail/reducers";
 import { setRoomActive } from "@/features/hotel-detail/hotelDetailSlice";
 
-const SkeletonList = lazy(() => import("@/components/Skeleton/SkeletonList"));
-const RoomDetail = lazy(() => import("./RoomDetail"));
+const SkeletonList = dynamic(() => import("@/components/Skeleton/SkeletonList"));
+const RoomDetail = dynamic(() => import("./RoomDetail"));
 
 const RoomList = ({ hotelsData }) => {
   const [searchParams] = useQueryParams();

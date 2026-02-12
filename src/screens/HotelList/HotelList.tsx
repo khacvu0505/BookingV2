@@ -1,4 +1,5 @@
-import React, { lazy, useEffect } from "react";
+import React, { useEffect } from "react";
+import dynamic from "next/dynamic";
 import BannerHotelList from "@/screens/HotelList/BannerHotelList";
 import MetaComponent from "@/components/MetaComponent";
 import useQueryParams from "@/hooks/useQueryParams";
@@ -18,8 +19,8 @@ import SubLocationHotel from "./Navbar/SubLocationHotel";
 import { useQuery } from "@tanstack/react-query";
 import { hotelKeys } from "@/lib/query-keys";
 
-const Navbar = lazy(() => import("@/screens/HotelList/Navbar"));
-const HotelListContent = lazy(() =>
+const Navbar = dynamic(() => import("@/screens/HotelList/Navbar"));
+const HotelListContent = dynamic(() =>
   import("@/screens/HotelList/HotelListContent")
 );
 

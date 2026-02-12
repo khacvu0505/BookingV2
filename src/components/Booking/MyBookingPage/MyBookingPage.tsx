@@ -1,7 +1,8 @@
-import React, { lazy, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import { useTranslation } from "react-i18next";
 
-const BookingHistoryList = lazy(
+const BookingHistoryList = dynamic(
   () => import("@/components/Booking/BookingHistoryList/BookingHistoryList")
 );
 

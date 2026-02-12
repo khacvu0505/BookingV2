@@ -1,4 +1,5 @@
-import React, { lazy, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import {
   clearSessionStorage,
   formatStringToDate,
@@ -20,13 +21,13 @@ import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { bookingKeys } from "@/lib/query-keys";
 
-const RatingModal = lazy(() => import("@/components/ratings/RatingModal"));
-const RatingComponent = lazy(() => import("@/components/ratings/RatingSvg"));
-const Policy = lazy(() => import("@/screens/Booking/BookingOverview/Policy"));
-const BookingTourInfo = lazy(
+const RatingModal = dynamic(() => import("@/components/ratings/RatingModal"));
+const RatingComponent = dynamic(() => import("@/components/ratings/RatingSvg"));
+const Policy = dynamic(() => import("@/screens/Booking/BookingOverview/Policy"));
+const BookingTourInfo = dynamic(
   () => import("@/screens/BookingDetailTour/BookingTourInfo")
 );
-const CancelBookingModal = lazy(
+const CancelBookingModal = dynamic(
   () => import("@/components/Booking/CancelBookingModal/CancelBookingModal")
 );
 

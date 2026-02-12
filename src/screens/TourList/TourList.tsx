@@ -1,5 +1,6 @@
 import useQueryParams from "@/hooks/useQueryParams";
-import { lazy, useEffect } from "react";
+import { useEffect } from "react";
+import dynamic from "next/dynamic";
 import { getTourListService } from "@/api/tours.api";
 import { cleanedObject, clearSessionStorage } from "@/utils/utils";
 import { booking_id, info_booking_tour } from "@/utils/constants";
@@ -13,10 +14,10 @@ import RatingByCustomer from "./Navbar/RatingByCustomer";
 import { useQuery } from "@tanstack/react-query";
 import { tourKeys } from "@/lib/query-keys";
 
-const MetaComponent = lazy(() => import("@/components/MetaComponent"));
-const BannerTourList = lazy(() => import("./BannerTourList"));
-const Navbar = lazy(() => import("./Navbar"));
-const TourListContent = lazy(() => import("./TourListContent"));
+const MetaComponent = dynamic(() => import("@/components/MetaComponent"));
+const BannerTourList = dynamic(() => import("./BannerTourList"));
+const Navbar = dynamic(() => import("./Navbar"));
+const TourListContent = dynamic(() => import("./TourListContent"));
 
 const metadata = {
   title: "Tour List",

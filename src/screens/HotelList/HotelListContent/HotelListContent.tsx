@@ -1,13 +1,14 @@
 /* eslint-disable no-undef */
-import React, { lazy } from "react";
+import React from "react";
+import dynamic from "next/dynamic";
 import "./HotelListContent.style.scss";
 import { useSelector } from "react-redux";
 import RegisterMember from "@/components/RegisterMember";
-const HotelListContentHeader = lazy(() => import("./HotelListContentHeader"));
-const HotelListData = lazy(() => import("./HotelListData"));
-const Pagination = lazy(() => import("@/components/Pagination"));
-const SkeletonList = lazy(() => import("@/components/Skeleton/SkeletonList"));
-const SkeletonHeader = lazy(() => import("@/components/Skeleton/SkeletonHeader"));
+const HotelListContentHeader = dynamic(() => import("./HotelListContentHeader"));
+const HotelListData = dynamic(() => import("./HotelListData"));
+const Pagination = dynamic(() => import("@/components/Pagination"));
+const SkeletonList = dynamic(() => import("@/components/Skeleton/SkeletonList"));
+const SkeletonHeader = dynamic(() => import("@/components/Skeleton/SkeletonHeader"));
 
 interface HotelListContentProps {
   hotels: any[];

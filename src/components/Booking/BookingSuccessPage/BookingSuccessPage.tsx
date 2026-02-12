@@ -4,7 +4,8 @@ import {
   getBookingInfoTour,
   getOnePayCallback,
 } from "@/api/booking.api";
-import { lazy, useEffect, useState, ComponentType } from "react";
+import { useEffect, useState, ComponentType } from "react";
+import dynamic from "next/dynamic";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatStringToDate } from "@/utils/utils";
 import useQueryParams from "@/hooks/useQueryParams";
@@ -19,8 +20,8 @@ import {
 import useWindowSize from "@/utils/useWindowSize";
 import { useTranslation } from "react-i18next";
 
-const Breadcrumb = lazy(() => import("@/components/Breadcrumb"));
-const Loading = lazy(() => import("@/screens/Loading"));
+const Breadcrumb = dynamic(() => import("@/components/Breadcrumb"));
+const Loading = dynamic(() => import("@/screens/Loading"));
 
 interface BookingSuccessPageProps {
   supplierType: "Hotel" | "Tour";

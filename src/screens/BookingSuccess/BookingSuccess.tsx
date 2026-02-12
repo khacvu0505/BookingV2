@@ -1,7 +1,7 @@
-import { lazy } from "react";
+import dynamic from "next/dynamic";
 import BookingSuccessPage from "@/components/Booking/BookingSuccessPage/BookingSuccessPage";
 
-const InvoiceComponent = lazy(() => import("./invoice/Invoice"));
+const InvoiceComponent = dynamic(() => import("./invoice/Invoice"));
 
 const BookingSuccess = () => {
   return (

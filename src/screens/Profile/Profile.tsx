@@ -1,9 +1,10 @@
-import React, { lazy } from "react";
+import React from "react";
+import dynamic from "next/dynamic";
 import { getProfile } from "@/utils/auth";
 import { useTranslation } from "react-i18next";
 
-const UploadAvatar = lazy(() => import("./UploadAvatar"));
-const ProfileForm = lazy(() => import("./ProfileForm"));
+const UploadAvatar = dynamic(() => import("./UploadAvatar"));
+const ProfileForm = dynamic(() => import("./ProfileForm"));
 
 const Profile = () => {
   const { t } = useTranslation();

@@ -1,5 +1,6 @@
 import MetaComponent from "@/components/MetaComponent";
-import React, { lazy, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 
 import Input from "@/components/Form/Input";
 import { Controller, useForm } from "react-hook-form";
@@ -41,10 +42,10 @@ import AuthenModal from "@/components/AuthenModal";
 import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
 
-const Breadcrumb = lazy(() => import("@/components/Breadcrumb"));
-const SidebarRight = lazy(() => import("@/components/Sidebar/SidebarRightTour"));
-const TimeRemainning = lazy(() => import("./TimeRemainning"));
-const BookingOverviewTour = lazy(() => import("./BookingOverview"));
+const Breadcrumb = dynamic(() => import("@/components/Breadcrumb"));
+const SidebarRight = dynamic(() => import("@/components/Sidebar/SidebarRightTour"));
+const TimeRemainning = dynamic(() => import("./TimeRemainning"));
+const BookingOverviewTour = dynamic(() => import("./BookingOverview"));
 
 const metadata = {
   title: "Booking Tours",

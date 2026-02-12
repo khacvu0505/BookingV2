@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./SubLocationHotel.style.scss";
 import classNames from "classnames";
-import Checkbox from "@/apps/Checkbox";
+import Checkbox from "@/components/Form/Checkbox";
 import { useTranslation } from "react-i18next";
 
 const SubLocationHotel = () => {

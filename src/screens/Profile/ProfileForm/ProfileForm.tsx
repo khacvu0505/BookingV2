@@ -1,6 +1,6 @@
 import { updateUserInfo } from "@/api/user.api";
-import Button from "@/apps/Button";
-import Input from "@/apps/Input";
+import Button from "@/components/Button";
+import Input from "@/components/Form/Input";
 import { profileFormSchema } from "@/schemas/profileFormSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";

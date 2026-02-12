@@ -4,7 +4,7 @@ import { getFromSessionStorage } from "@/utils/utils";
 import { ComponentType, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import Breadcrumb from "@/apps/Breadcrumb";
+import Breadcrumb from "@/components/Breadcrumb";
 
 interface AddonServicesPageProps {
   supplierType: "Hotel" | "Tour";

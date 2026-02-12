@@ -15,7 +15,7 @@ import React, {
 import { useSelector } from "react-redux";
 import "./BookingOverview.style.scss";
 import Policy from "./Policy";
-import Button from "@/apps/Button";
+import Button from "@/components/Button";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";

@@ -5,12 +5,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { info_booking } from "@/utils/constants";
 import { Gallery, Item } from "react-photoswipe-gallery";
-import ShowQuantity from "@/apps/ShowQuantity";
-import ShowPrice from "@/apps/ShowPrice";
+import ShowQuantity from "@/components/ShowQuantity";
+import ShowPrice from "@/components/ShowPrice";
 import AmenitiesModal from "../AmenitiesModal";
 import ServiceList from "./ServiceList";
-import Button from "@/apps/Button";
-import NeedApproval from "@/apps/ReturnPolicy/NeedApproval";
+import Button from "@/components/Button";
+import NeedApproval from "@/components/ReturnPolicy/NeedApproval";
 import { useTranslation } from "react-i18next";
 
 const RoomDetail = ({ hotel, handleChoose }) => {

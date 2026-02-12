@@ -1,4 +1,4 @@
-import MyBookingPage from "@/components/MyBookingPage/MyBookingPage";
+import MyBookingPage from "@/components/Booking/MyBookingPage/MyBookingPage";
 
 const MybookingTour = () => {
   return <MyBookingPage supplierType="Tour" />;

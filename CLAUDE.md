@@ -39,8 +39,16 @@ app/                  # Next.js App Router pages
 
 src/
 ├── api/              # API functions (auth, hotel, tours, booking, user, blogs)
-├── apps/             # Reusable UI components (Input, Button, Header, etc.)
-├── components/       # Feature-specific components
+├── components/       # All UI components (reusable + feature-specific)
+│   ├── Booking/      # BookingDetailPage, BookingHistoryList, BookingSuccessPage, CancelBookingModal, MyBookingPage
+│   ├── Form/         # Input, Select, TextArea, Checkbox, DateSearch, CustomCalendar, GuestSearch
+│   ├── OffCanvas/    # OffCanvasComponent, OffCanvasHeaderSearch, OffCanvasHotelDetailMobile, BottomSheet
+│   ├── ratings/      # Rating, RatingInCard, RatingModal, RatingSvg
+│   ├── Search/       # SearchAll, SearchInput, MasterSearch, HeaderTop
+│   ├── Sidebar/      # SidebarDetail, SidebarProfile, SidebarRight, SidebarRightTour
+│   ├── Skeleton/     # SkeletonCard, SkeletonHeader, SkeletonItem, SkeletonList, SkeletonReview
+│   ├── Wishlist/     # WishlistContent, WishlistItemComponent
+│   └── ...           # Other ungrouped components (Button, Header, CardItem, etc.)
 ├── features/         # Redux slices (app, hotels, hotel, tours, tour, blogs)
 ├── screens/          # Legacy page components (used by App Router pages)
 ├── hooks/            # Custom hooks (useFetchData, useMutate, useQueryParams)

@@ -21,20 +21,20 @@ import { fetchRelatedHotels } from "@/features/hotel-detail/reducers";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { tourKeys } from "@/lib/query-keys";
 
-import MetaComponent from "@/apps/MetaComponent";
-import Breadcrumb from "@/apps/Breadcrumb";
-import StickyHeader from "@/apps/StickyHeader";
-import GalleryComponent from "@/apps/Gallery";
-import PropertyHighlights from "@/apps/PropertyHighlights";
+import MetaComponent from "@/components/MetaComponent";
+import Breadcrumb from "@/components/Breadcrumb";
+import StickyHeader from "@/components/StickyHeader";
+import GalleryComponent from "@/components/Gallery";
+import PropertyHighlights from "@/components/PropertyHighlights";
 import Tickets from "./Tickets";
 import Overview from "./Overview";
 import HelpfulFacts from "./HelpfulFacts";
 import Itinerary from "./Itinerary";
-import ReviewProgress from "@/apps/Review/ReviewProgress";
-import DetailsReview from "@/apps/Review/DetailsReview";
-import QnA from "@/apps/QnA";
-import RelatedHotels from "@/apps/RelatedHotels";
-import CustomCalendar from "@/apps/CustomCalendar";
+import ReviewProgress from "@/components/Review/ReviewProgress";
+import DetailsReview from "@/components/Review/DetailsReview";
+import QnA from "@/components/QnA";
+import RelatedHotels from "@/components/RelatedHotels";
+import CustomCalendar from "@/components/Form/CustomCalendar";
 import { useTranslation } from "react-i18next";
 
 const TourDetail = () => {

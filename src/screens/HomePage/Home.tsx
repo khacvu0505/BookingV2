@@ -1,5 +1,5 @@
-import MetaComponent from "@/apps/MetaComponent";
-import LoadingPage from "@/apps/LoadingPage";
+import MetaComponent from "@/components/MetaComponent";
+import LoadingPage from "@/components/LoadingPage";
 import Promotion from "./Promotion/Promotion";
 import Carousel from "./Carousel";
 import ReasonChoose from "./ReasonChoose";

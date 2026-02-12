@@ -1,5 +1,5 @@
 import { getNewsByRegion } from "@/api/news.api";
-import Pagination from "@/apps/Pagination";
+import Pagination from "@/components/Pagination";
 import useQueryParams from "@/hooks/useQueryParams";
 import React from "react";
 import { useNavigate } from "react-router-dom";

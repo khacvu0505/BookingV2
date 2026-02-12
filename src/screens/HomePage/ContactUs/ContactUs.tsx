@@ -1,6 +1,6 @@
 import React from "react";
 import "./ContactUs.styles.scss";
-import Button from "@/apps/Button";
+import Button from "@/components/Button";
 import InputEmail from "./InputEmail";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useTranslation } from "react-i18next";

@@ -5,7 +5,7 @@ import Address from "@/components/block/Address";
 import Social from "@/components/common/social/Social";
 import ContactForm from "@/components/common/ContactForm";
 import LocationTopBar from "@/components/common/LocationTopBar";
-import Header3 from "@/components/header/header-3";
+import Header3 from "@/components/header-variants/header-3";
 import MetaComponent from "@/components/common/MetaComponent";
 
 const metadata = {

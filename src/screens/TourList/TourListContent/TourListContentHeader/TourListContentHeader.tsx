@@ -1,5 +1,5 @@
 import React from "react";
-import Dropdown from "@/apps/DropDown";
+import Dropdown from "@/components/DropDown";
 import "./TourListContentHeader.style.scss";
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";

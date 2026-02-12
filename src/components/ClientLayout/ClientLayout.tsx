@@ -12,17 +12,17 @@ import { useDispatch } from "react-redux";
 import { usePathname } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 
-import Header from "@/apps/Header";
-import HeaderTop from "@/apps/HeaderTop";
+import Header from "@/components/Header";
+import HeaderTop from "@/components/Search/HeaderTop";
 import Footer from "@/screens/HomePage/Footer";
 import AuthenModal from "@/components/authen/AuthenModal";
-import SocialWrap from "@/apps/SocialWrap";
+import SocialWrap from "@/components/SocialWrap";
 import {
   OffCanvasDatePicker,
   OffCanvasLocation,
-} from "@/apps/MasterSearch/OffCanvasMasterSearch";
-import BottomSheet from "@/apps/BottomSheet";
-import BottomSheetTour from "@/apps/BottomSheet/BottomSheetTour";
+} from "@/components/Search/MasterSearch/OffCanvasMasterSearch";
+import BottomSheet from "@/components/OffCanvas/BottomSheet";
+import BottomSheetTour from "@/components/OffCanvas/BottomSheet/BottomSheetTour";
 
 import { getProfile } from "@/utils/auth";
 import { saveFavourite, removeFavourite } from "@/api/user.api";

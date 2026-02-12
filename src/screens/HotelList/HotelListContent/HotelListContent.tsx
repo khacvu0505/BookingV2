@@ -2,12 +2,12 @@
 import React, { lazy } from "react";
 import "./HotelListContent.style.scss";
 import { useSelector } from "react-redux";
-import RegisterMember from "@/apps/RegisterMember";
+import RegisterMember from "@/components/RegisterMember";
 const HotelListContentHeader = lazy(() => import("./HotelListContentHeader"));
 const HotelListData = lazy(() => import("./HotelListData"));
-const Pagination = lazy(() => import("@/apps/Pagination"));
-const SkeletonList = lazy(() => import("@/apps/SkeletonList"));
-const SkeletonHeader = lazy(() => import("@/apps/SkeletonHeader"));
+const Pagination = lazy(() => import("@/components/Pagination"));
+const SkeletonList = lazy(() => import("@/components/Skeleton/SkeletonList"));
+const SkeletonHeader = lazy(() => import("@/components/Skeleton/SkeletonHeader"));
 
 interface HotelListContentProps {
   hotels: any[];

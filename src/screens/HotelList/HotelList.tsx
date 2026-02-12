@@ -1,6 +1,6 @@
 import React, { lazy, useEffect } from "react";
 import BannerHotelList from "@/screens/HotelList/BannerHotelList";
-import MetaComponent from "@/apps/MetaComponent";
+import MetaComponent from "@/components/MetaComponent";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useSelector } from "react-redux";
 import {
@@ -9,7 +9,7 @@ import {
   formatDate,
 } from "@/utils/utils";
 import { getHotelList } from "@/api/hotel.api";
-import OffCanvasComponent from "@/apps/OffCanvasComponent";
+import OffCanvasComponent from "@/components/OffCanvas/OffCanvasComponent";
 import AccommodationType from "./Navbar/AccommodationType";
 import RatingHotelList from "./Navbar/RatingHotelList";
 import RatingByCustomer from "./Navbar/RatingByCustomer";

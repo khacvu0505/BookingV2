@@ -3,19 +3,19 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import ShowPrice from "@/components/price/ShowPrice";
-import RatingComponent from "@/components/rating";
+import RatingComponent from "@/components/ratings/RatingSvg";
 
 import classNames from "classnames";
 import { createSearchParams, Link } from "react-router-dom";
-import ShowQuantity from "@/apps/ShowQuantity";
+import ShowQuantity from "@/components/ShowQuantity";
 import PromotionPrice from "@/components/promotion-price";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import { handleSetDefaultBooking } from "@/utils/handleSetDefaultBooking";
 import useQueryParams from "@/hooks/useQueryParams";
 import "./HotelItem.style.scss";
-import ShowPriceReal from "@/apps/ShowPrice";
-import Button from "@/apps/Button";
-import RatingInCard from "@/apps/RatingInCard";
+import ShowPriceReal from "@/components/ShowPrice";
+import Button from "@/components/Button";
+import RatingInCard from "@/components/ratings/RatingInCard";
 import RadomText from "@/screens/TourDetail/Tickets/RadomText";
 import { useTranslation } from "react-i18next";
 

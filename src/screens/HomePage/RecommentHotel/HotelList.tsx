@@ -4,7 +4,7 @@ import { Navigation } from "swiper";
 import { useSelector } from "react-redux";
 import { addDate, formatDate } from "@/utils/utils";
 import { handleSetDefaultBooking } from "@/utils/handleSetDefaultBooking";
-import CardItem from "@/apps/CardItem";
+import CardItem from "@/components/CardItem";
 import classNames from "classnames";
 import { useState } from "react";
 

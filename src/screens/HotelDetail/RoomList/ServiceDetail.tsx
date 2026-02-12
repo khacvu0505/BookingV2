@@ -6,9 +6,9 @@ import {
 } from "@/utils/utils";
 import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import ShowQuantity from "@/apps/ShowQuantity";
-import ShowPrice from "@/apps/ShowPrice";
-import ReturnPolicy from "@/apps/ReturnPolicy";
+import ShowQuantity from "@/components/ShowQuantity";
+import ShowPrice from "@/components/ShowPrice";
+import ReturnPolicy from "@/components/ReturnPolicy";
 import isEmpty from "lodash/isEmpty";
 
 const ServiceDetail = ({

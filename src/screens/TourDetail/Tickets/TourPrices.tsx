@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
 import { hold_code, info_booking_tour } from "@/utils/constants";
 import NumberControl from "./NumberControl";
-import Button from "@/apps/Button";
+import Button from "@/components/Button";
 import { checkAddOnServices } from "@/api/hotel.api";
 
 const TourPrices = ({ tourPrices }) => {

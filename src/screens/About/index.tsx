@@ -1,5 +1,5 @@
 import CallToActions from "@/components/common/CallToActions";
-import DefaultHeader from "@/components/header/default-header";
+import DefaultHeader from "@/components/header-variants/default-header";
 import DefaultFooter from "@/components/footer/default";
 import WhyChoose from "@/components/block/BlockGuide";
 import Block1 from "@/components/about/Block1";

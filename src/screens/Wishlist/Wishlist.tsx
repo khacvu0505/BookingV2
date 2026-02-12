@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import WishlistComponent from "@/apps/wishlist";
+import WishlistComponent from "@/components/Wishlist/WishlistContent";
 
 const Wishlist = () => {
   const { t } = useTranslation();

@@ -3,7 +3,7 @@ import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
 import classNames from "classnames";
 import "./LocationHotel.style.scss";
-import Checkbox from "@/apps/Checkbox";
+import Checkbox from "@/components/Form/Checkbox";
 import { useTranslation } from "react-i18next";
 
 const amenities = [

@@ -8,7 +8,7 @@ import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { fetchServicesByRoom } from "@/features/hotel-detail/reducers";
 import { setRoomActive } from "@/features/hotel-detail/hotelDetailSlice";
 
-const SkeletonList = lazy(() => import("@/apps/SkeletonList"));
+const SkeletonList = lazy(() => import("@/components/Skeleton/SkeletonList"));
 const RoomDetail = lazy(() => import("./RoomDetail"));
 
 const RoomList = ({ hotelsData }) => {

@@ -9,7 +9,7 @@ import RecommentIcon2 from "./components/RecommentIcon2";
 import RecommentIcon3 from "./components/RecommentIcon3";
 import RecommentIcon4 from "./components/RecommentIcon4";
 import RecommentIcon5 from "./components/RecommentIcon5";
-import TabRecomment from "@/apps/TabRecomment";
+import TabRecomment from "@/components/TabRecomment";
 import { useTranslation } from "react-i18next";
 
 const RecommentHotel = ({ initialHotels }: { initialHotels?: any[] }) => {

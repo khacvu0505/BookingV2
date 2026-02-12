@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { checkEmailExist } from "@/api/auth.api";
 import { handleRenderMessageError } from "@/utils/handleRenderMessageError";
 import { STEPS } from "../authen/AuthenModal";
-import Input from "@/apps/Input";
-import Button from "@/apps/Button";
+import Input from "@/components/Form/Input";
+import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 
 const EmailForm = ({ setStep, setEmailVerify }) => {

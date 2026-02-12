@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Tabs } from "@/apps/Tabs";
-import Timelines from "@/apps/Timelines";
-import Modal from "@/apps/Modal";
+import { Tabs } from "@/components/Tabs";
+import Timelines from "@/components/Timelines";
+import Modal from "@/components/Modal";
 import ItineraryContent from "./ItineraryContent";
 import { useTranslation } from "react-i18next";
 

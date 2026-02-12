@@ -10,8 +10,8 @@ import { setIsAuthenticated } from "@/features/app/appSlice";
 import { useDispatch } from "react-redux";
 import { STEPS } from "@/components/authen/AuthenModal";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
-import Input from "@/apps/Input";
-import Button from "@/apps/Button";
+import Input from "@/components/Form/Input";
+import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 
 const LoginForm = ({ handleCloseModal, setStep }: { handleCloseModal?: any; setStep?: any }) => {

@@ -1,4 +1,4 @@
-import MapComponent from "@/apps/MapComponent";
+import MapComponent from "@/components/MapComponent";
 import React, { useState, useRef, useEffect } from "react";
 import { Trans } from "react-i18next";
 

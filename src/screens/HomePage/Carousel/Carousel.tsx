@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import Image from "next/image";
-import MasterSearch from "@/apps/MasterSearch";
+import MasterSearch from "@/components/Search/MasterSearch";
 import "./Carousel.styles.scss";
 import { useTranslation } from "react-i18next";
 

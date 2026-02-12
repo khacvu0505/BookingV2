@@ -9,7 +9,7 @@ import Skeleton from "react-loading-skeleton";
 import useQueryParams from "@/hooks/useQueryParams";
 import { handleSetDefaultBooking } from "@/utils/handleSetDefaultBooking";
 import ShowPrice from "@/components/price/ShowPrice";
-import RatingComponent from "@/components/rating";
+import RatingComponent from "@/components/ratings/RatingSvg";
 import { setWishlistInfo, reset } from "@/features/app/appSlice";
 import { useDispatch } from "react-redux";
 import { localStorageEventTarget } from "@/utils/auth";

@@ -1,5 +1,5 @@
 import CallToActions from "@/components/common/CallToActions";
-import Header3 from "@/components/header/header-3";
+import Header3 from "@/components/header-variants/header-3";
 import DefaultFooter from "@/components/footer/default";
 import LocationTopBar from "@/components/common/LocationTopBar";
 import RelatedBlog from "@/components/blog/blog-details/RelatedBlog";

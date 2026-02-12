@@ -3,7 +3,7 @@ import { lazy, useEffect } from "react";
 import { getTourListService } from "@/api/tours.api";
 import { cleanedObject, clearSessionStorage } from "@/utils/utils";
 import { booking_id, info_booking_tour } from "@/utils/constants";
-import OffCanvasComponent from "@/apps/OffCanvasComponent";
+import OffCanvasComponent from "@/components/OffCanvas/OffCanvasComponent";
 import Category from "./Navbar/Category";
 import RatingTourList from "./Navbar/RatingTourList";
 import Duration from "./Navbar/Duration";
@@ -13,7 +13,7 @@ import RatingByCustomer from "./Navbar/RatingByCustomer";
 import { useQuery } from "@tanstack/react-query";
 import { tourKeys } from "@/lib/query-keys";
 
-const MetaComponent = lazy(() => import("@/apps/MetaComponent"));
+const MetaComponent = lazy(() => import("@/components/MetaComponent"));
 const BannerTourList = lazy(() => import("./BannerTourList"));
 const Navbar = lazy(() => import("./Navbar"));
 const TourListContent = lazy(() => import("./TourListContent"));

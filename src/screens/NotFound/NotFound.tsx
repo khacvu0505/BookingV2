@@ -1,6 +1,6 @@
 import CallToActions from "@/components/common/CallToActions";
-import DefaultHeader from "@/components/header/default-header";
-import Header3 from "@/components/header/header-3";
+import DefaultHeader from "@/components/header-variants/default-header";
+import Header3 from "@/components/header-variants/header-3";
 
 import DefaultFooter from "@/components/footer/default";
 import NotFound from "@/components/common/NotFound";

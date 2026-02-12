@@ -5,8 +5,8 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { fetchAddOnServices } from "@/features/hotel-detail/reducers";
 import { useAppDispatch } from "@/store/hooks";
-import SidebarRight from "@/apps/SidebarRight";
-import SkeletonCard from "@/apps/SkeletonCard";
+import SidebarRight from "@/components/Sidebar/SidebarRight";
+import SkeletonCard from "@/components/Skeleton/SkeletonCard";
 import { useTranslation } from "react-i18next";
 
 const AddonList = () => {

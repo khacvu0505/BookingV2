@@ -1,5 +1,5 @@
 import React from "react";
-import MetaComponent from "@/apps/MetaComponent";
+import MetaComponent from "@/components/MetaComponent";
 import "./PrivaryPolicy.style.scss";
 
 const metadata = {

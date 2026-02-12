@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import "./HotelListContentHeader.style.scss";
-import Dropdown from "@/apps/DropDown";
+import Dropdown from "@/components/DropDown";
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
 import { useTranslation } from "react-i18next";

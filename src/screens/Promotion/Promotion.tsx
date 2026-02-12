@@ -11,7 +11,7 @@ import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
 import Skeleton from "react-loading-skeleton";
 import { useNavigate } from "react-router-dom";
-import Pagination from "@/components/hotel-list/common/Pagination";
+import Pagination from "@/components/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { promotionKeys } from "@/lib/query-keys";
 

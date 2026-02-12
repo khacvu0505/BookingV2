@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import BookingSuccessPage from "@/components/BookingSuccessPage/BookingSuccessPage";
+import BookingSuccessPage from "@/components/Booking/BookingSuccessPage/BookingSuccessPage";
 
 const InvoiceComponent = lazy(() => import("./invoice/Invoice"));
 

@@ -1,7 +1,7 @@
 import React from "react";
 
 import useQueryParams from "@/hooks/useQueryParams";
-import CardItem from "@/apps/CardItem";
+import CardItem from "@/components/CardItem";
 import { useNavigate } from "react-router-dom";
 
 interface TourListDataProps {

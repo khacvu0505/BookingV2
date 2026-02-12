@@ -1,4 +1,4 @@
-import BookingDetailPage from "@/components/BookingDetailPage/BookingDetailPage";
+import BookingDetailPage from "@/components/Booking/BookingDetailPage/BookingDetailPage";
 
 const BookingDetailTour = () => {
   return <BookingDetailPage supplierType="Tour" />;

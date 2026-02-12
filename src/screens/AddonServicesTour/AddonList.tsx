@@ -1,10 +1,10 @@
 import { getFromSessionStorage } from "@/utils/utils";
 import Services from "./Services";
-import SkeletonCard from "@/apps/SkeletonCard";
+import SkeletonCard from "@/components/Skeleton/SkeletonCard";
 import { useTranslation } from "react-i18next";
 import { info_booking_tour } from "@/utils/constants";
 import { getAddOnServices } from "@/api/hotel.api";
-import SidebarRight from "@/apps/SidebarRightTour";
+import SidebarRight from "@/components/Sidebar/SidebarRightTour";
 import { useQuery } from "@tanstack/react-query";
 import { tourKeys } from "@/lib/query-keys";
 

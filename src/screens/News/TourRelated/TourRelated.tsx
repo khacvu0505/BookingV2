@@ -1,5 +1,5 @@
 import { getToursRecommend } from "@/api/news.api";
-import CardItem from "@/apps/CardItem";
+import CardItem from "@/components/CardItem";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";

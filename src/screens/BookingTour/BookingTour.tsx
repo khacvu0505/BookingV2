@@ -1,12 +1,12 @@
-import MetaComponent from "@/apps/MetaComponent";
+import MetaComponent from "@/components/MetaComponent";
 import React, { lazy, useEffect, useMemo, useRef, useState } from "react";
 
-import Input from "@/apps/Input";
+import Input from "@/components/Form/Input";
 import { Controller, useForm } from "react-hook-form";
-import Select from "@/apps/Select";
-import TextArea from "@/apps/TextArea";
-import Checkbox from "@/apps/Checkbox";
-import Button from "@/apps/Button";
+import Select from "@/components/Form/Select";
+import TextArea from "@/components/Form/TextArea";
+import Checkbox from "@/components/Form/Checkbox";
+import Button from "@/components/Button";
 import useWindowSize from "@/utils/useWindowSize";
 import {
   clearSessionStorage,
@@ -38,12 +38,12 @@ import useStorageListener from "@/hooks/useStorageListener";
 import { refreshToken } from "@/api/auth.api";
 import { saveAccessTokenToLocalStorage } from "@/utils/auth";
 import { reset as resetApp } from "@/features/app/appSlice";
-import AuthenModal from "@/apps/AuthenModal";
+import AuthenModal from "@/components/AuthenModal";
 import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
 
-const Breadcrumb = lazy(() => import("@/apps/Breadcrumb"));
-const SidebarRight = lazy(() => import("@/apps/SidebarRightTour"));
+const Breadcrumb = lazy(() => import("@/components/Breadcrumb"));
+const SidebarRight = lazy(() => import("@/components/Sidebar/SidebarRightTour"));
 const TimeRemainning = lazy(() => import("./TimeRemainning"));
 const BookingOverviewTour = lazy(() => import("./BookingOverview"));
 

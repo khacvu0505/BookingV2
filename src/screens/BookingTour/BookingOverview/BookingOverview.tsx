@@ -15,7 +15,7 @@ import React, {
   useState,
 } from "react";
 import { useSelector } from "react-redux";
-import Button from "@/apps/Button";
+import Button from "@/components/Button";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./BookingOverview.style.scss";

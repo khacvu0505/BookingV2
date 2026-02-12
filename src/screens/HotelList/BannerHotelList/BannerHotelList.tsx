@@ -1,5 +1,5 @@
 import React from "react";
-import MasterSearch from "@/apps/MasterSearch";
+import MasterSearch from "@/components/Search/MasterSearch";
 import "./BannerHotelList.style.scss";
 import { useTranslation } from "react-i18next";
 

@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from "react";
-import Button from "@/apps/Button";
+import Button from "@/components/Button";
 import LightGallery from "lightgallery/react";
 import "./Intro.style.scss";
 

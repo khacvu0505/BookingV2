@@ -32,6 +32,7 @@ const LanguageCurrencyPopover = ({ textClass }: LanguageCurrencyPopoverProps) =>
 
   const [showPopover, setShowPopover] = useState(false);
   const popoverRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // Close popover when clicking outside
   useEffect(() => {
@@ -39,14 +40,15 @@ const LanguageCurrencyPopover = ({ textClass }: LanguageCurrencyPopoverProps) =>
       if (
         popoverRef.current &&
         !popoverRef.current.contains(event.target as Node) &&
-        (event.target as HTMLElement).id !== "popoverButton"
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
       ) {
         setShowPopover(false);
       }
     };
 
     // eslint-disable-next-line no-undef
-    document.addEventListener("click", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
       // eslint-disable-next-line no-undef
       document.removeEventListener("mousedown", handleClickOutside);
@@ -68,9 +70,9 @@ const LanguageCurrencyPopover = ({ textClass }: LanguageCurrencyPopoverProps) =>
   return (
     <div className="position-relative">
       <button
+        ref={buttonRef}
         className={`d-flex items-center text-14  ${textClass}`}
-        onClick={(e) => {
-          e.stopPropagation();
+        onClick={() => {
           setShowPopover(!showPopover);
         }}
         {...attributesActive}

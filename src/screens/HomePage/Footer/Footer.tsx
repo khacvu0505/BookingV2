@@ -17,8 +17,8 @@ const Footer = () => {
           </p>
         </div>
         <div className="d-flex gap-2">
-          <img src={instagramIcon as any} alt="instagram-icon" />
-          <img src={facebookIcon as any} alt="facebook-icon" />
+          <img src={instagramIcon.src} alt="instagram-icon" />
+          <img src={facebookIcon.src} alt="facebook-icon" />
         </div>
         <div className="row mb-70 xl:mb-50">
           <div className="col-12 col-lg-6 mb-50 xl:mb-20">

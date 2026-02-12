@@ -30,6 +30,8 @@ import {
   fetchServicesByRoom,
 } from "@/features/hotel-detail/reducers";
 import { getHotelPolicies } from "@/api/hotel.api";
+import { useQuery } from "@tanstack/react-query";
+import { hotelKeys } from "@/lib/query-keys";
 import { handleSetDefaultBooking } from "@/utils/handleSetDefaultBooking";
 import isEmpty from "lodash/isEmpty";
 import "./HotelDetail.styles.scss";
@@ -64,11 +66,28 @@ const HotelDetail = () => {
     useSelector((state: any) => state.hotel);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [hotelPolicies, setHotelPolicies] = useState<any>(null);
   const offCanvasRef = useRef<any>();
 
   const { checkIn, checkOut, adults, children, room, location, roomActive } =
     searchParams || {};
+
+  const { data: hotelPolicies } = useQuery({
+    queryKey: hotelKeys.policies(String(slug ?? "")),
+    queryFn: async () => {
+      const params = {
+        Slug: slug,
+        FromDate: searchParams.checkIn,
+        ToDate: searchParams.checkOut,
+        TotalRoom: searchParams.room,
+      };
+      const res = await getHotelPolicies(params);
+      if (res?.success) {
+        return res.data;
+      }
+      return [];
+    },
+    enabled: !!slug,
+  });
 
   const breadcrumbData = useMemo(
     () => [
@@ -91,7 +110,6 @@ const HotelDetail = () => {
   );
 
   useEffect(() => {
-    // get hotel info
     const params = {
       Slug: slug,
       FromDate: searchParams.checkIn,
@@ -99,18 +117,6 @@ const HotelDetail = () => {
       TotalRoom: searchParams.room,
     };
     dispatch(fetchHotelBySlug(cleanedObject(params)) as any);
-    //get hotel policies
-    getHotelPolicies(params)
-      .then((res) => {
-        if (res?.success) {
-          setHotelPolicies(res?.data);
-        } else {
-          setHotelPolicies([]);
-        }
-      })
-      .catch(() => {
-        setHotelPolicies([]);
-      });
   }, [slug]);
 
   useEffect(() => {

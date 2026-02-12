@@ -42,7 +42,7 @@ const HeaderTop = () => {
       {/* Mobile and Tablet */}
       <div className="d-none xxl:d-flex justify-between align-items-center container-mobile">
         <img
-          src={okdimallLogo as any}
+          src={okdimallLogo.src}
           alt="okdimall-logo"
           className="object-cover cursor-pointer"
           onClick={() => handleOpen("logo")}
@@ -50,7 +50,7 @@ const HeaderTop = () => {
         <div className="d-flex align-items-center gap-3 ">
           <div>
             <img
-              src={giftIcon as any}
+              src={giftIcon.src}
               alt="gift-icon"
               className="object-cover cursor-pointer"
               onClick={() => handleOpen("gift")}

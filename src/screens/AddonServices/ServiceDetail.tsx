@@ -1,9 +1,9 @@
 import { formatCurrency } from "@/utils/utils";
 import { useMemo, useRef } from "react";
-import DetailModal from "./DetailModal";
+import DetailModal from "@/components/AddonServicesPage/DetailModal";
 import { handleSetAddon } from "@/utils/handleSetDefaultBooking";
 import { useSelector } from "react-redux";
-import "./AddonServices.styles.scss";
+import "@/components/AddonServicesPage/AddonServices.styles.scss";
 import { useTranslation } from "react-i18next";
 
 const ServiceDetail = ({

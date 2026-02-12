@@ -2,16 +2,9 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import {
-  homeItems,
-  blogItems,
-  pageItems,
-  dashboardItems,
-  categorieMobileItems,
   categorieMegaMenuItems,
 } from "../../data/mainMenuData";
 import { isActiveLink } from "../../utils/linkActiveChecker";
-import Social from "../common/social/Social";
-import ContactInfo from "./ContactInfo";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

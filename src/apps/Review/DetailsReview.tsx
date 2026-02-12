@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import ReviewGallery from "./ReviewGallery";
 import { getListComments } from "@/api/hotel.api";
-import Skeleton from "react-loading-skeleton";
 import { formatStringToDate } from "@/utils/utils";
 import Pagination from "@/apps/Pagination";
 import ReviewSkeleton from "../SkeletonReview/SkeletonReview";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import { hotelKeys } from "@/lib/query-keys";
 
 interface DetailsReviewProps {
   hotel: any;
@@ -13,40 +14,23 @@ interface DetailsReviewProps {
 
 const DetailsReview = ({ hotel }: DetailsReviewProps) => {
   const { t } = useTranslation();
-  const [isLoading, setIsLoading] = useState(false);
-  const [infoComments, setInfoComments] = useState<any>({});
   const [currentPage, setCurrentPage] = useState(1);
-  const lastFetchKey = useRef<string | null>(null);
 
-  useEffect(() => {
-    if (!hotel?.hotelCode) return;
-    const fetchKey = `${hotel.hotelCode}_${currentPage}`;
-    if (fetchKey === lastFetchKey.current) return;
-    lastFetchKey.current = fetchKey;
-    let cancelled = false;
-
-    const fetchComments = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getListComments({
-          Page: currentPage,
-          PageSize: 5,
-          Entity: hotel.hotelCode,
-        });
-        if (cancelled) return;
-        if (data?.success) {
-          setInfoComments(data);
-        }
-      } catch (error) {
-        if (!cancelled) console.error("Uncaught error: ", error);
-      } finally {
-        if (!cancelled) setIsLoading(false);
+  const { data: infoComments, isLoading } = useQuery({
+    queryKey: hotelKeys.comments(hotel?.hotelCode ?? "", currentPage),
+    queryFn: async () => {
+      const res = await getListComments({
+        Page: currentPage,
+        PageSize: 5,
+        Entity: hotel.hotelCode,
+      });
+      if (res?.success) {
+        return res as any;
       }
-    };
-
-    fetchComments();
-    return () => { cancelled = true; };
-  }, [hotel?.hotelCode, currentPage]);
+      return null;
+    },
+    enabled: !!hotel?.hotelCode,
+  });
 
   if (infoComments?.data?.length === 0) return;
 
@@ -67,7 +51,7 @@ const DetailsReview = ({ hotel }: DetailsReviewProps) => {
               <div className="row  justify-between">
                 <div className="col-lg-4">
                   <div className="d-flex gap-3">
-                    <div 
+                    <div
                       className="flex items-center justify-center w-16 h-16 rounded-full text-white text-xl font-medium"
                       style={{
                         backgroundColor: `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`,
@@ -80,7 +64,7 @@ const DetailsReview = ({ hotel }: DetailsReviewProps) => {
                       {item?.userName
                         ?.split(' ')
                         .filter(Boolean)
-                        .map(n => n[0])
+                        .map((n: string) => n[0])
                         .join('')
                         .toUpperCase()
                         .substring(0, 2)}
@@ -139,7 +123,7 @@ const DetailsReview = ({ hotel }: DetailsReviewProps) => {
                         </svg>
                         <span className="ml-6">{item?.bookingType}</span>
                       </p>}
-                      
+
                     </div>
                   </div>
                 </div>

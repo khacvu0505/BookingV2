@@ -1,12 +1,7 @@
 import useQueryParams from "@/hooks/useQueryParams";
-import { useDispatch } from "react-redux";
 import { lazy, useEffect } from "react";
 import { getTourListService } from "@/api/tours.api";
 import { cleanedObject, clearSessionStorage } from "@/utils/utils";
-import {
-  setRequestingTours,
-  setTours,
-} from "@/features/tour-list/tourList.slice";
 import { booking_id, info_booking_tour } from "@/utils/constants";
 import OffCanvasComponent from "@/apps/OffCanvasComponent";
 import Category from "./Navbar/Category";
@@ -15,6 +10,8 @@ import Duration from "./Navbar/Duration";
 import Languages from "./Navbar/Languages";
 import FindTour from "./Navbar/FindTour";
 import RatingByCustomer from "./Navbar/RatingByCustomer";
+import { useQuery } from "@tanstack/react-query";
+import { tourKeys } from "@/lib/query-keys";
 
 const MetaComponent = lazy(() => import("@/apps/MetaComponent"));
 const BannerTourList = lazy(() => import("./BannerTourList"));
@@ -27,7 +24,7 @@ const metadata = {
 };
 
 const TourList = () => {
-  const [params, setSearchParams] = useQueryParams();
+  const [params] = useQueryParams();
   const {
     page: pageParam = 1,
     pageSize: pageSizeParam = 9,
@@ -43,10 +40,23 @@ const TourList = () => {
     rating: ratingParam,
     ratingByCustomer: ratingByCustomerParam,
   } = params || {};
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const { data: tourListData, isLoading: isLoadingTours } = useQuery({
+    queryKey: tourKeys.list({
+      regionIDParam,
+      minPriceParam,
+      maxPriceParam,
+      votesParam,
+      categoryTypeParam,
+      durationParam,
+      pageParam,
+      pageSizeParam,
+      sortParam,
+      ratingParam,
+      ratingByCustomerParam,
+      searchParam,
+    }),
+    queryFn: async () => {
       const obj = cleanedObject({
         regionID: regionIDParam,
         minPrice: Number(minPriceParam),
@@ -59,34 +69,22 @@ const TourList = () => {
         Orders: sortParam,
         Rating: ratingParam,
         Votes: ratingByCustomerParam,
-
-        // languages: languageParam,
       });
-      const data = await getTourListService({
+      const res = await getTourListService({
         ...obj,
         keyword: searchParam || "",
       });
-      dispatch(setTours(data));
-    };
+      return {
+        tours: Array.isArray(res.data) ? res.data : [],
+        total: res.totalRecords ?? 0,
+        totalPages: res.totalPage ?? 0,
+      };
+    },
+  });
 
-    dispatch(setRequestingTours());
-
-    fetchData();
-  }, [
-    regionIDParam,
-    minPriceParam,
-    maxPriceParam,
-    votesParam,
-    categoryTypeParam,
-    durationParam,
-    pageParam,
-    pageSizeParam,
-    sortParam,
-    ratingParam,
-    ratingByCustomerParam,
-    searchParam,
-    dispatch,
-  ]);
+  const tours = tourListData?.tours ?? [];
+  const total = tourListData?.total ?? 0;
+  const totalPages = tourListData?.totalPages ?? 0;
 
   useEffect(() => {
     clearSessionStorage(info_booking_tour);
@@ -125,7 +123,12 @@ const TourList = () => {
               <Languages />
             </div>
           </OffCanvasComponent>
-          <TourListContent />
+          <TourListContent
+            tours={tours}
+            total={total}
+            totalPages={totalPages}
+            isLoadingTours={isLoadingTours}
+          />
         </div>
       </div>
     </>

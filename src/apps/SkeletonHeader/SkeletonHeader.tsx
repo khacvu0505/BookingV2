@@ -4,7 +4,7 @@ import "./SkeletonHeader.style.scss";
 
 const SkeletonHeader = () => {
   return (
-    <SkeletonTheme baseColor="#202020" highlightColor="#cfcbc4">
+    <SkeletonTheme baseColor="#e0e0e0" highlightColor="#f5f5f5">
       <section className="d-flex justify-content-between items-center">
         <div className="d-flex">
           <Skeleton width={15} className="mr-10" />

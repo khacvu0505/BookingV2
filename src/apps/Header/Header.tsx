@@ -198,7 +198,7 @@ const Header = () => {
                       src={
                         isAuthenticated && !isEmpty(profile)
                           ? thumb
-                          : (avatarDefault as any)
+                          : avatarDefault.src
                       }
                       className="rounded-circle ml-10 cursor-pointer"
                       alt="avatar"

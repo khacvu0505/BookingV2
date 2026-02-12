@@ -1,19 +1,13 @@
-import React, { lazy, useEffect, useState } from "react";
+import React, { lazy, useEffect } from "react";
 import BannerHotelList from "@/screens/HotelList/BannerHotelList";
-// import Navbar from "@/screens/HotelList/Navbar";
 import MetaComponent from "@/apps/MetaComponent";
 import useQueryParams from "@/hooks/useQueryParams";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   addDate,
   cleanedObject,
-  clearSessionStorage,
   formatDate,
 } from "@/utils/utils";
-import {
-  setHotels,
-  setRequestingHotels,
-} from "@/features/hotel-list/hotelSlice";
 import { getHotelList } from "@/api/hotel.api";
 import OffCanvasComponent from "@/apps/OffCanvasComponent";
 import AccommodationType from "./Navbar/AccommodationType";
@@ -21,6 +15,8 @@ import RatingHotelList from "./Navbar/RatingHotelList";
 import RatingByCustomer from "./Navbar/RatingByCustomer";
 import LocationHotel from "./Navbar/LocationHotel";
 import SubLocationHotel from "./Navbar/SubLocationHotel";
+import { useQuery } from "@tanstack/react-query";
+import { hotelKeys } from "@/lib/query-keys";
 
 const Navbar = lazy(() => import("@/screens/HotelList/Navbar"));
 const HotelListContent = lazy(() =>
@@ -34,10 +30,9 @@ const metadata = {
 
 const HotelList = () => {
   const [params, setSearchParams] = useQueryParams();
-  const dispatch = useDispatch();
 
   const secondaryLocationList =
-    useSelector((state) => state.hotels.secondaryLocation) || undefined;
+    useSelector((state: any) => state.hotels.secondaryLocation) || undefined;
 
   const {
     location: locationParam = "DN",
@@ -60,89 +55,80 @@ const HotelList = () => {
     sort: sortParam = "",
   } = params || {};
 
-  useEffect(() => {
-    if (secondaryLocationList?.length === 0 || !secondaryLocationList) return;
-    const subLocationArr = subLocationParam
-      ? subLocationParam?.split("-").map(Number)
-      : [];
-    const subLocationParamFormatted =
-      secondaryLocationList?.length > 0
-        ? secondaryLocationList
-            .filter((item) => subLocationArr.includes(item.id))
-            .map((i) => i.value)
-            .join(",")
-        : undefined;
-    const benefitsParamFormatted = benefitsParam
-      ? benefitsParam.replaceAll("-", ",")
-      : "";
-    const accommodationTypeParamFormatted = accommodationTypeParam
-      ? accommodationTypeParam.replaceAll("-", ",")
-      : "";
+  const { data: hotelListData, isLoading: isLoadingHotels } = useQuery({
+    queryKey: hotelKeys.list({
+      locationParam,
+      checkInParam,
+      checkOutParam,
+      adultsParam,
+      childrenParam,
+      roomParam,
+      minPriceParam,
+      maxPriceParam,
+      pageParam,
+      pageSizeParam,
+      keywordParam,
+      ratingParam,
+      subLocationParam,
+      benefitsParam,
+      positionParam,
+      ratingByCustomerParam,
+      accommodationTypeParam,
+      sortParam,
+    }),
+    queryFn: async () => {
+      const subLocationArr = subLocationParam
+        ? subLocationParam?.split("-").map(Number)
+        : [];
+      const subLocationParamFormatted =
+        secondaryLocationList?.length > 0
+          ? secondaryLocationList
+              .filter((item: any) => subLocationArr.includes(item.id))
+              .map((i: any) => i.value)
+              .join(",")
+          : undefined;
+      const benefitsParamFormatted = benefitsParam
+        ? benefitsParam.replaceAll("-", ",")
+        : "";
+      const accommodationTypeParamFormatted = accommodationTypeParam
+        ? accommodationTypeParam.replaceAll("-", ",")
+        : "";
 
-    dispatch(setRequestingHotels());
-    getHotelList(
-      cleanedObject({
-        RegionID: locationParam,
-        FromDate: checkInParam,
-        ToDate: checkOutParam,
-        Adult: adultsParam,
-        Children: childrenParam,
-        TotalRoom: roomParam,
-        Keyword: keywordParam,
-        MinPrice: Number(minPriceParam),
-        MaxPrice: Number(maxPriceParam),
-        Rating: ratingParam,
-        SecondaryLocation: subLocationParamFormatted,
-        BenefitGroup: benefitsParamFormatted,
-        DistanceCenter: positionParam,
-        Votes: ratingByCustomerParam,
-        CategoryType: accommodationTypeParamFormatted,
-        Page: Number(pageParam) || 1,
-        PageSize: Number(pageSizeParam) || 10,
-        Orders: sortParam,
-      })
-    )
-      .then((res) => {
-        dispatch(
-          setHotels({
-            data: res.data,
-            total: res.totalRecords,
-            totalPages: res.totalPage,
-          })
-        );
-      })
-      .catch(() => {
-        dispatch(
-          setHotels({
-            data: [],
-            total: 0,
-            totalPages: 0,
-          })
-        );
-      });
-    // }
-  }, [
-    accommodationTypeParam,
-    adultsParam,
-    benefitsParam,
-    checkInParam,
-    checkOutParam,
-    childrenParam,
-    dispatch,
-    keywordParam,
-    locationParam,
-    maxPriceParam,
-    minPriceParam,
-    pageParam,
-    pageSizeParam,
-    positionParam,
-    ratingByCustomerParam,
-    ratingParam,
-    roomParam,
-    secondaryLocationList,
-    subLocationParam,
-    sortParam,
-  ]);
+      const res = await getHotelList(
+        cleanedObject({
+          RegionID: locationParam,
+          FromDate: checkInParam,
+          ToDate: checkOutParam,
+          Adult: adultsParam,
+          Children: childrenParam,
+          TotalRoom: roomParam,
+          Keyword: keywordParam,
+          MinPrice: Number(minPriceParam),
+          MaxPrice: Number(maxPriceParam),
+          Rating: ratingParam,
+          SecondaryLocation: subLocationParamFormatted,
+          BenefitGroup: benefitsParamFormatted,
+          DistanceCenter: positionParam,
+          Votes: ratingByCustomerParam,
+          CategoryType: accommodationTypeParamFormatted,
+          Page: Number(pageParam) || 1,
+          PageSize: Number(pageSizeParam) || 10,
+          Orders: sortParam,
+        })
+      );
+
+      return {
+        hotels: Array.isArray(res.data) ? res.data : [],
+        total: res.totalRecords ?? 0,
+        totalPages: res.totalPage ?? 0,
+      };
+    },
+    enabled: !!secondaryLocationList && secondaryLocationList.length > 0,
+  });
+
+  const hotels = hotelListData?.hotels ?? [];
+  const total = hotelListData?.total ?? 0;
+  const totalPages = hotelListData?.totalPages ?? 0;
 
   useEffect(() => {
     let defaultParams = {
@@ -208,7 +194,12 @@ const HotelList = () => {
               <SubLocationHotel />
             </div>
           </OffCanvasComponent>
-          <HotelListContent />
+          <HotelListContent
+            hotels={hotels}
+            total={total}
+            totalPages={totalPages}
+            isLoadingHotels={isLoadingHotels}
+          />
         </div>
       </div>
     </div>

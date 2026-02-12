@@ -24,7 +24,7 @@ const Hightlights = ({ propertyHighlights }: HightlightsProps) => {
                 />
               ) : (
                 <img
-                  src={icons[index] as any}
+                  src={icons[index].src}
                   alt="icon-highlight"
                   className="iconHighlight"
                 />

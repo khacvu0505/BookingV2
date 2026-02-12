@@ -62,7 +62,7 @@ const MobileMenu = () => {
     <>
       <div className="pro-header d-flex align-items-center justify-between pb-0">
         <img
-          src={okdimallLogo as any}
+          src={okdimallLogo .src}
           alt="okdimall-logo"
           className="object-cover cursor-pointer"
         />
@@ -202,7 +202,7 @@ const MobileMenu = () => {
                 label={
                   <div className="d-flex items-center gap-3">
                     <img
-                      src={avatarIcon as any}
+                      src={avatarIcon .src}
                       alt="avatar-icon"
                       className="object-cover text-20 lg:text-18"
                     />
@@ -256,7 +256,7 @@ const MobileMenu = () => {
                 label={
                   <div className="d-flex items-center gap-3">
                     <img
-                      src={historyListIcon as any}
+                      src={historyListIcon .src}
                       alt="avatar-icon"
                       className="object-cover text-20 lg:text-18"
                     />
@@ -312,7 +312,7 @@ const MobileMenu = () => {
               <div data-bs-dismiss="offcanvas">
                 <MenuItem onClick={() => navigate("/profile/wishlist")}>
                   <img
-                    src={wishlistIcon as any}
+                    src={wishlistIcon .src}
                     alt="avatar-icon"
                     className="object-cover text-20 lg:text-18 mr-15"
                   />
@@ -329,7 +329,7 @@ const MobileMenu = () => {
                 </MenuItem>
                 <MenuItem onClick={handleClickLogout}>
                   <img
-                    src={avatarIcon as any}
+                    src={avatarIcon .src}
                     alt="avatar-icon"
                     className="object-cover text-20 lg:text-18 mr-15"
                   />

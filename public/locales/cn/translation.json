@@ -281,7 +281,8 @@
     "NO_DATA": "无数据",
     "I_AGREE": "我同意",
     "PRIVACY_POLICY": "隐私政策",
-    "PRIVACY_TEXT": "通过选择此项，您的个人信息将用于处理订单、提升网站使用体验以及隐私政策中描述的其他特定目的。"
+    "PRIVACY_TEXT": "通过选择此项，您的个人信息将用于处理订单、提升网站使用体验以及隐私政策中描述的其他特定目的。",
+    "FEEDBACK_DATE": "反馈日期: "
   },
   "AUTH": {
     "LOGIN/TITLE": "欢迎你回来！",
@@ -455,6 +456,12 @@
     "NEWS_POPULAR": "热门新闻",
     "NEWS_POPULAR_DESC": "立即更新来自OKdimall的新旅程信息！",
     "NEWS_RELATED": "相关文章"
+  },
+  "VOUCHER": {
+    "TITLE": "优惠码",
+    "DISCOUNT": "折扣",
+    "EXPIRY": "有效期",
+    "APPLIED": "已使用"
   },
   "DESTINATIONS": {
     "DESTINATIONS": "目的地",

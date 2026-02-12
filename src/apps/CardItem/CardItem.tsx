@@ -160,7 +160,7 @@ const CardItem = ({ data, handleChooseItem, isTour = false }: CardItemProps) => 
               </div>
               <div className="d-flex align-items-center gap-1">
                 <img
-                  src={iconLocation as any}
+                  src={iconLocation.src}
                   alt="icon-location"
                   className="object-cover"
                 />

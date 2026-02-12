@@ -21,7 +21,7 @@ export const DisplayGiftInfo = () => {
   return (
     <>
       <div>
-        <img src={giftIcon as any} alt="gift-icon" className="mr-4 mb-2" />
+        <img src={giftIcon.src} alt="gift-icon" className="mr-4 mb-2" />
       </div>
       <p className="text-14 text-neutral-800 fw-400">
         {t("HOME.HEADER/PROMOTION_TITLE")}{" "}

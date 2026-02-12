@@ -69,7 +69,7 @@ export default function GalleryComponent({
               {hotel?.address && (
                 <p className="lh-12 text-12 fw-400 text-neutral-300 text-right w-100 text-truncate text-start xl:pt-8">
                   <img
-                    src={iconLocation as any}
+                    src={iconLocation.src}
                     alt="icon-location"
                     className="object-cover"
                   />

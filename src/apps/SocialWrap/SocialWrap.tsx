@@ -126,8 +126,8 @@ const SocialWrap = () => {
             </a>
           </li>
         </div>
+        {!activeToogle && <ScrollToTop />}
       </div>
-      {!activeToogle && <ScrollToTop />}
       <KakaoTalkModal ref={kakaoTalkRef} />
       <WechatModal ref={wechatRef} />
     </>

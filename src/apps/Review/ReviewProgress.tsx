@@ -1,9 +1,10 @@
 import { getVoteSupplier } from "@/api/hotel.api";
 import RatingComponent from "@/apps/Rating";
+import { hotelKeys } from "@/lib/query-keys";
 import { converObjectToArray } from "@/utils/utils";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import Skeleton from "react-loading-skeleton";
 
 interface ReviewProgressProps {
   hotel: any;
@@ -11,9 +12,18 @@ interface ReviewProgressProps {
 
 const ReviewProgress = ({ hotel }: ReviewProgressProps) => {
   const { t } = useTranslation();
-  const [isLoading, setIsLoading] = useState(false);
-  const [voteSupplier, setVoteSupplier] = useState<any>({});
-  const lastFetchedCode = useRef<string | null>(null);
+
+  const { data: voteSupplier, isLoading } = useQuery({
+    queryKey: hotelKeys.voteSupplier(hotel?.hotelCode ?? ""),
+    queryFn: async () => {
+      const res = await getVoteSupplier(hotel.hotelCode);
+      if (res?.success && res?.data && typeof res.data === "object") {
+        return res.data;
+      }
+      return null;
+    },
+    enabled: !!hotel?.hotelCode,
+  });
 
   const voteSupplierInfo = useMemo(
     () => ({
@@ -29,33 +39,6 @@ const ReviewProgress = ({ hotel }: ReviewProgressProps) => {
     [t]
   );
 
-  useEffect(() => {
-    if (!hotel?.hotelCode || hotel.hotelCode === lastFetchedCode.current) return;
-    lastFetchedCode.current = hotel.hotelCode;
-    let cancelled = false;
-
-    const fetchVoteSupplier = async () => {
-      setIsLoading(true);
-      try {
-        const voteSupplierData = await getVoteSupplier(hotel.hotelCode);
-        if (cancelled) return;
-        const data = voteSupplierData?.data;
-        if (data && typeof data === "object" && voteSupplierData?.success) {
-          setVoteSupplier(data);
-        } else {
-          setVoteSupplier(null);
-        }
-      } catch (error) {
-        if (!cancelled) console.error("Uncaught error: ", error);
-      } finally {
-        if (!cancelled) setIsLoading(false);
-      }
-    };
-
-    fetchVoteSupplier();
-    return () => { cancelled = true; };
-  }, [hotel?.hotelCode]);
-
   return (
     <>
       {!isLoading && (
@@ -68,7 +51,7 @@ const ReviewProgress = ({ hotel }: ReviewProgressProps) => {
                     {voteSupplier?.votePoint || 10}
                   </div>
                   <div className="fw-600 text-24 xl:text-22 lg:text-20">
-                    {voteSupplier?.voteStatus || "Tuyệt vời"}
+                    {voteSupplier?.voteStatus || "Tuyệt vời"}
                   </div>
                   <div className="text-16 xl:text-15 text-primary-500 fw-400 mt-5">
                     {voteSupplier?.totalReview} {t("COMMON.RATING")}

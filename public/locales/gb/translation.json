@@ -3,7 +3,6 @@
     "HEADER/SEARCH": "Destinations, attractions, sightseeing ...",
     "HEADER/HOME": "Home",
     "HEADER/FILE": "Profile",
-    "HEADER/CHANGE_PASSWORD": "Change Password",
     "HEADER/WISHLIST": "Wishlist",
     "HEADER/BOOKING": "Bookings",
     "HEADER/LOGOUT": "Logout",
@@ -237,6 +236,7 @@
     "WIFI_FREE": "Free Wifi",
     "PLEASE_CHOOSE": "Please choose",
     "SUBMIT": "Submit",
+    "YOUR_COMMENT": "Your comment",
     "BOOKING_ROOM_INFO": "Booking room information",
     "ROOM_INFO": "Room Information",
     "ROOM": "Room",
@@ -269,6 +269,7 @@
     "BOOKING_EXPIRED_DESC": "* After the request is made, the system will process the cancellation and issue a refund (if applicable). This action cannot be undone.",
     "POLICY_OF": "Policy of",
     "NOT_PROMOTION": "No promotion",
+    "DO_YOU_WANT_CANCEL_BOOKING_TOUR": "Do you want to cancel this tour booking?",
     "CANCEL_BOOKING_TOUR": "Cancel Booking",
     "CANCEL_BOOKING_TOUR_INFO": "Cancel Booking Information",
     "TOUR_NAME": "Tour Name",
@@ -385,7 +386,7 @@
     "FILTER/CATEGORY": "Category",
     "FILTER/DURATION": "Duration",
     "FILTER/LANGUAGE": "Language",
-    "TOUR_INFO": "Tour information"
+    "TOUR_INFORMATION": "Tour information"
   },
   "TOUR": {
     "CHOOSE_SERVICE": "Select a service package",
@@ -399,11 +400,13 @@
     "DROP_OFF_LOCATION": "Drop-off location",
     "LABEL_REQUEST_MORE_DESCRIPTION": "Note: Special requests will be accommodated based on the provider's availability at the time of service.",
     "BOOK_FOR_ANOTHER_PERSON": "Book this tour for another person",
-    "TOUR_INFO": "Tour information"
+    "TOUR_INFORMATION": "Tour information"
   },
   "BOOKING_SUCCESS_TOUR": {
     "BOOKING_FAILED": "Booking Tour Failed",
-    "BOOKING_CODE": "Booking Code"
+    "BOOKING_CODE": "Booking Code",
+    "START_DATE": "Departure Date",
+    "END_DATE": "End Date"
   },
   "PROFILE": {
     "PROFILE": "Profile",

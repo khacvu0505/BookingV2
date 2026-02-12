@@ -1,16 +1,7 @@
 import { Link } from "react-router-dom";
 
 import {
-  homeItems,
-  blogItems,
-  pageItems,
-  dashboardItems,
-} from "../../data/mainMenuData";
-import CategoriesMegaMenu from "./CategoriesMegaMenu";
-import {
-  isActiveParent,
   isActiveLink,
-  isActiveParentChaild,
 } from "../../utils/linkActiveChecker";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";

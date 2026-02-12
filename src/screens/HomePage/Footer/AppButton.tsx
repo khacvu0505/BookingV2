@@ -32,7 +32,7 @@ const AppButton = () => {
         {t("HOME.FOOTER/PAYMENT_TITLE")}
       </p>
       <img
-        src={paymentImg as any}
+        src={paymentImg.src}
         alt="payment-method"
         className="object-fit mb-40 xl:mb-30"
       />

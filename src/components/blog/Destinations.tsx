@@ -1,6 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-import { destinations4 } from "../data/desinations";
 import { useEffect, useState } from "react";
 import { getRegions } from "@/api/category.api";
 import Skeleton from "react-loading-skeleton";

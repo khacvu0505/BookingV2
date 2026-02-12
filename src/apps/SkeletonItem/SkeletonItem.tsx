@@ -3,7 +3,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const SkeletonItem = () => {
   return (
-    <SkeletonTheme baseColor="#202020" highlightColor="#cfcbc4">
+    <SkeletonTheme baseColor="#e0e0e0" highlightColor="#f5f5f5">
       <section className="bg-light py-1 px-2 my-3">
         <section className="d-flex justify-content-between">
           <div className="d-flex">

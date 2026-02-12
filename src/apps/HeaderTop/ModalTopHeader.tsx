@@ -16,7 +16,7 @@ const ModalTopHeader = ({ open, handleClose, type }: ModalTopHeaderProps) => {
         return (
           <>
             <img
-              src={okdimallLogo as any}
+              src={okdimallLogo.src}
               alt="okdimall-logo"
               className="object-cover cursor-pointer"
             />

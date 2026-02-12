@@ -18,7 +18,7 @@ export interface OffCanvasDetailHandle {
 
 const OffCanvasDetail = ({ hotelPolicies, hotel }: OffCanvasDetailProps, ref: React.Ref<OffCanvasDetailHandle>) => {
   const tabTitleHeader = useTabTitleHeader();
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(-1);
   const isMobile = useWindowSize().width < 768;
   const handleTabClick = (index: number) => {
     setActiveTab(index);

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-import { useFetchData } from "@/hooks/useFetchData";
 import { getRegions } from "@/api/category.api";
 import classNames from "classnames";
 import useQueryParams from "@/hooks/useQueryParams";
+import { useQuery } from "@tanstack/react-query";
+import { commonKeys } from "@/lib/query-keys";
 
 interface PopularNewsProps {
   handleChangeLocation: (item: any) => void;
@@ -14,7 +15,13 @@ interface PopularNewsProps {
 
 const PopularNews = ({ handleChangeLocation, title, description }: PopularNewsProps) => {
   const [active, setActive] = useState(0);
-  const [regionsList] = useFetchData(getRegions, {});
+  const { data: regionsList = [] } = useQuery({
+    queryKey: commonKeys.regions(),
+    queryFn: async () => {
+      const res = await getRegions();
+      return res?.success ? res.data : [];
+    },
+  });
   const [params, setSearchParams] = useQueryParams();
   const { region } = params;
 

@@ -55,6 +55,20 @@ const LocationSearch = ({ handleChangeValue, type, isOffCanvas = false }: Locati
     }
   }, [params, regions, searchValueInput, isRemoveSearch]);
 
+  // Default to first region when no location is selected
+  useEffect(() => {
+    if (regions.length > 0 && !selectedItem && !searchValueInput) {
+      const firstRegion = regions[0];
+      setSelectedItem(firstRegion);
+      setSearchValueInput(firstRegion?.name);
+      dispatch(setValueInputSearch(firstRegion?.name));
+      handleChangeValue({
+        location: firstRegion?.id,
+        locationName: firstRegion?.name,
+      });
+    }
+  }, [regions]);
+
   useEffect(() => {
     setSearchValueInput(valueInputSearch);
   }, [valueInputSearch]);

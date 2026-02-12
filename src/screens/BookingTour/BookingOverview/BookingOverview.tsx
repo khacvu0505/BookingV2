@@ -24,28 +24,31 @@ import BookingTourInfo from "../BookingTourInfo";
 import isEmpty from "lodash/isEmpty";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { bookingKeys } from "@/lib/query-keys";
 
 const BookingOverView = ({ email, bookingID, refOTPModal }, ref) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
-  const [overview, setOverview] = useState(null);
-  const [isLoadingRoom, setIsLoadingRoom] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAccepted, setIsAccepted] = useState(false);
   const { currentCurrency } = useSelector((state) => state.app);
   const [isShowMore, setIsShowMore] = useState(false);
 
-  const handleClickContinue = () => {
-    if (!isAccepted) {
-      handleRenderNoti(t("COMMON.AGREE_TERM_AND_CONDITION"), "error");
-      return;
-    }
-    setIsSubmitting(true);
+  const { data: overview = null, isLoading: isLoadingRoom } = useQuery({
+    queryKey: [...bookingKeys.all, "overviewTour", bookingID],
+    queryFn: async () => {
+      const res = await getBookingInfoTour(bookingID);
+      if (res?.success) return res.data;
+      return null;
+    },
+    enabled: !!bookingID && isVisible,
+  });
 
-    getPaymentBooking(bookingID).then((res) => {
+  const paymentMutation = useMutation({
+    mutationFn: () => getPaymentBooking(bookingID),
+    onSuccess: (res) => {
       const { success, error } = res;
-
       if (success) {
         clearSessionStorage(tax_include);
         clearSessionStorage(create_invoice);
@@ -57,13 +60,12 @@ const BookingOverView = ({ email, bookingID, refOTPModal }, ref) => {
         }
       } else {
         setIsVisible(false);
-
         Swal.fire({
           title: t("COMMON.NOTIFICATION"),
-          imageUrl: "/images/Booking/icon-info.png", // Đường dẫn đến hình ảnh
-          imageWidth: 72, // Độ rộng của hình ảnh (tùy chỉnh)
-          imageHeight: 72, // Độ cao của hình ảnh (tùy chỉnh)
-          imageAlt: "Custom icon", // Văn bản thay thế nếu không hiển thị được hình ảnh
+          imageUrl: "/images/Booking/icon-info.png",
+          imageWidth: 72,
+          imageHeight: 72,
+          imageAlt: "Custom icon",
           text: typeof error === "string" ? error : t("COMMON.TRY_AGAIN_LATER"),
           confirmButtonText: "Okay",
           confirmButtonColor: "#00AEED",
@@ -72,12 +74,19 @@ const BookingOverView = ({ email, bookingID, refOTPModal }, ref) => {
           allowOutsideClick: false,
           position: "top",
           customClass: {
-            popup: "mt-30", // Thêm class để tùy chỉnh khoảng cách
+            popup: "mt-30",
           },
-        }).then((result) => {});
+        });
       }
-      setIsSubmitting(false);
-    });
+    },
+  });
+
+  const handleClickContinue = () => {
+    if (!isAccepted) {
+      handleRenderNoti(t("COMMON.AGREE_TERM_AND_CONDITION"), "error");
+      return;
+    }
+    paymentMutation.mutate();
   };
 
   const handleCloseModal = () => {
@@ -97,26 +106,6 @@ const BookingOverView = ({ email, bookingID, refOTPModal }, ref) => {
     // eslint-disable-next-line no-undef
     window.scroll({ top: 0, behavior: "smooth" });
   }, []);
-
-  useEffect(() => {
-    if (bookingID && isVisible) {
-      setIsLoadingRoom(true);
-      getBookingInfoTour(bookingID)
-        .then((res) => {
-          const { success, data } = res;
-          if (success) {
-            setOverview(data);
-          } else {
-            setOverview(null);
-          }
-          setIsLoadingRoom(false);
-        })
-        .catch(() => {
-          setIsLoadingRoom(false);
-          setOverview(null);
-        });
-    }
-  }, [bookingID, isVisible]);
 
   useEffect(() => {
     if (!isVisible) {
@@ -506,7 +495,7 @@ const BookingOverView = ({ email, bookingID, refOTPModal }, ref) => {
               {t("COMMON.CLOSE")}
             </Button>
             <Button onClick={handleClickContinue} className="ml-16">
-              {isSubmitting ? (
+              {paymentMutation.isPending ? (
                 <>
                   <span className="loader"></span>
                   <span className="ml-10">{t("COMMON.PROCESSING")}...</span>

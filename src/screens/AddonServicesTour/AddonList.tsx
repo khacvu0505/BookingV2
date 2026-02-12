@@ -3,15 +3,23 @@ import Services from "./Services";
 import SkeletonCard from "@/apps/SkeletonCard";
 import { useTranslation } from "react-i18next";
 import { info_booking_tour } from "@/utils/constants";
-import { useFetchData } from "@/hooks/useFetchData";
 import { getAddOnServices } from "@/api/hotel.api";
 import SidebarRight from "@/apps/SidebarRightTour";
+import { useQuery } from "@tanstack/react-query";
+import { tourKeys } from "@/lib/query-keys";
 
 const AddonList = () => {
   const { t } = useTranslation();
   const infoBookingTour = getFromSessionStorage(info_booking_tour);
-  const [addonServices, isLoadingAddon] = useFetchData(getAddOnServices, {
-    supplierCode: infoBookingTour?.supplierCode,
+  const supplierCode = infoBookingTour?.supplierCode;
+
+  const { data: addonServices = [], isLoading: isLoadingAddon } = useQuery({
+    queryKey: [...tourKeys.all, "addOnServices", supplierCode],
+    queryFn: async () => {
+      const res = await getAddOnServices({ supplierCode });
+      return res?.success ? res.data : [];
+    },
+    enabled: !!supplierCode,
   });
 
   return (

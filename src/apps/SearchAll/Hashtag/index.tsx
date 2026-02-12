@@ -1,9 +1,16 @@
 import { getHashtagSearchAll } from "@/api/user.api";
-import { useFetchData } from "@/hooks/useFetchData";
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { searchKeys } from "@/lib/query-keys";
 
 const Hashtag = () => {
-  const [hashTagData] = useFetchData(getHashtagSearchAll, {});
+  const { data: hashTagData = [] } = useQuery({
+    queryKey: searchKeys.hashtags(),
+    queryFn: async () => {
+      const res = await getHashtagSearchAll();
+      return res?.success ? res.data : [];
+    },
+  });
 
   return (
     <>

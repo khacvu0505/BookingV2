@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { changePasswordSchema } from "@/schemas/changePasswordSchema";
@@ -6,12 +6,12 @@ import { updatePassword } from "@/api/auth.api";
 import Input from "@/apps/Input";
 import Button from "@/apps/Button";
 import MetaComponent from "@/apps/MetaComponent";
-import Swal from "sweetalert2";
 import { forgotPassword } from "@/api/user.api";
 import { getFromLocalStorage } from "@/utils/utils";
 import { profile_user } from "@/utils/constants";
 import { handleAlert } from "@/utils/handleAlert";
 import { useTranslation } from "react-i18next";
+import { useMutation } from "@tanstack/react-query";
 
 const metadata = {
   title: "Change Password",
@@ -20,8 +20,6 @@ const metadata = {
 
 const ChangePassword = () => {
   const { t } = useTranslation();
-  const [isSubmmitting, setIsSubmmitting] = useState(false);
-  const [isSubmmittingForgot, setIsSubmmittingForgot] = useState(false);
 
   const {
     handleSubmit,
@@ -38,58 +36,57 @@ const ChangePassword = () => {
     resolver: yupResolver(changePasswordSchema),
   });
 
-  const handleSubmitForm = (data) => {
-    setIsSubmmitting(true);
-    const newData = {
-      oldPassword: data?.currentPassword,
-      newPassword: data?.newPassword,
-      confirmPassword: data?.confirmNewPassword,
-    };
-    updatePassword(newData as any)
-      .then((res) => {
-        setIsSubmmitting(false);
-        if (res?.success) {
-          reset();
-          handleAlert({
-            type: "success",
-            title: t("COMMON.SUCCESS"),
-            html: `<p>${t("PROFILE.UPDATE_PASSWORD_SUCCESS")}</p>`,
-          });
-
-          return;
-        }
+  const updatePasswordMutation = useMutation({
+    mutationFn: (data: any) =>
+      updatePassword({
+        oldPassword: data.currentPassword,
+        newPassword: data.newPassword,
+        confirmPassword: data.confirmNewPassword,
+      } as any),
+    onSuccess: (res) => {
+      if (res?.success) {
+        reset();
         handleAlert({
-          type: "error",
-          title: t("COMMON.FAILED"),
-          html: `<p>${res?.error}</p>`,
+          type: "success",
+          title: t("COMMON.SUCCESS"),
+          html: `<p>${t("PROFILE.UPDATE_PASSWORD_SUCCESS")}</p>`,
         });
-      })
-      .catch(() => {
-        // handleRenderNoti("Vui lòng thử lại sau", "error");
-        setIsSubmmitting(false);
+        return;
+      }
+      handleAlert({
+        type: "error",
+        title: t("COMMON.FAILED"),
+        html: `<p>${res?.error}</p>`,
       });
-  };
+    },
+  });
 
-  const handleForgotPassword = async () => {
-    const email = getFromLocalStorage(profile_user)?.email;
-    if (!email) return;
-    try {
-      setIsSubmmittingForgot(true);
-      await forgotPassword(email);
+  const forgotPasswordMutation = useMutation({
+    mutationFn: (email: string) => forgotPassword(email),
+    onSuccess: () => {
       handleAlert({
         type: "success",
         title: t("COMMON.SUCCESS"),
         html: t("PROFILE.CHECK_EMAIL_TO_GET_NEW_PASSWORD"),
       });
-      setIsSubmmittingForgot(false);
-    } catch (error) {
-      setIsSubmmittingForgot(false);
+    },
+    onError: () => {
       handleAlert({
         type: "error",
         title: t("COMMON.FAILED"),
         html: t("COMMON.TRY_AGAIN_LATER"),
       });
-    }
+    },
+  });
+
+  const handleSubmitForm = (data) => {
+    updatePasswordMutation.mutate(data);
+  };
+
+  const handleForgotPassword = () => {
+    const email = getFromLocalStorage(profile_user)?.email;
+    if (!email) return;
+    forgotPasswordMutation.mutate(email);
   };
 
   useEffect(() => {
@@ -140,14 +137,14 @@ const ChangePassword = () => {
           isOutline
           className="mr-16"
           onClick={handleForgotPassword}
-          isLoading={isSubmmittingForgot}
+          isLoading={forgotPasswordMutation.isPending}
         >
           {t("PROFILE.FORGOT_PASSWORD")}
         </Button>
 
         <Button
           onClick={handleSubmit(handleSubmitForm)}
-          isLoading={isSubmmitting}
+          isLoading={updatePasswordMutation.isPending}
         >
           {t("PROFILE.SAVE_PASSWORD")}
         </Button>

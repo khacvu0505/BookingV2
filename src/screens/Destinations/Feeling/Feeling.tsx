@@ -1,23 +1,30 @@
 import React from "react";
 import { getNewsByRegion } from "@/api/news.api";
-import { useFetchData } from "@/hooks/useFetchData";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import { newsKeys } from "@/lib/query-keys";
 
 const Feeling = ({ selected }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const params = {
-    Page: 1,
-    PageSize: 4,
-    Entity: {
-      RegionFID: selected?.id || "NT",
-      CateID: 60,
-      Keyword: "",
-      SupplierType: "",
+
+  const { data = [] } = useQuery({
+    queryKey: newsKeys.byRegion(selected?.id || "NT", 60),
+    queryFn: async () => {
+      const res = await getNewsByRegion({
+        Page: 1,
+        PageSize: 4,
+        Entity: {
+          RegionFID: selected?.id || "NT",
+          CateID: 60,
+          Keyword: "",
+          SupplierType: "",
+        },
+      });
+      return res?.success ? res.data : [];
     },
-  };
-  const [data] = useFetchData(getNewsByRegion, params);
+  });
 
   return (
     <div className="mt-50 xl:mt-40 lg:mt-30">

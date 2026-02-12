@@ -1,24 +1,30 @@
 import { getNewsByRegion } from "@/api/news.api";
-import { useFetchData } from "@/hooks/useFetchData";
 import classNames from "classnames";
 import React, { useMemo } from "react";
 import { Trans } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { newsKeys } from "@/lib/query-keys";
 
 const Scenery = ({ selected }) => {
   const navigate = useNavigate();
-  const params = {
-    Page: 1,
-    PageSize: 6,
-    Entity: {
-      RegionFID: selected?.id || "NT",
-      CateID: 45,
-      Keyword: "",
-      SupplierType: "",
-    },
-  };
 
-  const [data] = useFetchData(getNewsByRegion, params);
+  const { data = [] } = useQuery({
+    queryKey: newsKeys.byRegion(selected?.id || "NT", 45),
+    queryFn: async () => {
+      const res = await getNewsByRegion({
+        Page: 1,
+        PageSize: 6,
+        Entity: {
+          RegionFID: selected?.id || "NT",
+          CateID: 45,
+          Keyword: "",
+          SupplierType: "",
+        },
+      });
+      return res?.success ? res.data : [];
+    },
+  });
 
   const topData = useMemo(() => {
     return data?.length > 0 ? data?.slice(0, 3) : [];

@@ -30,6 +30,8 @@ const MobileMenu = () => {
   const { t } = useTranslation();
   const [params] = useQueryParams();
   const { searchValue } = useSelector((state) => state.app);
+  const regions = useSelector((state) => state.hotels.regions) || [];
+  const defaultLocation = regions[0]?.id || "";
   const { isAuthenticated = false, profile } =
     useSelector((state) => state.app) || {};
   const { fullName = "", thumb = "" } = profile || {};
@@ -98,7 +100,7 @@ const MobileMenu = () => {
                     new Date(),
                     3
                   )}&adults=2&children=0&room=1&location=${
-                    params?.location || searchValue?.location || "DN"
+                    params?.location || searchValue?.location || defaultLocation
                   }&page=1`
                 )
               }

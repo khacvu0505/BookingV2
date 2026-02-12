@@ -1,16 +1,18 @@
 import { getSearchLocation } from "@/api/hotel.api";
-import { useFetchData } from "@/hooks/useFetchData";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { searchKeys } from "@/lib/query-keys";
 
 const Regions = () => {
-  // eslint-disable-next-line no-undef
-  //   const isDesktop = window.innerWidth >= 1024;
   const isDesktop = false;
-  const [regionList] = useFetchData(getSearchLocation, {
-    keyword: "",
+  const { data: regionList = [] } = useQuery({
+    queryKey: searchKeys.regions(),
+    queryFn: async () => {
+      const res = await getSearchLocation({ keyword: "" });
+      return res?.success ? res.data : [];
+    },
   });
-  console.log("regionList", regionList);
   const navigate = useNavigate();
 
   return (

@@ -10,21 +10,77 @@ import React, {
 } from "react";
 import OtpInput from "react-otp-input";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 
 const VerifyOTPModal = ({ email, bookingID }, ref) => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [otp, setOtp] = useState("");
-  const [isSubmmitting, setIsSubmmitting] = useState(false);
+
+  const verifyOTPMutation = useMutation({
+    mutationFn: (otpValue: string) =>
+      verifyOTP({ email, otp: otpValue, bookingID }),
+    onSuccess: (res) => {
+      const { success, data, error } = res;
+      if (success) {
+        if (data.includes("https")) {
+          // eslint-disable-next-line no-undef
+          window.open(data, "_self");
+        } else {
+          navigate(`/booking/${bookingID}`);
+        }
+      } else {
+        switch (error) {
+          case "wrongotp":
+            handleRenderNoti("Mã OTP không chính xác", "error");
+            break;
+          case "expiredotp":
+            resendOTP(email)
+              .then((data) => {
+                if (data.success) {
+                  handleRenderNoti(
+                    "Mã OTP đã hết hạn. Kiểm tra lại email của bạn ",
+                    "error"
+                  );
+                } else {
+                  handleRenderNoti(
+                    "Có lỗi xảy ra. Vui lòng thử lại sau",
+                    "error"
+                  );
+                }
+              })
+              .catch(() => {
+                handleRenderNoti(
+                  "Có lỗi xảy ra. Vui lòng thử lại sau",
+                  "error"
+                );
+              });
+            break;
+          default:
+            handleRenderNoti(
+              "Có lỗi xảy ra. Vui lòng thử lại sau",
+              "error"
+            );
+            setIsVisible(false);
+            clearSessionStorage(info_booking);
+            clearSessionStorage(tax_include);
+            clearSessionStorage(create_invoice);
+            break;
+        }
+        setOtp("");
+      }
+    },
+    onError: () => {
+      setOtp("");
+      handleRenderNoti("Vui lòng thử lại sau", "error");
+    },
+  });
 
   const handleUnload = (event) => {
     if (otp.length === 6) {
-      // Remove event listener if otp length is 6
       // eslint-disable-next-line no-undef
       window.removeEventListener("beforeunload", handleUnload);
     } else {
-      // setToSessionStorage(booking_id, bookingID);
-      // Custom message for beforeunload event
       event.returnValue = "Are you sure you want to leave?";
     }
   };
@@ -39,68 +95,7 @@ const VerifyOTPModal = ({ email, bookingID }, ref) => {
 
   useEffect(() => {
     if (otp.length === 6) {
-      setIsSubmmitting(true);
-      verifyOTP({ email, otp, bookingID })
-        .then((res) => {
-          const { success, data, error } = res;
-          if (success) {
-            if (data.includes("https")) {
-              // eslint-disable-next-line no-undef
-              window.open(data, "_self");
-            } else {
-              // Payment with point
-
-              navigate(`/booking/${bookingID}`);
-            }
-
-            setIsSubmmitting(false);
-          } else {
-            switch (error) {
-              case "wrongotp":
-                handleRenderNoti("Mã OTP không chính xác", "error");
-                break;
-              case "expiredotp":
-                resendOTP(email)
-                  .then((data) => {
-                    if (data.success) {
-                      handleRenderNoti(
-                        "Mã OTP đã hết hạn. Kiểm tra lại email của bạn ",
-                        "error"
-                      );
-                    } else {
-                      handleRenderNoti(
-                        "Có lỗi xảy ra. Vui lòng thử lại sau",
-                        "error"
-                      );
-                    }
-                  })
-                  .catch(() => {
-                    handleRenderNoti(
-                      "Có lỗi xảy ra. Vui lòng thử lại sau",
-                      "error"
-                    );
-                  });
-                break;
-              default:
-                handleRenderNoti(
-                  "Có lỗi xảy ra. Vui lòng thử lại sau",
-                  "error"
-                );
-                setIsVisible(false);
-                clearSessionStorage(info_booking);
-                clearSessionStorage(tax_include);
-                clearSessionStorage(create_invoice);
-                break;
-            }
-            setIsSubmmitting(false);
-            setOtp("");
-          }
-        })
-        .catch(() => {
-          setIsSubmmitting(false);
-          setOtp("");
-          handleRenderNoti("Vui lòng thử lại sau", "error");
-        });
+      verifyOTPMutation.mutate(otp);
     }
   }, [otp]);
 
@@ -125,7 +120,7 @@ const VerifyOTPModal = ({ email, bookingID }, ref) => {
         </div>
 
         <div className="row justify-content-center mt-30 mb-60">
-          {isSubmmitting ? (
+          {verifyOTPMutation.isPending ? (
             <div className="text-center">
               <span className="loader"></span>
               <span className="ml-10">Đang xử lý...</span>

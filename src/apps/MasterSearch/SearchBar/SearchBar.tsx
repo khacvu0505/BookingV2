@@ -34,6 +34,8 @@ const SearchBar = ({ activeTab, showTab, type = "hotel" }: SearchBarProps) => {
   const dispatch = useDispatch();
 
   const { searchValue } = useSelector((state) => state.app);
+  const regions = useSelector((state) => state.hotels.regions) || [];
+  const defaultLocation = regions[0]?.id || "";
 
   useEffect(() => {
     getRegions()
@@ -50,7 +52,8 @@ const SearchBar = ({ activeTab, showTab, type = "hotel" }: SearchBarProps) => {
   };
 
   const handleSearchInfo = () => {
-    if (!searchValue.location) {
+    const location = searchValue.location || defaultLocation;
+    if (!location) {
       handleRenderNoti("Vui long chon dia diem", "error");
       return;
     }
@@ -62,7 +65,7 @@ const SearchBar = ({ activeTab, showTab, type = "hotel" }: SearchBarProps) => {
           return navigate({
             pathname: `/hotels/${searchValue.slug}`,
             search: createSearchParams({
-              location: searchValue.location || "DN",
+              location: location,
               checkIn: searchValue.checkIn,
               checkOut:
                 searchValue.checkOut < searchValue.checkIn
@@ -77,7 +80,7 @@ const SearchBar = ({ activeTab, showTab, type = "hotel" }: SearchBarProps) => {
         return navigate({
           pathname: "/hotels/",
           search: createSearchParams({
-            location: searchValue.location || "DN",
+            location: location,
             checkIn: searchValue.checkIn,
             checkOut:
               searchValue.checkOut < searchValue.checkIn
@@ -99,7 +102,7 @@ const SearchBar = ({ activeTab, showTab, type = "hotel" }: SearchBarProps) => {
         return navigate({
           pathname: "/tour/",
           search: createSearchParams({
-            location: searchValue.location,
+            location,
           }).toString(),
         });
     }

@@ -19,6 +19,8 @@ import { displayAuthenButton } from "./Header.config";
 import MobileMenu from "./MobileMenu";
 import { STEPS } from "../AuthenModal/AuthenModal";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import { commonKeys } from "@/lib/query-keys";
 
 const Header = () => {
   const { t } = useTranslation();
@@ -78,14 +80,16 @@ const Header = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      getProfile().then((data: any) => {
-        dispatch(setProfile(data));
-        saveProfileToLocalStorage(data);
-      });
-    }
-  }, [dispatch, isAuthenticated]);
+  useQuery({
+    queryKey: commonKeys.profile(),
+    queryFn: async () => {
+      const data: any = await getProfile();
+      dispatch(setProfile(data));
+      saveProfileToLocalStorage(data);
+      return data;
+    },
+    enabled: isAuthenticated,
+  });
 
   const handleOpenAuthenModal = () => {
     refSignInModal.current.setIsVisible(true);

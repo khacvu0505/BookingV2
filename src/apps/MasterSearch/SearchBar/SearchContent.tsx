@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { AttactiveItem, RecentSearchItem } from "./components";
-import { useFetchData } from "@/hooks/useFetchData";
 import { getSearchLocation } from "@/api/hotel.api";
 import {
   BREAKPOINT_LG,
@@ -11,6 +10,8 @@ import { getFromLocalStorage, removeLocalStorage } from "@/utils/utils";
 import isEmpty from "lodash/isEmpty";
 import useWindowSize from "@/utils/useWindowSize";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import { searchKeys } from "@/lib/query-keys";
 
 interface SearchContentProps {
   regions: any[];
@@ -30,15 +31,18 @@ const SearchContent = ({
   const { t } = useTranslation();
   const isDesktop = useWindowSize().width > BREAKPOINT_LG;
   const [listSearchHistory, setListSearchHistory] = useState<any[]>([]);
-  const [listSearch, isSearchLocation] = useFetchData(
-    getSearchLocation,
-    searchValue
-      ? {
-          keyword: searchValue,
-          type: type === "hotel" ? 1 : 2,
-        }
-      : {}
-  );
+  const searchType = type === "hotel" ? 1 : 2;
+  const { data: listSearch = [], isLoading: isSearchLocation } = useQuery({
+    queryKey: searchKeys.location(searchValue, searchType),
+    queryFn: async () => {
+      const res = await getSearchLocation({
+        keyword: searchValue,
+        type: searchType,
+      });
+      return res?.success ? res.data : [];
+    },
+    enabled: !!searchValue,
+  });
 
   useEffect(() => {
     if (!type) return;

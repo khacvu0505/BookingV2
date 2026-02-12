@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./TimeRemainning.style.scss";
 import { getBookingExpired, getHoldTime } from "@/api/booking.api";
 import { clearSessionStorage, getFromSessionStorage } from "@/utils/utils";
@@ -14,21 +14,23 @@ import { handleRenderNoti } from "@/utils/handleRenderNoti";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import { bookingKeys } from "@/lib/query-keys";
 
 const TimeRemainning = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [holdTime, setHoldTime] = useState("");
-  const [remainingTime, setRemainingTime] = useState(
-    (holdTime && calculateRemainingTime(new Date(holdTime))) || ""
-  );
+  const [remainingTime, setRemainingTime] = useState<number | string>("");
   const infoBooking = getFromSessionStorage(info_booking);
   const slug = getFromSessionStorage(previous_item);
   const hotelInfo = infoBooking?.hotelInfo || {};
+  const holdCode = getFromSessionStorage(hold_code);
+  const holdCodeRef = useRef(holdCode);
+
   function calculateRemainingTime(targetDateTime) {
     const currentTime = new Date();
     const timeDifference = targetDateTime.getTime() - currentTime.getTime();
-    const remainingSeconds = Math.max(timeDifference / 1000, 0); // Ensure remaining time is not negative
+    const remainingSeconds = Math.max(timeDifference / 1000, 0);
     return remainingSeconds;
   }
 
@@ -40,72 +42,69 @@ const TimeRemainning = () => {
       .padStart(2, "0")}`;
   }
 
+  const { data: holdTime = "" } = useQuery({
+    queryKey: [...bookingKeys.all, "holdTime", holdCode],
+    queryFn: async () => {
+      const res = await getHoldTime(holdCode);
+      if (res?.success) {
+        return res?.data || "";
+      }
+      Swal.fire({
+        title: t("COMMON.NOTIFICATION"),
+        icon: "info",
+        text: t("HOTEL_BOOKING.ROOM_EXPIRED"),
+        confirmButtonText: t("HOTEL_BOOKING.BACK_HOTEL_LIST"),
+        confirmButtonColor: "#f52549",
+        cancelButtonText: t("HOTEL_BOOKING.CHOOSE_ANOTHER_ROOM"),
+        cancelButtonColor: "#13bbc3",
+        showCancelButton: true,
+        allowEscapeKey: false,
+        allowEnterKey: true,
+        allowOutsideClick: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          clearSessionStorage(hold_code);
+          clearSessionStorage(info_booking);
+          clearSessionStorage(previous_item);
+          clearSessionStorage(tax_include);
+          clearSessionStorage(booking_id);
+          clearSessionStorage(create_invoice);
+          navigate("/hotels");
+          return;
+        }
+        if (infoBooking && slug) {
+          clearSessionStorage(hold_code);
+          clearSessionStorage(info_booking);
+          clearSessionStorage(previous_item);
+          clearSessionStorage(tax_include);
+          clearSessionStorage(booking_id);
+          clearSessionStorage(create_invoice);
+          navigate(
+            `${slug}?checkIn=${hotelInfo?.fromDate}&checkOut=${hotelInfo?.toDate}&adults=${hotelInfo?.adults}&children=${hotelInfo?.children}&room=${hotelInfo?.room}`
+          );
+        } else {
+          clearSessionStorage(hold_code);
+          clearSessionStorage(info_booking);
+          clearSessionStorage(previous_item);
+          clearSessionStorage(tax_include);
+          clearSessionStorage(booking_id);
+          clearSessionStorage(create_invoice);
+          navigate("/hotels");
+        }
+      });
+      return "";
+    },
+    enabled: !!holdCode,
+    retry: false,
+    staleTime: Infinity,
+  });
+
+  // Cleanup: expire booking on unmount
   useEffect(() => {
-    const holdCode = getFromSessionStorage(hold_code);
-
-    try {
-      getHoldTime(holdCode)
-        .then((res) => {
-          const isSuccess = res.success;
-          if (isSuccess) {
-            setHoldTime(res?.data || "");
-          } else {
-            setHoldTime("");
-            Swal.fire({
-              title: t("COMMON.NOTIFICATION"),
-              icon: "info",
-              text: t("HOTEL_BOOKING.ROOM_EXPIRED"),
-              confirmButtonText: t("HOTEL_BOOKING.BACK_HOTEL_LIST"),
-              confirmButtonColor: "#f52549",
-              cancelButtonText: t("HOTEL_BOOKING.CHOOSE_ANOTHER_ROOM"),
-              cancelButtonColor: "#13bbc3",
-              showCancelButton: true,
-              allowEscapeKey: false,
-              allowEnterKey: true,
-              allowOutsideClick: false,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                clearSessionStorage(hold_code);
-                clearSessionStorage(info_booking);
-                clearSessionStorage(previous_item);
-                clearSessionStorage(tax_include);
-                clearSessionStorage(booking_id);
-                clearSessionStorage(create_invoice);
-                navigate("/hotels");
-                return;
-              }
-              if (infoBooking && slug) {
-                clearSessionStorage(hold_code);
-                clearSessionStorage(info_booking);
-                clearSessionStorage(previous_item);
-                clearSessionStorage(tax_include);
-                clearSessionStorage(booking_id);
-                clearSessionStorage(create_invoice);
-                navigate(
-                  `${slug}?checkIn=${hotelInfo?.fromDate}&checkOut=${hotelInfo?.toDate}&adults=${hotelInfo?.adults}&children=${hotelInfo?.children}&room=${hotelInfo?.room}`
-                );
-              } else {
-                clearSessionStorage(hold_code);
-                clearSessionStorage(info_booking);
-                clearSessionStorage(previous_item);
-                clearSessionStorage(tax_include);
-                clearSessionStorage(booking_id);
-                clearSessionStorage(create_invoice);
-                navigate("/hotels");
-              }
-            });
-          }
-        })
-        .catch(() => {
-          setHoldTime("");
-        });
-    } catch (error) {
-      handleRenderNoti(t("HOTEL_BOOKING.PLEASE_TRY_AGAIN"), "error");
-      throw error;
-    }
-
     return () => {
-      getBookingExpired(holdCode);
+      if (holdCodeRef.current) {
+        getBookingExpired(holdCodeRef.current);
+      }
     };
   }, []);
   useEffect(() => {

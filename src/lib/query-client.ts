@@ -7,7 +7,7 @@ function makeQueryClient() {
         staleTime: 2 * 60 * 1000, // 2 minutes
         gcTime: 5 * 60 * 1000, // 5 minutes
         retry: 1,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
       },
     },
   });

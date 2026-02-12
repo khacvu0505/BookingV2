@@ -1,14 +1,20 @@
-import { getRelatedHotels } from "@/api/hotel.api";
 import { getToursRecommend } from "@/api/news.api";
 import CardItem from "@/apps/CardItem";
-import { useFetchData } from "@/hooks/useFetchData";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { newsKeys } from "@/lib/query-keys";
 
 const TourRelated = () => {
   const navigate = useNavigate();
 
-  const [tourRelated] = useFetchData(getToursRecommend, {});
+  const { data: tourRelated = [] } = useQuery({
+    queryKey: newsKeys.toursRecommend(),
+    queryFn: async () => {
+      const res = await getToursRecommend();
+      return res?.success ? res.data : [];
+    },
+  });
 
   return (
     <div

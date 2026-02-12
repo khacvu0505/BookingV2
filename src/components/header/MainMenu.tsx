@@ -7,11 +7,14 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { addDate, formatDate } from "@/utils/utils";
 import useQueryParams from "@/hooks/useQueryParams";
+import { useSelector } from "react-redux";
 
 const MainMenu = ({ style = "" }) => {
   const [params] = useQueryParams();
   const { pathname } = useLocation();
   const [isActiveParent, setIsActiveParent] = useState(false);
+  const regions = useSelector((state: any) => state.hotels.regions) || [];
+  const defaultLocation = regions[0]?.id || "";
 
   const isHotelList = pathname === "/hotels/";
   return (
@@ -81,7 +84,7 @@ const MainMenu = ({ style = "" }) => {
                     new Date(),
                     3
                   )}&adults=2&children=0&room=1&location=${
-                    params?.location || "DN"
+                    params?.location || defaultLocation
                   }&page=1`
                 : `/hotels/?checkIn=${formatDate(
                     new Date()

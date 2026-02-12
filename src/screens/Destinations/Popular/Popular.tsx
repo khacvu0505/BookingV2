@@ -1,10 +1,8 @@
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import CardItem from "@/apps/CardItem";
-import { useFetchData } from "@/hooks/useFetchData";
-import { getToursRecommend } from "@/api/news.api";
 import Icon5 from "../svg/Icon5";
 import Icon1 from "../svg/Icon1";
 import Icon2 from "../svg/Icon2";
@@ -18,6 +16,8 @@ import { addDate, formatDate } from "@/utils/utils";
 import TabRecomment from "@/apps/TabRecomment";
 import SkeletonCard from "@/apps/SkeletonCard";
 import { t } from "i18next";
+import { useQuery } from "@tanstack/react-query";
+import { destinationKeys } from "@/lib/query-keys";
 
 const getData = () => [
   {
@@ -128,9 +128,6 @@ const Section = ({ items, selected, onClick }) => {
 };
 
 const Popular = () => {
-  // const [tourRelated] = useFetchData(getToursRecommend);
-  const [tourRelated, setTourRelated] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const sections = [
@@ -140,25 +137,14 @@ const Popular = () => {
   ];
   const [selected, setSelected] = useState(getData()[0]);
 
-  useEffect(() => {
-    const fetchData = async (type?: any) => {
-      setIsLoading(true);
-      try {
-        const data = await getPopularDestinations({ type: selected?.id });
-        setTourRelated(data?.data || []);
-      } catch (error) {
-        console.log(error);
-        setTourRelated([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    if (selected?.id) {
-      fetchData();
-    } else {
-      setTourRelated([]);
-    }
-  }, [selected]);
+  const { data: tourRelated = [], isLoading } = useQuery({
+    queryKey: destinationKeys.popular(selected?.id),
+    queryFn: async () => {
+      const res = await getPopularDestinations({ type: selected?.id });
+      return res?.data || [];
+    },
+    enabled: !!selected?.id,
+  });
 
   return (
     <div>

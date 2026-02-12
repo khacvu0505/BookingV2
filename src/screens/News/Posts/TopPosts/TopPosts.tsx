@@ -1,32 +1,39 @@
 import { getNewsByRegion } from "@/api/news.api";
 import Pagination from "@/apps/Pagination";
-import { useFetchData } from "@/hooks/useFetchData";
 import useQueryParams from "@/hooks/useQueryParams";
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { newsKeys } from "@/lib/query-keys";
 
 const TopPosts = ({ selected }) => {
   const navigate = useNavigate();
   const [params, setSearchParams] = useQueryParams();
   const pageParam = Number(params.page) || 1;
 
-  const [topPosts, setTopPosts] = React.useState(null);
-  const [newsData, isLoading, totalPage] = useFetchData(getNewsByRegion, {
-    Page: pageParam,
-    PageSize: 10,
-    Entity: {
-      RegionFID: selected?.id || "NT",
-      CateID: "",
-      Keyword: "",
-      SupplierType: "",
+  const { data: queryData } = useQuery({
+    queryKey: newsKeys.topPosts(selected?.id || "NT", pageParam),
+    queryFn: async () => {
+      const res = await getNewsByRegion({
+        Page: pageParam,
+        PageSize: 10,
+        Entity: {
+          RegionFID: selected?.id || "NT",
+          CateID: "",
+          Keyword: "",
+          SupplierType: "",
+        },
+      });
+      if (res?.success) {
+        return { list: res.data, totalPage: res.totalPage ?? 1 };
+      }
+      return { list: null, totalPage: 1 };
     },
   });
 
-  useEffect(() => {
-    if (newsData) {
-      setTopPosts(newsData[0]);
-    }
-  }, [newsData]);
+  const newsData = queryData?.list;
+  const totalPage = queryData?.totalPage ?? 1;
+  const topPosts = newsData?.[0] ?? null;
   // onClick={() => {
   //   navigate(`/news/${item?.slug}`);
   // }}

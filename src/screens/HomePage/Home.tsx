@@ -1,7 +1,3 @@
-import { lazy, useRef } from "react";
-import { useEffect, useState } from "react";
-import { getImageHome } from "@/api/category.api";
-
 import MetaComponent from "@/apps/MetaComponent";
 import LoadingPage from "@/apps/LoadingPage";
 import Promotion from "./Promotion/Promotion";
@@ -12,7 +8,9 @@ import ParallaxBanner from "./ParallaxBanner";
 import TopDestinations from "./TopDestination";
 import ContactUs from "./ContactUs";
 import { useTranslation } from "react-i18next";
-// import TestModal from "./TestModal";
+import { useQuery } from "@tanstack/react-query";
+import { commonKeys } from "@/lib/query-keys";
+import { getImageHome } from "@/api/category.api";
 
 const metadata = {
   title: "Home",
@@ -20,10 +18,15 @@ const metadata = {
 };
 
 const Home = () => {
-  // const testModalRef = useRef(null);
   const { t } = useTranslation();
-  const [imagesHome, setImageHome] = useState(null);
-  const [isLoading, setLoading] = useState(false);
+  const { data: imagesHome = null, isLoading } = useQuery({
+    queryKey: commonKeys.imageHome(),
+    queryFn: async () => {
+      const res = await getImageHome();
+      if (res?.success) return res.data;
+      return null;
+    },
+  });
   const {
     banners = [],
     videoURL = "",
@@ -31,28 +34,6 @@ const Home = () => {
     videoImage = "",
     videoAvt = "",
   } = imagesHome || {};
-
-  useEffect(() => {
-    const fetchImageHome = async () => {
-      setLoading(true);
-      await getImageHome()
-        .then((res) => {
-          if (res?.success) {
-            setImageHome(res?.data);
-          } else {
-            setImageHome(null);
-          }
-        })
-        .catch(() => {
-          setImageHome(null);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    };
-
-    fetchImageHome();
-  }, []);
 
   return (
     <div className="w-100 overflow-hidden">

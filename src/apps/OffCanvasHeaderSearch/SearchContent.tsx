@@ -1,21 +1,23 @@
 import { getSearchGeneral } from "@/api/hotel.api";
-import { useFetchData } from "@/hooks/useFetchData";
 import React from "react";
 import { ResultSearchItem } from "./ResultSearchItem";
+import { useQuery } from "@tanstack/react-query";
+import { searchKeys } from "@/lib/query-keys";
 
 interface SearchContentProps {
   searchValueDebounce: string;
 }
 
 const SearchContent = ({ searchValueDebounce }: SearchContentProps) => {
-  const [listSearchGeneral, isSearchGeneralLoading] = useFetchData(
-    getSearchGeneral,
-    searchValueDebounce
-      ? {
-          keyword: searchValueDebounce,
-        }
-      : {}
-  );
+  const { data: listSearchGeneral = [], isLoading: isSearchGeneralLoading } =
+    useQuery({
+      queryKey: searchKeys.general(searchValueDebounce),
+      queryFn: async () => {
+        const res = await getSearchGeneral({ keyword: searchValueDebounce });
+        return res?.success ? res.data : [];
+      },
+      enabled: !!searchValueDebounce,
+    });
 
   const handleOptionClick = (value: any) => {
     // eslint-disable-next-line no-undef

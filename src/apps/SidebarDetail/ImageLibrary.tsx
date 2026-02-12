@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import LightGallery from "lightgallery/react";
 
 // If you want you can use SCSS instead of css
@@ -6,48 +6,34 @@ import "lightgallery/scss/lightgallery.scss";
 import "lightgallery/scss/lg-zoom.scss";
 
 // import plugins if you need
-import lgThumbnail from "lightgallery/plugins/thumbnail";
 import lgZoom from "lightgallery/plugins/zoom";
 import lgVideo from "lightgallery/plugins/video";
 
 import "./ImageLibrary.style.scss";
 import { getImageLibrary } from "@/api/hotel.api";
+import { useQuery } from "@tanstack/react-query";
+import { hotelKeys } from "@/lib/query-keys";
 
 interface GalleryProps {
   hotel: any;
 }
 
-interface GalleryImage {
-  id: number;
-  src: string;
-  alt: string;
-}
-
 function Gallery({ hotel }: GalleryProps) {
-  const [images, setImages] = useState<GalleryImage[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getImageLibrary(hotel?.hotelCode);
-        if (data?.success) {
-          if (data.data.length > 0) {
-            const imgList = data.data.map((item: string, idx: number) => ({
-              id: idx + 1,
-              src: item,
-              alt: `Image ${idx + 1}`,
-            }));
-            setImages(imgList);
-          }
-        } else {
-          setImages([]);
-        }
-      } catch (error) {
-        setImages([]);
+  const { data: images = [] } = useQuery({
+    queryKey: hotelKeys.imageLibrary(hotel?.hotelCode),
+    queryFn: async () => {
+      const res = await getImageLibrary(hotel?.hotelCode);
+      if (res?.success && res.data.length > 0) {
+        return res.data.map((item: string, idx: number) => ({
+          id: idx + 1,
+          src: item,
+          alt: `Image ${idx + 1}`,
+        }));
       }
-    };
-    fetchData();
-  }, []);
+      return [];
+    },
+    enabled: !!hotel?.hotelCode,
+  });
 
   return (
     <div className="App">

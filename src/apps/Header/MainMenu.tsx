@@ -14,6 +14,8 @@ const MainMenu = ({ style = "" }: MainMenuProps) => {
   const [params] = useQueryParams();
   const { pathname } = useLocation();
   const { searchValue } = useSelector((state) => state.app);
+  const regions = useSelector((state) => state.hotels.regions) || [];
+  const defaultLocation = regions[0]?.id || "";
 
   const isHotelList = pathname === "/hotels/";
   return (
@@ -30,7 +32,7 @@ const MainMenu = ({ style = "" }: MainMenuProps) => {
               new Date(),
               3
             )}&adults=2&children=0&room=1&location=${
-              params?.location || searchValue?.location || "DN"
+              params?.location || searchValue?.location || defaultLocation
             }&page=1`}
           >
             <span className="fw-500">{t("HOME.HEADER/HOTELS")}</span>

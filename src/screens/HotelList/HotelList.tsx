@@ -33,9 +33,12 @@ const HotelList = () => {
 
   const secondaryLocationList =
     useSelector((state: any) => state.hotels.secondaryLocation) || undefined;
+  const regions =
+    useSelector((state: any) => state.hotels.regions) || [];
+  const defaultLocation = regions[0]?.id || "";
 
   const {
-    location: locationParam = "DN",
+    location: locationParam = defaultLocation,
     checkIn: checkInParam = formatDate(new Date()),
     checkOut: checkOutParam = addDate(new Date(), 3),
     adults: adultsParam = 2,

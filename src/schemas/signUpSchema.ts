@@ -26,7 +26,7 @@ export const signUpSchema = yup.object({
     .string()
     .required(() => t("AUTH.SIGNUP/RE_ENTER_PASSWORD"))
     .oneOf([yup.ref("password"), null], () =>
-      t("AUTH.SIGNUP/PASSWORD_NOT_MATCH")
+      t("AUTH.SIGNUP/RE_ENTER_PASSWORD_NOT_MATCH")
     ),
 });
 

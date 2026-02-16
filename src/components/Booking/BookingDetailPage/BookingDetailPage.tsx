@@ -339,7 +339,7 @@ const BookingDetailPage = ({ supplierType }: BookingDetailPageProps) => {
               {supplierType === "Hotel" && (
                 <div className="d-flex items-center col-md-6 mb-16">
                   <p className="text-14 fw-400 text-neutral-800 mr-4">
-                    {t("PROFILE.NUMBER_OF_GUESTS")}:{" "}
+                    {t("PROFILE.NUMBER_OF_GUEST")}:{" "}
                   </p>{" "}
                   <p className="fw-600 text-14 text-neutral-800">
                     {bookingDetail?.totalAdult + bookingDetail?.totalChildren} (

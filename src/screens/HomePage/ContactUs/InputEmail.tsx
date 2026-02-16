@@ -41,14 +41,14 @@ const InputEmail = () => {
   };
 
   return (
-    <div>
+    <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
       <div className="inputEmail">
         <input
           type="email"
           placeholder={t("HOME.INPUT_EMAIL")}
           onChange={handleChange}
         />
-        <button className="button text-18" onClick={handleSubmit}>
+        <button type="submit" className="button text-18">
           {t("HOME.SUBSCRIBE")}
         </button>
       </div>
@@ -57,7 +57,7 @@ const InputEmail = () => {
           {t("HOME.EMAIL_INVALID")}
         </p>
       )}
-    </div>
+    </form>
   );
 };
 

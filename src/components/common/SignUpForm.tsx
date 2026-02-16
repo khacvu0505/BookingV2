@@ -73,7 +73,7 @@ const SignUpForm = ({ setStep, emailVerify, handleCloseModal }: SignUpFormProps)
   };
 
   return (
-    <form className="row y-gap-20">
+    <form className="row y-gap-20" onSubmit={handleSubmit(handleSubmitForm as any)}>
       <div className="col-12">
         <h1 className="text-22 fw-500">{t("AUTH.SIGNUP/TITLE")}</h1>
         <p className="mt-10">
@@ -195,7 +195,7 @@ const SignUpForm = ({ setStep, emailVerify, handleCloseModal }: SignUpFormProps)
       <div className="col-12">
         <Button
           className="w-100"
-          onClick={handleSubmit(handleSubmitForm as any)}
+          htmlType="submit"
           disabled={isSubmmitting}
         >
           {isSubmmitting ? (

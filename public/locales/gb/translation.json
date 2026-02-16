@@ -11,6 +11,7 @@
     "HEADER/DESTINATIONS": "Destinations",
     "HEADER/FLIGHT_TICKET": "Flight Tickets",
     "HEADER/NEWS": "News",
+    "HEADER/PROFILE": "Personal Information",
     "HEADER/PROMOTION_TITLE": "Ba Den Mountain Tour Discount",
     "TITLE": "Discover Your World",
     "SUB_TITLE": "Amazing places are waiting for you with attractive offers",
@@ -386,7 +387,7 @@
     "FILTER/CATEGORY": "Category",
     "FILTER/DURATION": "Duration",
     "FILTER/LANGUAGE": "Language",
-    "TOUR_INFORMATION": "Tour information"
+    "TOUR_INFO": "Tour information"
   },
   "TOUR": {
     "CHOOSE_SERVICE": "Select a service package",

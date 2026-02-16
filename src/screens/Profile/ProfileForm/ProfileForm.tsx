@@ -100,7 +100,7 @@ const ProfileForm = ({ dataUser }) => {
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit(handleSubmitProfile)}>
       <div className="row px-0 w-75 ml-0 xl:w-1/1">
         <div className="mb-30 col-12 col-md-6 pl-0 md:pr-0">
           <Input
@@ -143,11 +143,11 @@ const ProfileForm = ({ dataUser }) => {
         />
       </div>
       <div className="d-flex justify-content-end w-75 xl:w-1/1">
-        <Button onClick={handleSubmit(handleSubmitProfile)} isLoading={updateProfileMutation.isPending}>
+        <Button htmlType="submit" isLoading={updateProfileMutation.isPending}>
           {t("PROFILE.UPDATE_INFORMATION")}
         </Button>
       </div>
-    </div>
+    </form>
   );
 };
 

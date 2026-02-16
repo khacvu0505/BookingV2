@@ -76,7 +76,7 @@ const UpdateCustomerReceiveModal = (props, ref) => {
           </div>
         </div>
 
-        <div className="row justify-content-center mt-30 mb-30">
+        <form className="row justify-content-center mt-30 mb-30" onSubmit={handleSubmit(handleSubmitForm)}>
           <div className="col-10 mb-20">
             <div className="form-input ">
               <input
@@ -84,8 +84,6 @@ const UpdateCustomerReceiveModal = (props, ref) => {
                 required
                 name="currentPassword"
                 {...register("currentPassword")}
-                // value={profileForm.name}
-                // onChange={handleChangeForm}
               />
 
               <label className="lh-1 text-14 text-light-1">
@@ -103,8 +101,6 @@ const UpdateCustomerReceiveModal = (props, ref) => {
                 required
                 name="newPassword"
                 {...register("newPassword")}
-                // value={profileForm.name}
-                // onChange={handleChangeForm}
               />
               <label className="lh-1 text-14 text-light-1">New Password</label>
             </div>
@@ -118,8 +114,6 @@ const UpdateCustomerReceiveModal = (props, ref) => {
                 required
                 name="confirmNewPassword"
                 {...register("confirmNewPassword")}
-                // value={profileForm.name}
-                // onChange={handleChangeForm}
               />
               <label className="lh-1 text-14 text-light-1">
                 Confirm New Password
@@ -130,13 +124,13 @@ const UpdateCustomerReceiveModal = (props, ref) => {
           </div>
           <div className="col-10">
             <button
+              type="submit"
               className="button py-20 -dark-1 bg-blue-1 text-white w-100"
-              onClick={handleSubmit(handleSubmitForm)}
             >
               UPDATE <div className="icon-arrow-top-right ml-15" />
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

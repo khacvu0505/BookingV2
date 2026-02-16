@@ -94,7 +94,7 @@ const ChangePassword = () => {
   }, [errors]);
 
   return (
-    <div>
+    <form onSubmit={handleSubmit(handleSubmitForm)}>
       <MetaComponent meta={metadata} />
       <h1 className="text-24 lg:text-22 md:text-20 fw-600 text-neutral-800 mb-8">
         {t("PROFILE.CHANGE_PASSWORD")}
@@ -143,13 +143,13 @@ const ChangePassword = () => {
         </Button>
 
         <Button
-          onClick={handleSubmit(handleSubmitForm)}
+          htmlType="submit"
           isLoading={updatePasswordMutation.isPending}
         >
           {t("PROFILE.SAVE_PASSWORD")}
         </Button>
       </div>
-    </div>
+    </form>
   );
 };
 

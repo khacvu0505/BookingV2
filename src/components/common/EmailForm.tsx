@@ -39,7 +39,7 @@ const EmailForm = ({ setStep, setEmailVerify }) => {
   };
 
   return (
-    <>
+    <form onSubmit={(e) => { e.preventDefault(); handleCheckEmailExisted(); }}>
       <h1 className="text-20 text-md-22 fw-500 text-center mb-20">
         {t("COMMON.ENTER_YOUR_EMAIL")}
       </h1>
@@ -58,8 +58,8 @@ const EmailForm = ({ setStep, setEmailVerify }) => {
       <div className="col-12">
         <Button
           className="w-100"
+          htmlType="submit"
           disabled={isSubmmitting || Boolean(!email)}
-          onClick={handleCheckEmailExisted}
         >
           {isSubmmitting ? (
             <span className="loader mr-15"></span>
@@ -77,7 +77,7 @@ const EmailForm = ({ setStep, setEmailVerify }) => {
           Tiếp tục <div className="icon-arrow-top-right ml-15" />
         </button> */}
       </div>
-    </>
+    </form>
   );
 };
 

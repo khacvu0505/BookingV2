@@ -50,7 +50,7 @@ const LoginForm = ({ handleCloseModal, setStep }: { handleCloseModal?: any; setS
 
   return (
     <>
-      <form className="row y-gap-20">
+      <form className="row y-gap-20" onSubmit={handleSubmit(handleSubmitForm)}>
         <div className="col-12">
           <h1 className="text-22 fw-500"></h1>
           {pathname !== "/login" && (
@@ -109,7 +109,7 @@ const LoginForm = ({ handleCloseModal, setStep }: { handleCloseModal?: any; setS
         {/* End .col */}
 
         <div className="col-12">
-          <Button onClick={handleSubmit(handleSubmitForm)} className="w-100">
+          <Button htmlType="submit" className="w-100">
             {isSubmmitting ? (
               <span className="loader mr-15"></span>
             ) : (

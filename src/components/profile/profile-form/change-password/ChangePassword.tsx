@@ -99,7 +99,7 @@ const ChangePassword = (props: any, ref: any) => {
         </div>
         {/* End flex wrapper */}
 
-        <div className="row justify-content-center mt-30 mb-30">
+        <form className="row justify-content-center mt-30 mb-30" onSubmit={handleSubmit(handleSubmitForm)}>
           <div className="col-10 mb-20">
             <div className="form-input ">
               <input
@@ -107,8 +107,6 @@ const ChangePassword = (props: any, ref: any) => {
                 required
                 name="currentPassword"
                 {...register("currentPassword")}
-                // value={profileForm.name}
-                // onChange={handleChangeForm}
               />
 
               <label className="lh-1 text-14 text-light-1">
@@ -126,8 +124,6 @@ const ChangePassword = (props: any, ref: any) => {
                 required
                 name="newPassword"
                 {...register("newPassword")}
-                // value={profileForm.name}
-                // onChange={handleChangeForm}
               />
               <label className="lh-1 text-14 text-light-1">Mật khẩu mới</label>
             </div>
@@ -141,8 +137,6 @@ const ChangePassword = (props: any, ref: any) => {
                 required
                 name="confirmNewPassword"
                 {...register("confirmNewPassword")}
-                // value={profileForm.name}
-                // onChange={handleChangeForm}
               />
               <label className="lh-1 text-14 text-light-1">
                 Nhập lại mật khẩu
@@ -153,15 +147,15 @@ const ChangePassword = (props: any, ref: any) => {
           </div>
           <div className="col-10">
             <button
+              type="submit"
               className="button py-20 -dark-1 bg-blue-1 text-white w-100"
-              onClick={handleSubmit(handleSubmitForm)}
               disabled={isSubmmitting}
             >
               {isSubmmitting && <span className="loader mr-15"></span>}
               Cập nhật <div className="icon-arrow-top-right ml-15" />
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

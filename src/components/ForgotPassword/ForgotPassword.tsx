@@ -48,7 +48,7 @@ const ForgotPassword = ({ handleCloseModal }: ForgotPasswordProps) => {
   };
 
   return (
-    <>
+    <form onSubmit={(e) => { e.preventDefault(); handleCheckEmailExisted(); }}>
       <h1 className="text-20 text-md-22 fw-500 text-center mb-20">
         Quên mật khẩu
       </h1>
@@ -67,8 +67,8 @@ const ForgotPassword = ({ handleCloseModal }: ForgotPasswordProps) => {
       <div className="col-12">
         <Button
           className="w-100"
+          htmlType="submit"
           disabled={isSubmmitting || Boolean(!email)}
-          onClick={handleCheckEmailExisted}
         >
           {isSubmmitting ? <span className="loader mr-15"></span> : "Tiếp tục"}
         </Button>
@@ -82,7 +82,7 @@ const ForgotPassword = ({ handleCloseModal }: ForgotPasswordProps) => {
           Tiếp tục <div className="icon-arrow-top-right ml-15" />
         </button> */}
       </div>
-    </>
+    </form>
   );
 };
 

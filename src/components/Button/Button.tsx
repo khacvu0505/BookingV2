@@ -7,6 +7,7 @@ interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>
   isOutline?: boolean;
   disabled?: boolean;
   type?: string;
+  htmlType?: "button" | "submit" | "reset";
   className?: string;
   isLoading?: boolean;
 }
@@ -16,6 +17,7 @@ const Button: React.FC<ButtonProps> = ({
   isOutline = false,
   disabled = false,
   type = "primary",
+  htmlType = "button",
   className,
   isLoading,
   ...restProps
@@ -26,7 +28,7 @@ const Button: React.FC<ButtonProps> = ({
         return (
           <button
             {...restProps}
-            type="button"
+            type={htmlType}
             className={classNames(
               `button buttonCustom text-18 xl:text-16 lg:text-14 py-10 px-16 lg:py-8 lg:px-14 md:px-6`,
               {
@@ -54,7 +56,7 @@ const Button: React.FC<ButtonProps> = ({
         return (
           <button
             {...restProps}
-            type="button"
+            type={htmlType}
             className={classNames(
               `button buttonCustom text-18 xl:text-16 lg:text-14 py-10 px-16 lg:py-8 lg:px-14`,
               {

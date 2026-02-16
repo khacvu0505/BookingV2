@@ -2,10 +2,12 @@ import useQueryParams from "@/hooks/useQueryParams";
 import { useCallback, useEffect, useState } from "react";
 import debounce from "lodash/debounce";
 import { cleanedObject } from "@/utils/utils";
+import { useTranslation } from "react-i18next";
 
 const SearchBox = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchParams, setSearchParams] = useQueryParams();
+  const { t } = useTranslation();
 
   const debouncedSearch = useCallback(
     debounce((searchTerm) => {
@@ -35,7 +37,7 @@ const SearchBox = () => {
       <input
         className="pl-50 border-light text-dark-1 h-50 rounded-8"
         type="text"
-        placeholder="e.g. FLC Tower, Đà Lạt ..."
+        placeholder={t("COMMON.SEARCH_PLACEHOLDER_HOTEL")}
         value={searchValue || ""}
         onChange={handleChangeValue}
       />

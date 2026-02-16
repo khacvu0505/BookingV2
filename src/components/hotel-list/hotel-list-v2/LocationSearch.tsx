@@ -1,8 +1,10 @@
 import useQueryParams from "@/hooks/useQueryParams";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const SearchBar = ({ handleChangeDataFilter }) => {
+  const { t } = useTranslation();
   const regions = useSelector((state) => state.hotels.regions) || [];
 
   const [params, _] = useQueryParams();
@@ -55,7 +57,7 @@ const SearchBar = ({ handleChangeDataFilter }) => {
           data-bs-auto-close="true"
           data-bs-offset="0,22"
         >
-          <h4 className="text-15 fw-500 ls-2 lh-16">Địa chỉ</h4>
+          <h4 className="text-15 fw-500 ls-2 lh-16">{t("COMMON.ADDRESS")}</h4>
           <div className="text-15 text-light-1 ls-2 lh-16">
             <input
               autoComplete="off"

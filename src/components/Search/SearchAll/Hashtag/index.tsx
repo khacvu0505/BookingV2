@@ -2,8 +2,10 @@ import { getHashtagSearchAll } from "@/api/user.api";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { searchKeys } from "@/lib/query-keys";
+import { useTranslation } from "react-i18next";
 
 const Hashtag = () => {
+  const { t } = useTranslation();
   const { data: hashTagData = [] } = useQuery({
     queryKey: searchKeys.hashtags(),
     queryFn: async () => {
@@ -17,7 +19,7 @@ const Hashtag = () => {
       {(hashTagData as any[])?.length > 0 && (
         <div className="pt-5 pb-5">
           <p className="text-neutral-800 fw-800 pb-5">
-            Mọi người đang tìm kiếm{" "}
+            {t("COMMON.PEOPLE_SEARCHING")}{" "}
           </p>
 
           <div className="d-flex align-items-center flex-wrap mb-2">

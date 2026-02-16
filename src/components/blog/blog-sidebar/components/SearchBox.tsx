@@ -2,8 +2,10 @@ import { setFilter } from "@/features/blogs/blogSlice";
 import debounce from "lodash/debounce";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const SearchBox = () => {
+  const { t } = useTranslation();
   const { filter } = useSelector((state) => state.blogs);
   const [searchText, setSearchText] = useState(filter?.Entity.Keyword || "");
   const dispatch = useDispatch();
@@ -32,7 +34,7 @@ const SearchBox = () => {
       <input
         className="pl-50 border-light text-dark-1 h-50 rounded-8"
         type="text"
-        placeholder="Nhập từ khoá"
+        placeholder={t("COMMON.ENTER_KEYWORD")}
         value={searchText || ""}
         onChange={handleChangeValue}
       />

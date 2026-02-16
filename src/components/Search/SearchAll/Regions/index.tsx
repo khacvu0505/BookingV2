@@ -3,8 +3,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { searchKeys } from "@/lib/query-keys";
+import { useTranslation } from "react-i18next";
 
 const Regions = () => {
+  const { t } = useTranslation();
   const isDesktop = false;
   const { data: regionList = [] } = useQuery({
     queryKey: searchKeys.regions(),
@@ -17,7 +19,7 @@ const Regions = () => {
 
   return (
     <div>
-      <p className="text-neutral-800 fw-800 pb-5">Địa điểm hấp dẫn </p>
+      <p className="text-neutral-800 fw-800 pb-5">{t("COMMON.ATTRACTIVE_LOCATIONS")} </p>
       <div className="d-flex align-items-center flex-wrap mb-2">
         {(regionList as any[])?.length > 0 &&
           (regionList as any[]).map((item: any, idx: number) => (

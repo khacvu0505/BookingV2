@@ -7,8 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { getBookingExpired, getHoldTime } from "@/api/booking.api";
 import { useQuery } from "@tanstack/react-query";
 import { bookingKeys } from "@/lib/query-keys";
+import { useTranslation } from "react-i18next";
 
 const TimeRemainning = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [remainingTime, setRemainingTime] = useState<number | string>("");
   const holdCode = getFromSessionStorage(hold_code);
@@ -37,12 +39,12 @@ const TimeRemainning = () => {
         return res?.data || "";
       }
       Swal.fire({
-        title: "Thông báo",
+        title: t("COMMON.NOTIFICATION"),
         icon: "info",
-        text: "Giữ tour đã hết hạn",
-        confirmButtonText: "Về danh sách tour",
+        text: t("COMMON.TOUR_HOLD_EXPIRED"),
+        confirmButtonText: t("COMMON.BACK_TO_TOUR_LIST"),
         confirmButtonColor: "#f52549",
-        cancelButtonText: "Chọn tour khác",
+        cancelButtonText: t("COMMON.CHOOSE_ANOTHER_TOUR"),
         cancelButtonColor: "#13bbc3",
         showCancelButton: true,
         allowEscapeKey: false,
@@ -90,13 +92,13 @@ const TimeRemainning = () => {
   useEffect(() => {
     if (typeof remainingTime === "number" && remainingTime <= 0) {
       Swal.fire({
-        title: "Thông báo",
-        imageUrl: "/images/Booking/icon-info.png", // Đường dẫn đến hình ảnh
-        imageWidth: 72, // Độ rộng của hình ảnh (tùy chỉnh)
-        imageHeight: 72, // Độ cao của hình ảnh (tùy chỉnh)
-        imageAlt: "Custom icon", // Văn bản thay thế nếu không hiển thị được hình ảnh
-        text: "Hết thời gian giữ tour, vui lòng lựa chọn tour khác",
-        confirmButtonText: "Về trang chủ",
+        title: t("COMMON.NOTIFICATION"),
+        imageUrl: "/images/Booking/icon-info.png",
+        imageWidth: 72,
+        imageHeight: 72,
+        imageAlt: "Custom icon",
+        text: t("COMMON.TOUR_HOLD_TIMEOUT"),
+        confirmButtonText: t("COMMON.BACK_TO_HOMEPAGE"),
         confirmButtonColor: "#00AEED",
         allowEscapeKey: false,
         allowEnterKey: true,
@@ -121,7 +123,7 @@ const TimeRemainning = () => {
   return (
     <div className="time_remainning xl:mt-20">
       <p className="time_remainning-text text-16 lg:text-15 md:text-14 fw-600">
-        <span>Thời gian còn lại:</span>
+        <span>{t("COMMON.TIME_REMAINING")}</span>
         <span> {remainingTime && formatRemainingTime(remainingTime)}</span>
       </p>
     </div>

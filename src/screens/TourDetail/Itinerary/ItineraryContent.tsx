@@ -56,7 +56,7 @@ const ItineraryContent = ({ data }) => {
                   onClick={() => toggleCollapse(index)}
                 >
                   <button className="d-block lh-15 text-14 lg:text-13 underline fw-500 mt-5">
-                    {openIndex === index ? "Ẩn bớt" : "Xem thêm"}
+                    {openIndex === index ? t("COMMON.SHOW_LESS") : t("COMMON.SEE_MORE")}
                   </button>
                 </div>
               </div>

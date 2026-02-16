@@ -1,29 +1,32 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 const HotPlaces = () => {
-  const placesContent = [
+  const { t } = useTranslation();
+  const placesContent = useMemo(() => [
     {
       id: 1,
-      name: "Sapa",
+      name: t("HOME.HOT_PLACE/SAPA"),
     },
     {
       id: 2,
-      name: "Phú Quốc",
+      name: t("HOME.HOT_PLACE/PHU_QUOC"),
     },
     {
       id: 3,
-      name: "Đà Lạt",
+      name: t("HOME.HOT_PLACE/DA_LAT"),
     },
     {
       id: 4,
-      name: "Nha Trang",
+      name: t("HOME.HOT_PLACE/NHA_TRANG"),
     },
     {
       id: 5,
-      name: "Vũng Tàu",
+      name: t("HOME.HOT_PLACE/VUNG_TAU"),
     },
-  ];
+  ], [t]);
   return (
     <div className="slider mr-30">
       <Swiper

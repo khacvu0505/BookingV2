@@ -89,7 +89,7 @@ const HotelListContentHeader = ({ total }: HotelListContentHeaderProps) => {
       </div>
       <div className="d-none sm:d-flex items-center w-100">
         <p className="text-18 lg:text-17 md:text-15 text-neutral-800 w-25">
-          Sắp xếp:{" "}
+          {t("COMMON.SORT")}:{" "}
         </p>
         <div className="w-75">
           <Dropdown

@@ -17,14 +17,10 @@ import isEmpty from "lodash/isEmpty";
 import AuthenModal from "@/components/authen/AuthenModal";
 import useWindowSize from "@/utils/useWindowSize";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
-
-const infoOptions = [
-  { id: 1, title: "Hồ sơ của tôi", link: "/profile/information" },
-  { id: 2, title: "Đơn đặt chỗ", link: "/profile/booking-history-hotel" },
-  { id: 3, title: "Đăng xuất", link: "/logout" },
-];
+import { useTranslation } from "react-i18next";
 
 const Header1 = (props, ref) => {
+  const { t } = useTranslation();
   const { isAuthenticated, profile } = useSelector((state) => state.app) || {};
   const { fullName = "", thumb = "" } = profile || {};
 
@@ -66,7 +62,7 @@ const Header1 = (props, ref) => {
           // navigate("/");
         })
         .catch(() => {
-          handleRenderNoti("Đăng xuất thất bại", "error");
+          handleRenderNoti(t("COMMON.LOGOUT_FAILED"), "error");
         });
 
       return;
@@ -204,7 +200,11 @@ const Header1 = (props, ref) => {
 
                       <div className="toggle-element -dropdown js-click-dropdown dropdown-menu">
                         <div className="text-15 y-gap-15 js-dropdown-list">
-                          {infoOptions.map((item) => (
+                          {[
+                            { id: 1, title: t("COMMON.MY_PROFILE"), link: "/profile/information" },
+                            { id: 2, title: t("PROFILE.BOOKING_HISTORY"), link: "/profile/booking-history-hotel" },
+                            { id: 3, title: t("COMMON.LOGOUT"), link: "/logout" },
+                          ].map((item) => (
                             <div key={item.id}>
                               <button
                                 className={`d-block js-dropdown-link text-dark-1`}
@@ -232,7 +232,7 @@ const Header1 = (props, ref) => {
                         }
                         className="button px-30 fw-400 text-14 -blue-1 -blue-1-05  h-50"
                       >
-                        Đăng nhập
+                        {t("COMMON.LOGIN")}
                       </div>
                     </div>
                   </>

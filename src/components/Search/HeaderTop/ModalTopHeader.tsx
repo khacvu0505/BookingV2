@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "@/components/Modal";
 import okdimallLogo from "/images/home/okdimall_logo.png";
 import { DisplayGiftInfo, displayPhoneInfo } from "./HeaderTop.config";
+import { useTranslation } from "react-i18next";
 
 interface ModalTopHeaderProps {
   open: boolean;
@@ -10,6 +11,7 @@ interface ModalTopHeaderProps {
 }
 
 const ModalTopHeader = ({ open, handleClose, type }: ModalTopHeaderProps) => {
+  const { t } = useTranslation();
   const renderModal = () => {
     switch (type) {
       case "logo":
@@ -21,7 +23,7 @@ const ModalTopHeader = ({ open, handleClose, type }: ModalTopHeaderProps) => {
               className="object-cover cursor-pointer"
             />
             <span className="text-14 fw-400 text-neutral-800">
-              OKdimall - Càng đi, Càng thích
+              {`OKdimall - ${t("COMMON.SLOGAN")}`}
             </span>
           </>
         );

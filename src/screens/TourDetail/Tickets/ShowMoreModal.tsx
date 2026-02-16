@@ -1,7 +1,9 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 import { sanitizeHtml } from "@/utils/sanitize";
+import { useTranslation } from "react-i18next";
 
 const ShowMoreModal = (props, ref) => {
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const { tourName, description } = props;
 
@@ -24,7 +26,7 @@ const ShowMoreModal = (props, ref) => {
       <div className="currencyMenu__content bg-white rounded-4 modal-custom-size1 h-600 px-20">
         <div className="row mx-20 mt-20 pb-10 border-bottom-light justify-content-between">
           <div className=" col-auto text-20 fw-500">
-            Chi tiết tour {tourName}
+            {t("TOUR.TOUR_DETAIL_TITLE", { name: tourName })}
           </div>
           <div className="col-auto">
             <button className="pointer" onClick={handleCloseModal}>

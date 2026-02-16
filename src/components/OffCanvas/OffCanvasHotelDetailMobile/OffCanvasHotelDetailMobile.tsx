@@ -1,5 +1,6 @@
 import React from "react";
 import OffCanvasComponent from "../OffCanvasComponent";
+import { useTranslation } from "react-i18next";
 
 interface OffCanvasHotelDetailMobileProps {
   header: React.ReactNode;
@@ -8,6 +9,7 @@ interface OffCanvasHotelDetailMobileProps {
 }
 
 const OffCanvasHotelDetailMobile = ({ header, body, hotel }: OffCanvasHotelDetailMobileProps) => {
+  const { t } = useTranslation();
   return (
     <OffCanvasComponent
       id="offcanvas-hotel-detail"
@@ -15,7 +17,7 @@ const OffCanvasHotelDetailMobile = ({ header, body, hotel }: OffCanvasHotelDetai
       classNameBody="px-0"
     >
       <p className="text-15 fw-500 text-neutral-800 py-16">
-        Thông tin thêm khách sạn {hotel?.hotelName}
+        {t("COMMON.MORE_INFO_HOTEL", { hotelName: hotel?.hotelName })}
       </p>
       {body}
     </OffCanvasComponent>

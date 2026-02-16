@@ -1,16 +1,19 @@
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-const amenities = [
-  { name: "Bên trong trung tâm thành phố", count: 0 },
-  { name: "Cách trung tâm < 2 km", count: 2 },
-  { name: "Cách trung tâm 2-5 km", count: 5 },
-  { name: "Cách trung tâm 5-10 km", count: 10 },
-];
 const AmenitiesFilter = () => {
   const [params, setSearchParams] = useQueryParams();
   const [selected, setSelected] = useState("");
+  const { t } = useTranslation();
+
+  const amenities = useMemo(() => [
+    { name: t("COMMON.INSIDE_CITY_CENTER"), count: 0 },
+    { name: t("COMMON.LESS_THAN_2KM"), count: 2 },
+    { name: t("COMMON.FROM_2_TO_5KM"), count: 5 },
+    { name: t("COMMON.FROM_5_TO_10KM"), count: 10 },
+  ], [t]);
 
   const { position = "" } = params;
 

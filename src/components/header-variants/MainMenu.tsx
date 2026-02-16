@@ -4,8 +4,10 @@ import { useState } from "react";
 import { addDate, formatDate } from "@/utils/utils";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const MainMenu = ({ style = "" }) => {
+  const { t } = useTranslation();
   const [params] = useQueryParams();
   const { pathname } = useLocation();
   const [isActiveParent] = useState(false);
@@ -62,7 +64,7 @@ const MainMenu = ({ style = "" }) => {
               />
             </svg>
 
-            <span className="ml-10 fw-500">Gói dịch vụ</span>
+            <span className="ml-10 fw-500">{t("COMMON.SERVICE_PACKAGE")}</span>
           </a>
           {/* <div className="mega">
             <CategoriesMegaMenu setIsActiveParent={setIsActiveParent} />
@@ -90,7 +92,7 @@ const MainMenu = ({ style = "" }) => {
                   )}&adults=2&children=0&room=1&location=DN&page=1`
             }
           >
-            <span className="fw-500">Khách sạn</span>
+            <span className="fw-500">{t("HOME.HEADER/HOTELS")}</span>
           </Link>
         </li>
         {/* End Destinatinos single menu */}
@@ -176,12 +178,12 @@ const MainMenu = ({ style = "" }) => {
 
         <li className={pathname === "/promotions" ? "current" : ""}>
           <Link to="/promotions">
-            <span className="fw-500"> Khuyến mãi</span>
+            <span className="fw-500"> {t("HOME.HEADER/PROMOTIONS")}</span>
           </Link>
         </li>
         <li className={pathname === "/blogs" ? "current" : ""}>
           <Link to="/blogs">
-            <span className="fw-500">Tin tức</span>
+            <span className="fw-500">{t("HOME.HEADER/NEWS")}</span>
           </Link>
         </li>
       </ul>

@@ -1,18 +1,21 @@
 import { setFilter } from "@/features/blogs/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 const Categories = () => {
+  const { t } = useTranslation();
   const { filter } = useSelector((state) => state.blogs);
   const dispatch = useDispatch();
-  const catContent = [
-    { name: "Khách sạn", value: "HOTEL" },
+  const catContent = useMemo(() => [
+    { name: t("COMMON.HOTEL"), value: "HOTEL" },
     { name: "Tour", value: "TOUR" },
-    { name: "Vé tham quan", value: "TICKET" },
-    { name: "Vé máy bay", value: "FLIGHT" },
-    { name: "Xe đưa đón", value: "CAR" },
-    { name: "Du thuyền", value: "CRUISE" },
-    { name: "Golf", value: "GOLF" },
-  ];
+    { name: t("COMMON.TICKET"), value: "TICKET" },
+    { name: t("COMMON.FLIGHT"), value: "FLIGHT" },
+    { name: t("COMMON.SHUTTLE"), value: "CAR" },
+    { name: t("COMMON.CRUISE"), value: "CRUISE" },
+    { name: t("COMMON.GOLF"), value: "GOLF" },
+  ], [t]);
   const handleCategory = (value) => {
     const dataFilter = {
       ...filter,

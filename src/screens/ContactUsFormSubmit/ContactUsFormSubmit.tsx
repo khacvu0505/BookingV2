@@ -1,5 +1,6 @@
 import React from "react";
 import MetaComponent from "@/components/MetaComponent";
+import { useTranslation } from "react-i18next";
 
 const metadata = {
   title: "Contact",
@@ -7,6 +8,7 @@ const metadata = {
 };
 
 const ContactUsFormSubmit = () => {
+  const { t } = useTranslation();
   <MetaComponent meta={metadata} />;
 
   return (
@@ -14,12 +16,10 @@ const ContactUsFormSubmit = () => {
       <section className="mt-100 md:mt-80">
         <div className="container">
           <p className="text-neutral-800 text-24 lg:text-20">
-            Danh sách đánh giá, phản ánh, kiến nghị của Tổ chức xã hội
+            {t("COMMON.FEEDBACK_LIST_TITLE")}
           </p>
           <p className="text-neutral-800 text-16  lg:text-14">
-            Danh sách các đánh giá, phản ánh, kiến nghị của tổ chức xã hội tham
-            gia bảo vệ quyền lợi người tiêu dùng hoặc tổ chức đánh giá tín nhiệm
-            theo quy định của pháp luật
+            {t("COMMON.FEEDBACK_LIST_DESC")}
           </p>
           <a
             href="https://docs.google.com/spreadsheets/d/1UR15WAqqNiV5QXUp-MXDmQ6gpOz0IVaI5HUe1f2eJhY/edit?gid=0#gid=0"
@@ -27,7 +27,7 @@ const ContactUsFormSubmit = () => {
             target={"_blank"}
             rel={"noopener noreferrer"}
           >
-            Nhấp vào để xem
+            {t("COMMON.CLICK_TO_VIEW")}
           </a>
         </div>
       </section>

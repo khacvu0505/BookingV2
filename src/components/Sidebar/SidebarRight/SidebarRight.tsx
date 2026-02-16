@@ -227,7 +227,7 @@ const SidebarRight = ({ isOffcanvas = false }: SidebarRightProps) => {
                             <div className="bg-gray-1 w-100 rounded-4 px-8 py-8">
                               <div className="d-flex justify-content-between align-items-center">
                                 <p className="text-14 fw-400 text-action-success w-100">
-                                  Dịch vụ mua thêm
+                                  {t("COMMON.ADDON_SERVICES_PURCHASED")}
                                 </p>
                                 <button
                                   className="button text-13 text-primary-500 w-50 justify-content-end"
@@ -284,7 +284,7 @@ const SidebarRight = ({ isOffcanvas = false }: SidebarRightProps) => {
                 {isBookingPage && infoBooking?.totalDiscountSUP > 0 && (
                   <div className="d-flex justify-content-between w-100">
                     <p className="side_bar_right_booking_info-title">
-                      Giảm giá từ khách sạn
+                      {t("COMMON.HOTEL_DISCOUNT")}
                     </p>
                     <p className="text-success fw-500">
                       -{formatCurrency(infoBooking?.totalDiscountSUP)}{" "}
@@ -295,7 +295,7 @@ const SidebarRight = ({ isOffcanvas = false }: SidebarRightProps) => {
                 {isBookingPage && infoBooking?.totalDiscountOK > 0 && (
                   <div className="d-flex justify-content-between w-100">
                     <p className="side_bar_right_booking_info-title">
-                      Mã giảm giá{" "}
+                      {t("COMMON.VOUCHER_CODE")}{" "}
                       {infoBooking?.voucherCode &&
                         `(${infoBooking?.voucherCode})`}
                     </p>
@@ -308,7 +308,7 @@ const SidebarRight = ({ isOffcanvas = false }: SidebarRightProps) => {
                 {isBookingPage && infoBooking?.totalDiscountMember > 0 && (
                   <div className="d-flex justify-content-between w-100">
                     <p className="side_bar_right_booking_info-title">
-                      Giảm giá thành viên
+                      {t("COMMON.MEMBER_DISCOUNT")}
                     </p>
                     <p className="text-success fw-500">
                       -{formatCurrency(infoBooking?.totalDiscountMember)}{" "}
@@ -322,7 +322,7 @@ const SidebarRight = ({ isOffcanvas = false }: SidebarRightProps) => {
             {!!createInvoice && taxInclude && (
               <div className="d-flex justify-content-between w-100 border-bottom-light py-10">
                 <p className="side_bar_right_booking_info-title">
-                  Thuế và phí dịch vụ khách sạn
+                  {t("COMMON.TAX_AND_SERVICE_FEE")}
                 </p>
                 <p className="text-dark fw-500">
                   {infoBooking?.totalPayment > 0

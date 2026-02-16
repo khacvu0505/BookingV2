@@ -1,23 +1,10 @@
 import { BREAKPOINT_LG, defaultDateRange } from "@/utils/constants";
 import useWindowSize from "@/utils/useWindowSize";
 import { formatDateCalendar } from "@/utils/utils";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
-const weekDays = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
-const months = [
-  "Tháng 1",
-  "Tháng 2",
-  "Tháng 3",
-  "Tháng 4",
-  "Tháng 5",
-  "Tháng 6",
-  "Tháng 7",
-  "Tháng 8",
-  "Tháng 9",
-  "Tháng 10",
-  "Tháng 11",
-  "Tháng 12",
-];
+import { useTranslation } from "react-i18next";
+
 interface DateSearchProps {
   handleChangeValue: (value: Record<string, any>) => void;
   defaultDate?: any;
@@ -29,7 +16,19 @@ const DateSearch = ({
   defaultDate = defaultDateRange,
   value,
 }: DateSearchProps) => {
+  const { t } = useTranslation();
   const isDesktop = useWindowSize().width > BREAKPOINT_LG;
+  const weekDays = useMemo(() => [
+    t("COMMON.WEEKDAY_SUN"), t("COMMON.WEEKDAY_MON"), t("COMMON.WEEKDAY_TUE"),
+    t("COMMON.WEEKDAY_WED"), t("COMMON.WEEKDAY_THU"), t("COMMON.WEEKDAY_FRI"),
+    t("COMMON.WEEKDAY_SAT"),
+  ], [t]);
+  const months = useMemo(() => [
+    t("COMMON.MONTH_1"), t("COMMON.MONTH_2"), t("COMMON.MONTH_3"),
+    t("COMMON.MONTH_4"), t("COMMON.MONTH_5"), t("COMMON.MONTH_6"),
+    t("COMMON.MONTH_7"), t("COMMON.MONTH_8"), t("COMMON.MONTH_9"),
+    t("COMMON.MONTH_10"), t("COMMON.MONTH_11"), t("COMMON.MONTH_12"),
+  ], [t]);
   const [dates, setDates] = useState(defaultDate);
 
   const handleChangeDate = (value: any) => {

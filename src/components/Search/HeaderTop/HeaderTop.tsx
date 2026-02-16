@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import giftIcon from "/images/home/gift-icon.png";
 import okdimallLogo from "/images/home/okdimall_logo.png";
 import ModalTopHeader from "./ModalTopHeader";
@@ -9,6 +10,7 @@ import OffCanvasHeaderSearch from "@/components/OffCanvas/OffCanvasHeaderSearch"
 const HeaderTop = () => {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState("");
+  const { t } = useTranslation();
 
   const handleOpen = (type: string) => {
     setOpen(true);
@@ -23,7 +25,7 @@ const HeaderTop = () => {
             aria-hidden="true"
           />
           <span className="text-14 text-neutral-800 fw-400">
-            Nguyễn Lộ Trạch, Nha Trang, Khánh Hòa, Việt Nam
+            {t("COMMON.COMPANY_ADDRESS")}
           </span>
         </div>
 

@@ -10,6 +10,7 @@ import ShowQuantity from "@/components/ShowQuantity";
 import ShowPrice from "@/components/ShowPrice";
 import ReturnPolicy from "@/components/ReturnPolicy";
 import isEmpty from "lodash/isEmpty";
+import { useTranslation } from "react-i18next";
 
 const ServiceDetail = ({
   service,
@@ -20,6 +21,7 @@ const ServiceDetail = ({
   setCountService,
   source,
 }: { service: any; roomID?: any; roomName?: any; handleChooseService: any; countService: any; setCountService: any; source: any }) => {
+  const { t } = useTranslation();
   const { roomActive } = useSelector((state: any) => state.hotel) || {};
   const infoBooking = getFromSessionStorage(info_booking);
   const [isActive, setIsActive] = useState(
@@ -145,7 +147,7 @@ const ServiceDetail = ({
         <div className="col-xl-7 mb-3 mb-md-0">
           <div className=" fw-400 text-action-success text-14">
             <i className="icon-user text-16 xl:text-14 pr-10 text-action-success ml-10"></i>
-            {service.totalAdult} người lớn, {service.totalChildren} trẻ em
+            {t("COMMON.ADULTS_AND_CHILDREN", { adults: service.totalAdult, children: service.totalChildren })}
           </div>
           <ReturnPolicy
             paymentPolicy={service?.paymentPolicy}
@@ -159,14 +161,14 @@ const ServiceDetail = ({
             style={{ borderLeft: "2px solid var(--color-green-2)" }}
           >
             <span className="text-neutral-800 fw-500 mr-10 text-18 xl:text-16">
-              Ưu đãi bao gồm
+              {t("COMMON.INCLUDED_OFFERS")}
             </span>
             {!isShowMore && service?.includes?.length > 5 && (
               <span
                 className="text-16 lg:text-14 fw-400 text-primary-500 italic cursor-pointer"
                 onClick={handleShowMoreService}
               >
-                Xem chi tiết
+                {t("COMMON.VIEW_DETAIL")}
               </span>
             )}
 

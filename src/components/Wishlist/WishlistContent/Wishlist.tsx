@@ -99,7 +99,7 @@ const Wishlist = () => {
               name="search"
               onChange={handleChangeValue}
               value={search}
-              placeholder="Nhập thông tin tìm kiếm"
+              placeholder={t("COMMON.SEARCH_PLACEHOLDER")}
               prefix={
                 <img src="/images/Profile/icon-search.png" alt="icon-search" />
               }

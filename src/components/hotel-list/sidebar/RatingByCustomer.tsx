@@ -1,38 +1,20 @@
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useMemo, useState, memo } from "react";
+import { useTranslation } from "react-i18next";
 
 const RatingByCustomer = () => {
+  const { t } = useTranslation();
   const [params, setSearchParams] = useQueryParams();
   const { ratingByCustomer: ratingByCustomerParam } = params;
 
-  const [dataList, _setDataList] = useState([
-    {
-      id: 1,
-      value: 10,
-      text: "Tuyệt hảo",
-    },
-    {
-      id: 2,
-      value: 9.5,
-      text: "Tuyệt vời",
-    },
-    {
-      id: 3,
-      value: 8.7,
-      text: "Rất tốt",
-    },
-    {
-      id: 4,
-      value: 8,
-      text: "Tốt",
-    },
-    {
-      id: 5,
-      value: 7,
-      text: "Tệ",
-    },
-  ]);
+  const dataList = useMemo(() => [
+    { id: 1, value: 10, text: t("COMMON.RATING_EXCEPTIONAL") },
+    { id: 2, value: 9.5, text: t("COMMON.RATING_WONDERFUL") },
+    { id: 3, value: 8.7, text: t("COMMON.RATING_VERY_GOOD") },
+    { id: 4, value: 8, text: t("COMMON.RATING_GOOD") },
+    { id: 5, value: 7, text: t("COMMON.RATING_BAD") },
+  ], [t]);
   const [selected, setSelected] = useState(0);
 
   const handleChoose = (id) => {

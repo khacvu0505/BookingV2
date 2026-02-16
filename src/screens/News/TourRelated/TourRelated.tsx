@@ -1,11 +1,13 @@
 import { getToursRecommend } from "@/api/news.api";
 import CardItem from "@/components/CardItem";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { newsKeys } from "@/lib/query-keys";
 
 const TourRelated = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const { data: tourRelated = [] } = useQuery({
@@ -30,7 +32,7 @@ const TourRelated = () => {
           className="mr-10 lg:mr-8 object-cover px-16 xl:px-12 lg:px-10 pt-14 xl:pt-12 lg:pt-10"
         />
         <p className="text-18 xl:text-16 lg:text-15 fw-500 text-neutral-800 pt-16">
-          Tour giờ chót
+          {t("COMMON.LAST_MINUTE_TOUR")}
         </p>
       </div>
       <div className="row px-10 py-24 xl:py-20 lg:py-15">

@@ -13,6 +13,7 @@ import FindTour from "./Navbar/FindTour";
 import RatingByCustomer from "./Navbar/RatingByCustomer";
 import { useQuery } from "@tanstack/react-query";
 import { tourKeys } from "@/lib/query-keys";
+import { useTranslation } from "react-i18next";
 
 const MetaComponent = dynamic(() => import("@/components/MetaComponent"));
 const BannerTourList = dynamic(() => import("./BannerTourList"));
@@ -25,6 +26,7 @@ const metadata = {
 };
 
 const TourList = () => {
+  const { t } = useTranslation();
   const [params] = useQueryParams();
   const {
     page: pageParam = 1,
@@ -110,7 +112,7 @@ const TourList = () => {
                   className="navbar_head-icon"
                 />
                 <p className="text-18 lg:text-17 md:text-16 fw-500 text-neutral-800 ml-8">
-                  Bộ lọc thông tin
+                  {t("COMMON.FILTER_INFO")}
                 </p>
               </div>
             }

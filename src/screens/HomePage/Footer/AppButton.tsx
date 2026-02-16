@@ -53,8 +53,8 @@ const AppButton = () => {
       <div className="mt-30 flex items-center gap-20">
         <a href='http://online.gov.vn/Website/chi-tiet-133384' target="_blank" rel="noopener noreferrer">
           <img 
-            alt='Bộ Công Thương' 
-            title='Bộ Công Thương' 
+            alt={t("COMMON.MINISTRY_OF_TRADE")}
+            title={t("COMMON.MINISTRY_OF_TRADE")} 
             src='https://ik.imagekit.io/tvlk/image/imageResource/2019/09/23/1569229181629-eeb038ad844874f951326d0a8534bf48.png?tr=q-75,w-100'
             className="h-40 object-contain"
             loading="lazy"

@@ -12,8 +12,10 @@ import { logout } from "@/api/auth.api";
 import { reset } from "@/features/app/appSlice";
 import { clearAccessTokenFromLocalStorage } from "@/utils/auth";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
+import { useTranslation } from "react-i18next";
 
 const MobileMenu = () => {
+  const { t } = useTranslation();
   const { isAuthenticated = false, profile } =
     useSelector((state) => state.app) || {};
   const { fullName = "", thumb = "" } = profile || {};
@@ -32,7 +34,7 @@ const MobileMenu = () => {
         navigate("/");
       })
       .catch(() => {
-        handleRenderNoti("Đăng xuất thất bại", "error");
+        handleRenderNoti(t("COMMON.LOGOUT_FAILED"), "error");
       });
   };
 
@@ -99,7 +101,7 @@ const MobileMenu = () => {
                   pathname.includes("information") ? "menu-active-link" : ""
                 }
               >
-                Trang cá nhân
+                {t("COMMON.PERSONAL_INFORMATION")}
               </MenuItem>
               <MenuItem
                 onClick={() => navigate("/profile/booking-history-hotel")}
@@ -109,7 +111,7 @@ const MobileMenu = () => {
                     : ""
                 }
               >
-                Lịch sử
+                {t("PROFILE.BOOKING_HISTORY")}
               </MenuItem>
               <MenuItem
                 onClick={() => navigate("/profile/wishlist")}
@@ -117,9 +119,9 @@ const MobileMenu = () => {
                   pathname.includes("/wishlist") ? "menu-active-link" : ""
                 }
               >
-                Ưa thích
+                {t("HOME.HEADER/WISHLIST")}
               </MenuItem>
-              <MenuItem onClick={handleClickLogout}>Đăng xuất</MenuItem>
+              <MenuItem onClick={handleClickLogout}>{t("COMMON.LOGOUT")}</MenuItem>
             </SubMenu>
           )}
 
@@ -171,7 +173,7 @@ const MobileMenu = () => {
             onClick={() => navigate("/destinations")}
             className={pathname === "/destinations" ? "menu-active-link" : ""}
           >
-            Khách sạn
+            {t("HOME.HEADER/HOTELS")}
           </MenuItem>
           {/* End  Desitinations Menu */}
 
@@ -268,13 +270,13 @@ const MobileMenu = () => {
               pathname.includes("/promotions") ? "menu-active-link" : ""
             }
           >
-            Khuyến mãi
+            {t("HOME.HEADER/PROMOTIONS")}
           </MenuItem>
           <MenuItem
             onClick={() => navigate("/blogs")}
             className={pathname === "/blogs" ? "menu-active-link" : ""}
           >
-            Tin tức
+            {t("HOME.HEADER/NEWS")}
           </MenuItem>
         </Menu>
       </Sidebar>

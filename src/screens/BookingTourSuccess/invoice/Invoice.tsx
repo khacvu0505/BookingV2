@@ -313,7 +313,7 @@ export default function InvoiceComponent({ bookingInfo }) {
                             </tr>
                           ))}
                         <tr>
-                          <td className="text-md-18 fw-500">Tổng tiền</td>
+                          <td className="text-md-18 fw-500">{t("HOTEL_BOOKING.TOTAL_AMOUNT")}</td>
 
                           <td
                             style={{

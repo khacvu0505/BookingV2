@@ -190,7 +190,7 @@ const TourDetail = () => {
       <MetaComponent
         meta={{
           title: "Tour Detail",
-          description: "OKdimall - Du lịch và trải nghiệm",
+          description: `OKdimall - ${t("COMMON.META_DESCRIPTION")}`,
         }}
       />
 

@@ -1,5 +1,9 @@
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+
 const ContactInfo = () => {
-  const contactContent = [
+  const { t } = useTranslation();
+  const contactContent = useMemo(() => [
     {
       id: 1,
       title: "Hotline",
@@ -14,15 +18,15 @@ const ContactInfo = () => {
     },
     {
       id: 3,
-      title: "Tên công ty",
+      title: t("COMMON.COMPANY_NAME_LABEL"),
       text: "OKdimall Travel Co., Ltd",
     },
     {
       id: 4,
-      title: "Địa chỉ",
-      text: "3/2 Nguyễn Lộ Trạch, phường Nha Trang, tỉnh Khánh Hòa, Việt Nam",
+      title: t("COMMON.ADDRESS_LABEL"),
+      text: t("COMMON.COMPANY_ADDRESS"),
     },
-  ];
+  ], [t]);
   return (
     <>
       {contactContent.map((item) => (

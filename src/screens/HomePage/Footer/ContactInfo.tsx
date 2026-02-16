@@ -7,7 +7,7 @@ const ContactInfo = () => {
     {
       id: 1,
       icon: <i className="ri-map-pin-2-fill text-white text-16 mr-10" />,
-      text: "3/2 Nguyễn Lộ Trạch, phường Nha Trang, tỉnh Khánh Hòa, Việt Nam",
+      text: t("COMMON.COMPANY_ADDRESS"),
     },
     {
       id: 2,
@@ -30,15 +30,15 @@ const ContactInfo = () => {
     },
     {
       id: 5,
-      text: "Mã số thuế: 4201934832 do Phòng ĐKKD-Sở Kế hoạch và Đầu tư tỉnh Khánh Hòa cấp ngày 29/06/2021",
+      text: t("COMMON.TAX_CODE_INFO"),
     },
     {
       id: 6,
-      text: "Người đại diện theo pháp luật: Ông TẠ NGỌC TUẤN – chức danh: Giám đốc",
+      text: t("COMMON.LEGAL_REP_INFO"),
     },
     {
       id: 7,
-      text: "Đầu mối liên hệ, người đại diện được ủy quyền phối hợp với cơ quan nhà nước có thẩm quyền: Ông Tạ Ngọc Tuấn",
+      text: t("COMMON.AUTHORIZED_CONTACT_INFO"),
     },
     {
       id: 8,

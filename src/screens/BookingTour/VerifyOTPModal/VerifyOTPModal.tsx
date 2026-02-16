@@ -10,8 +10,10 @@ import React, {
 } from "react";
 import OtpInput from "react-otp-input";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const VerifyOTPModal = ({ email, bookingID }, ref) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [otp, setOtp] = useState("");
@@ -57,33 +59,33 @@ const VerifyOTPModal = ({ email, bookingID }, ref) => {
           } else {
             switch (error) {
               case "wrongotp":
-                handleRenderNoti("Mã OTP không chính xác", "error");
+                handleRenderNoti(t("COMMON.OTP_INCORRECT"), "error");
                 break;
               case "expiredotp":
                 resendOTP(email)
                   .then((data) => {
                     if (data.success) {
                       handleRenderNoti(
-                        "Mã OTP đã hết hạn. Kiểm tra lại email của bạn ",
+                        t("COMMON.OTP_EXPIRED_CHECK_EMAIL"),
                         "error"
                       );
                     } else {
                       handleRenderNoti(
-                        "Có lỗi xảy ra. Vui lòng thử lại sau",
+                        t("COMMON.ERROR_TRY_AGAIN"),
                         "error"
                       );
                     }
                   })
                   .catch(() => {
                     handleRenderNoti(
-                      "Có lỗi xảy ra. Vui lòng thử lại sau",
+                      t("COMMON.ERROR_TRY_AGAIN"),
                       "error"
                     );
                   });
                 break;
               default:
                 handleRenderNoti(
-                  "Có lỗi xảy ra. Vui lòng thử lại sau",
+                  t("COMMON.ERROR_TRY_AGAIN"),
                   "error"
                 );
                 setIsVisible(false);
@@ -99,7 +101,7 @@ const VerifyOTPModal = ({ email, bookingID }, ref) => {
         .catch(() => {
           setIsSubmmitting(false);
           setOtp("");
-          handleRenderNoti("Vui lòng thử lại sau", "error");
+          handleRenderNoti(t("COMMON.PLEASE_TRY_AGAIN"), "error");
         });
     }
   }, [otp]);
@@ -120,7 +122,7 @@ const VerifyOTPModal = ({ email, bookingID }, ref) => {
         <div className="d-flex items-center justify-between px-30 pb-20 sm:px-15 border-bottom-light mt-20">
           <div className="text-20 fw-500 lh-15 w-100 text-center">
             <img src="/img/general/logo-okdimall.svg" alt="logo" width={100} />
-            <p className="mt-10">Nhập mã xác thực OTP</p>
+            <p className="mt-10">{t("COMMON.ENTER_OTP")}</p>
           </div>
         </div>
 
@@ -128,7 +130,7 @@ const VerifyOTPModal = ({ email, bookingID }, ref) => {
           {isSubmmitting ? (
             <div className="text-center">
               <span className="loader"></span>
-              <span className="ml-10">Đang xử lý...</span>
+              <span className="ml-10">{t("COMMON.PROCESSING_LOADING")}</span>
             </div>
           ) : (
             <>
@@ -136,8 +138,7 @@ const VerifyOTPModal = ({ email, bookingID }, ref) => {
                 {email}
               </p>
               <p className="text-center text-dark-1 mb-30">
-                Vui lòng kiểm tra email để lấy mã xác thực <br /> (Hoặc bạn cũng
-                có thể xác thực mã OTP trong profile)
+                {t("COMMON.CHECK_EMAIL_FOR_OTP_OR_PROFILE")}
               </p>
             </>
           )}

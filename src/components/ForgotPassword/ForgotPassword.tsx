@@ -3,12 +3,14 @@ import Input from "@/components/Form/Input";
 import Button from "@/components/Button";
 import { forgotPassword } from "@/api/user.api";
 import { handleAlert } from "@/utils/handleAlert";
+import { useTranslation } from "react-i18next";
 
 interface ForgotPasswordProps {
   handleCloseModal: () => void;
 }
 
 const ForgotPassword = ({ handleCloseModal }: ForgotPasswordProps) => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [isSubmmitting, setIsSubmmitting] = useState(false);
   const [message, setMessage] = useState("");
@@ -24,7 +26,7 @@ const ForgotPassword = ({ handleCloseModal }: ForgotPasswordProps) => {
   const handleCheckEmailExisted = async () => {
     const isValid = validateEmail(email);
     if (!isValid) {
-      setMessage("Email không hợp lệ");
+      setMessage(t("COMMON.EMAIL_INVALID"));
       return;
     }
     try {
@@ -34,14 +36,14 @@ const ForgotPassword = ({ handleCloseModal }: ForgotPasswordProps) => {
         handleCloseModal();
         handleAlert({
           type: "success",
-          title: "Thành công",
-          html: "Vui lòng kiểm tra email để lấy lại mật khẩu",
+          title: t("COMMON.SUCCESS"),
+          html: t("COMMON.CHECK_EMAIL_FOR_PASSWORD"),
         });
         return;
       }
       setMessage((res as any)?.error);
     } catch (error) {
-      setMessage("Vui lòng thử lại sau");
+      setMessage(t("COMMON.PLEASE_TRY_AGAIN"));
     } finally {
       setIsSubmmitting(false);
     }
@@ -50,14 +52,14 @@ const ForgotPassword = ({ handleCloseModal }: ForgotPasswordProps) => {
   return (
     <form onSubmit={(e) => { e.preventDefault(); handleCheckEmailExisted(); }}>
       <h1 className="text-20 text-md-22 fw-500 text-center mb-20">
-        Quên mật khẩu
+        {t("COMMON.FORGOT_PASSWORD")}
       </h1>
 
       <div className="col-12 mb-30">
         <Input
           required
           label={"Email"}
-          placeholder={"Nhập email ..."}
+          placeholder={t("COMMON.ENTER_EMAIL_PLACEHOLDER")}
           name="email"
           value={email}
           error={{ message }}
@@ -70,7 +72,7 @@ const ForgotPassword = ({ handleCloseModal }: ForgotPasswordProps) => {
           htmlType="submit"
           disabled={isSubmmitting || Boolean(!email)}
         >
-          {isSubmmitting ? <span className="loader mr-15"></span> : "Tiếp tục"}
+          {isSubmmitting ? <span className="loader mr-15"></span> : t("COMMON.CONTINUE")}
         </Button>
         {/* <button
           type="submit"

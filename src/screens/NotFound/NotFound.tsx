@@ -1,13 +1,15 @@
 import NotFound from "@/components/common/NotFound";
 
 import MetaComponent from "@/components/common/MetaComponent";
-
-const metadata = {
-  title: "404 || Du lịch và trải nghiệm",
-  description: "OKdimall - Du lịch và trải nghiệm",
-};
+import { useTranslation } from "react-i18next";
 
 const NotFoundPage = () => {
+  const { t } = useTranslation();
+  const metadata = {
+    title: `404 || ${t("COMMON.META_DESCRIPTION")}`,
+    description: `OKdimall - ${t("COMMON.META_DESCRIPTION")}`,
+  };
+
   return (
     <>
       <MetaComponent meta={metadata} />

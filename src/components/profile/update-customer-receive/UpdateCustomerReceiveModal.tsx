@@ -4,12 +4,14 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { changePasswordSchema } from "@/schemas/changePasswordSchema";
 import { handleRenderMessageError } from "@/utils/handleRenderMessageError";
 
 const UpdateCustomerReceiveModal = (props, ref) => {
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -71,7 +73,7 @@ const UpdateCustomerReceiveModal = (props, ref) => {
                 fontSize: "25px",
               }}
             >
-              Cập nhật thông tin
+              {t("COMMON.UPDATE_INFO")}
             </p>
           </div>
         </div>
@@ -87,7 +89,7 @@ const UpdateCustomerReceiveModal = (props, ref) => {
               />
 
               <label className="lh-1 text-14 text-light-1">
-                Current Password
+                {t("COMMON.CURRENT_PASSWORD")}
               </label>
               <div></div>
             </div>
@@ -102,7 +104,7 @@ const UpdateCustomerReceiveModal = (props, ref) => {
                 name="newPassword"
                 {...register("newPassword")}
               />
-              <label className="lh-1 text-14 text-light-1">New Password</label>
+              <label className="lh-1 text-14 text-light-1">{t("COMMON.NEW_PASSWORD")}</label>
             </div>
             {errors.newPassword &&
               handleRenderMessageError(errors.newPassword.message)}
@@ -116,7 +118,7 @@ const UpdateCustomerReceiveModal = (props, ref) => {
                 {...register("confirmNewPassword")}
               />
               <label className="lh-1 text-14 text-light-1">
-                Confirm New Password
+                {t("COMMON.CONFIRM_NEW_PASSWORD")}
               </label>
             </div>
             {errors.confirmNewPassword &&
@@ -127,7 +129,7 @@ const UpdateCustomerReceiveModal = (props, ref) => {
               type="submit"
               className="button py-20 -dark-1 bg-blue-1 text-white w-100"
             >
-              UPDATE <div className="icon-arrow-top-right ml-15" />
+              {t("COMMON.UPDATE")} <div className="icon-arrow-top-right ml-15" />
             </button>
           </div>
         </form>

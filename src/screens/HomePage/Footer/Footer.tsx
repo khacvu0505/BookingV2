@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import AppButton from "./AppButton";
 import ContactInfo from "./ContactInfo";
 import Copyright from "./Copyright";
@@ -7,13 +8,14 @@ import instagramIcon from "/images/home/instagram.png";
 import facebookIcon from "/images/home/facebook.png";
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <footer className="footer -type-1 text-white footerContainer">
       <div className="container xxl:container-mobile">
         <div className="py-50 xl:pt-40 xl:pb-32">
           <p className="text-40 xl:text-30 fw-700 text-white">OKDIMALL</p>
           <p className="text-24 xl:text-20 fw-400 text-white">
-            CÔNG TY TNHH THƯƠNG MẠI VÀ DỊCH VỤ DU LỊCH OKDIMALL
+            {t("COMMON.COMPANY_FULL_NAME")}
           </p>
         </div>
         <div className="d-flex gap-2">

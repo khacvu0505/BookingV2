@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 const ShowQuantity = ({ quantity }) => {
+  const { t } = useTranslation();
   return (
     <span className="bg-pink-light text-blue-1 rounded-4 ">
       <svg
@@ -25,10 +28,10 @@ const ShowQuantity = ({ quantity }) => {
       </svg>
       <span className="px-5 text-truncate text-13 ">
         {quantity > 5
-          ? "Còn ít phòng"
+          ? t("HOTELS.ROOM/FEW")
           : quantity <= 5 && quantity > 1
-          ? ` Chỉ còn ${quantity} phòng trống`
-          : "Phòng cuối cùng của chúng tôi"}
+          ? ` ${t("HOTELS.JUST_ONLY")} ${quantity} ${t("HOTELS.ROOM/EMPTY")}`
+          : t("HOTELS.ROOM/LAST")}
       </span>
     </span>
   );

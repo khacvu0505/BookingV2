@@ -9,8 +9,10 @@ import {
 import { info_booking } from "@/utils/constants";
 import { setRoomActive } from "@/features/hotel-detail/hotelDetailSlice";
 import useQueryParams from "@/hooks/useQueryParams";
+import { useTranslation } from "react-i18next";
 
 const ServiceList = ({ roomID, roomName, source, roomIdButtonChoose, servicesRoom = [] }: { roomID: any; roomName: any; source: any; roomIdButtonChoose?: any; servicesRoom?: any[] }) => {
+  const { t } = useTranslation();
   const [isViewMore, setIsViewMore] = useState(false);
   const [searchParams, setSearchParams] = useQueryParams();
   const { roomActive } =
@@ -105,7 +107,7 @@ const ServiceList = ({ roomID, roomName, source, roomIdButtonChoose, servicesRoo
         {servicesRoom?.length > 3 && !isViewMore && (
           <div className="w-100 d-flex justify-content-center">
             <button className="button text-blue-1" onClick={handleViewMore}>
-              Xem thêm
+              {t("COMMON.SEE_MORE")}
             </button>
           </div>
         )}

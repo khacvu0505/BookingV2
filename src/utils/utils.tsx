@@ -7,6 +7,7 @@ import { DateObject } from "react-multi-date-picker";
 import { CURRENCY, DEFAULT_LANGUAGE } from "./constants";
 import classNames from "classnames";
 import React from "react";
+import i18next from "i18next";
 
 export function isAxiosError(error: unknown): error is AxiosError {
   return axios.isAxiosError(error);
@@ -105,20 +106,20 @@ export const formatStringToDate = (dateString: string, options: FormatStringToDa
     return formatDateToken(dateObject, format);
   }
 
-  const dayNamesVi = [
-    "Chủ Nhật",
-    "Thứ 2",
-    "Thứ 3",
-    "Thứ 4",
-    "Thứ 5",
-    "Thứ 6",
-    "Thứ 7",
+  const dayNames = [
+    i18next.t("COMMON.WEEKDAY_SUN"),
+    i18next.t("COMMON.WEEKDAY_MON"),
+    i18next.t("COMMON.WEEKDAY_TUE"),
+    i18next.t("COMMON.WEEKDAY_WED"),
+    i18next.t("COMMON.WEEKDAY_THU"),
+    i18next.t("COMMON.WEEKDAY_FRI"),
+    i18next.t("COMMON.WEEKDAY_SAT"),
   ];
 
   const year = dateObject.getFullYear();
   const month = String(dateObject.getMonth() + 1).padStart(2, "0");
   const day = String(dateObject.getDate()).padStart(2, "0");
-  const dayName = dayNamesVi[dateObject.getDay()];
+  const dayName = dayNames[dateObject.getDay()];
 
   const formattedDate = isHideDay
     ? `${day}-${month}-${year}`
@@ -319,26 +320,14 @@ export function getDaysBetween(startDate: string | Date, endDate: string | Date,
   const end = new Date(endDate);
   const days: DayInfo[] = [];
 
-  const shortDayNamesEn = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const monthNamesEn = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December",
-  ];
-
   const current = new Date(start);
   while (current <= end) {
     const dayOfWeek = current.getDay();
-    let dayDisplay: string;
-    if (locale === "vi") {
-      dayDisplay = dayOfWeek === 0 ? "CN" : `Thứ ${dayOfWeek + 1}`;
-    } else {
-      dayDisplay = shortDayNamesEn[dayOfWeek];
-    }
+    const dayDisplay = dayOfWeek === 0
+      ? i18next.t("COMMON.SUNDAY_SHORT")
+      : i18next.t("COMMON.DAY_NUMBER", { num: dayOfWeek + 1 });
 
-    const monthDisplay =
-      locale === "vi"
-        ? `Tháng ${current.getMonth() + 1}`
-        : monthNamesEn[current.getMonth()];
+    const monthDisplay = i18next.t("COMMON.MONTH_NUMBER", { num: current.getMonth() + 1 });
 
     const pad = (n: number) => String(n).padStart(2, "0");
     const uniqueKey = `${current.getFullYear()}-${pad(current.getMonth() + 1)}-${pad(current.getDate())}`;

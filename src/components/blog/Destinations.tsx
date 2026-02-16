@@ -1,12 +1,14 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { getRegions } from "@/api/category.api";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter } from "@/features/blogs/blogSlice";
 
 const Destinations = () => {
+  const { t } = useTranslation();
   const [regions, setRegions] = useState([]);
   const [loading, setLoading] = useState(true);
   const { filter } = useSelector((state) => state.blogs);
@@ -97,7 +99,7 @@ const Destinations = () => {
             </SwiperSlide>
           ))
         ) : (
-          <div className="text-center w-100">Không có điểm đến</div>
+          <div className="text-center w-100">{t("COMMON.NO_DESTINATION")}</div>
         )}
       </Swiper>
 

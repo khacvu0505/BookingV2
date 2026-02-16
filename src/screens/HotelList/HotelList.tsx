@@ -4,6 +4,7 @@ import BannerHotelList from "@/screens/HotelList/BannerHotelList";
 import MetaComponent from "@/components/MetaComponent";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import {
   addDate,
   cleanedObject,
@@ -30,6 +31,7 @@ const metadata = {
 };
 
 const HotelList = () => {
+  const { t } = useTranslation();
   const [params, setSearchParams] = useQueryParams();
 
   const secondaryLocationList =
@@ -185,7 +187,7 @@ const HotelList = () => {
                   className="navbar_head-icon"
                 />
                 <p className="text-18 lg:text-17 md:text-16 fw-500 text-neutral-800 ml-8">
-                  Bộ lọc thông tin khách sạn
+                  {t("COMMON.FILTER_HOTEL_INFO")}
                 </p>
               </div>
             }

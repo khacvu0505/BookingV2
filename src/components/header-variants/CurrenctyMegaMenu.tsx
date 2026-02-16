@@ -5,7 +5,7 @@ const CurrenctyMegaMenu = ({ textClass }) => {
   const handleCurrency = () => setClick((prevState) => !prevState);
 
   const currencyContent = [
-    { id: 1, name: "Việt Nam", currency: "VND", symbol: "đ" },
+    { id: 1, name: "Vietnam", currency: "VND", symbol: "đ" },
     { id: 2, name: "Australian dollar", currency: "AUD", symbol: "$" },
     { id: 3, name: "Brazilian real", currency: "BRL", symbol: "R$" },
     { id: 4, name: "Bulgarian lev", currency: "BGN", symbol: "лв." },

@@ -89,14 +89,14 @@ const OffCanvasLocation = () => {
   return (
     <OffCanvasComponent
       id="offcanvas-date-search"
-      header={<div className="text-16 text-center w-100 fw-500">Chọn ngày</div>}
+      header={<div className="text-16 text-center w-100 fw-500">{t("COMMON.SELECT_DATE")}</div>}
       footer={
         <Button
           data-bs-dismiss="offcanvas"
           className="text-center w-100"
           onClick={() => handleChangeValue(currentDate)}
         >
-          Ok{" "}
+          {t("COMMON.OK")}{" "}
           {currentDate?.checkIn &&
             currentDate?.checkOut &&
             `(${calculateNights(

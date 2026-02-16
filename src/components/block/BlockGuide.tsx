@@ -1,60 +1,60 @@
 import useWindowSize from "@/utils/useWindowSize";
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 
 const BlockGuide = () => {
+  const { t } = useTranslation();
   const [showMore, setShowMore] = useState(0);
   const { width } = useWindowSize();
   const handleShowMore = (id) => {
     setShowMore(id);
   };
-  const blockContent = [
+  const blockContent = useMemo(() => [
     {
       id: 1,
       icon: "/img/featureIcons/1.svg",
-      title: "Mang đến sự khác biệt",
+      title: t("HOME.DIFFERENT"),
       shortText: "",
-      text: `Lấy sự trải nghiệm và hài lòng của khách hàng là mục tiêu hàng đầu của chúng tôi, với triết lý lợi người trước, lợi mình sau.`,
+      text: t("HOME.DIFFERENT_DESC"),
       delayAnim: "100",
     },
     {
       id: 2,
       icon: "/img/featureIcons/2.svg",
-      title: "Dễ dàng lựa chọn, giá hợp lý",
+      title: t("HOME.REASONABLE_PRICE"),
       shortText: (
         <div>
-          Dễ dàng lựa chọn, thay đổi dịch vụ phòng lưu trú khách sạn, resort,
-          tour du lịch, sân golf, du thuyền, vé máy bay, và...
+          {t("HOME.REASONABLE_PRICE_SHORT")}
           <span
             className="text-blue-1 fst-italic cursor-pointer"
             onClick={() => handleShowMore(2)}
           >
-            {" "}
-            Xem thêm
+            {" "}{t("COMMON.SEE_MORE")}
           </span>
         </div>
       ),
-      text: "Dễ dàng lựa chọn, thay đổi dịch vụ phòng lưu trú khách sạn, resort, tour du lịch, sân golf, du thuyền, vé máy bay, vé tham quan và các dịch vụ khác theo nhu cầu khách hàng. Giá cả phù hợp, cạnh tranh.",
+      text: t("HOME.REASONABLE_PRICE_DESC"),
       delayAnim: "200",
     },
     {
       id: 3,
       icon: "/img/featureIcons/3.svg",
-      title: "Cam kết chất lượng dịch vụ",
+      title: t("HOME.SERVICE_QUALITY"),
       shortText: "",
-      text: `Cam kết mang tới khách hàng các dịch vụ theo tiêu chuẩn với chất lượng tốt nhất, đẳng cấp cao. Hỗ trợ dịch vụ 24/7.`,
+      text: t("HOME.SERVICE_QUALITY_DESC"),
       delayAnim: "300",
     },
     {
       id: 4,
       icon: "/img/featureIcons/4.svg",
-      title: "Tạo được niềm tin lâu dài",
+      title: t("HOME.TRUST"),
       shortText: "",
-      text: `Thành viên thân thiết, tiềm năng lựa chọn dịch vụ sớm sẽ nhận được ưu đãi tốt về giá kèm phần quà hấp dẫn.`,
+      text: t("HOME.TRUST_DESC"),
       delayAnim: "300",
     },
-  ];
+  ], [t, showMore]);
 
   return (
     <>

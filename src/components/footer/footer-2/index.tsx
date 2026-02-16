@@ -1,16 +1,18 @@
+import { useTranslation } from "react-i18next";
 import AppButton from "./AppButton";
 import ContactInfo from "./ContactInfo";
 import Copyright from "./Copyright";
 import FooterContent from "./FooterContent";
 
-const index = () => {
+const Footer2 = () => {
+  const { t } = useTranslation();
   return (
     <footer className="footer -type-1 text-white bg-blue-1">
       <div className="container">
         <div className="pt-20 pb-20">
           <div className="row y-gap-20 justify-between xl:justify-start">
             <div className="col-xl-5 col-lg-4 col-sm-6">
-              <h5 className="text-20 fw-500 mb-30">Liên hệ với chúng tôi</h5>
+              <h5 className="text-20 fw-500 mb-30">{t("COMMON.CONTACT_US")}</h5>
               <ContactInfo />
             </div>
             {/* End col */}
@@ -36,4 +38,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Footer2;

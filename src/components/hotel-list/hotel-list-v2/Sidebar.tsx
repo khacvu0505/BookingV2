@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { useTranslation } from "react-i18next";
 import SearchBox from "../sidebar/SearchBox";
 import RatingsFilter from "../sidebar/RatingsFilter";
 import PirceSlider from "../sidebar/PirceSlider";
@@ -10,11 +11,12 @@ import RatingByCustomer from "../sidebar/RatingByCustomer";
 import AccommodationType from "../sidebar/AccommodationType";
 
 const Sidebar = () => {
+  const { t } = useTranslation();
   return (
     <>
       <div className="sidebar__item -no-border">
         <div className="px-20 py-20 bg-light-2 rounded-4">
-          <h5 className="text-18 fw-500 mb-10">Tìm khách sạn</h5>
+          <h5 className="text-18 fw-500 mb-10">{t("COMMON.FIND_HOTEL")}</h5>
 
           <div className="row y-gap-20 pt-20">
             <MainFilterSearchBox />
@@ -23,13 +25,13 @@ const Sidebar = () => {
       </div>
 
       <div className="sidebar__item -no-border">
-        <h5 className="text-18 fw-500 mb-10">Tìm kiếm theo tên</h5>
+        <h5 className="text-18 fw-500 mb-10">{t("COMMON.SEARCH_BY_NAME")}</h5>
         <SearchBox />
       </div>
       {/* End search box */}
 
       <div className="sidebar__item">
-        <h5 className="text-18 fw-500 mb-10">Loại hình nơi ở</h5>
+        <h5 className="text-18 fw-500 mb-10">{t("COMMON.ACCOMMODATION_TYPE")}</h5>
         <div className="sidebar-checkbox">
           <div className="row y-gap-5 items-center">
             <AccommodationType />
@@ -38,7 +40,7 @@ const Sidebar = () => {
       </div>
 
       <div className="sidebar__item pb-30">
-        <h5 className="text-18 fw-500 mb-10">Giá hàng đêm</h5>
+        <h5 className="text-18 fw-500 mb-10">{t("COMMON.NIGHTLY_PRICE")}</h5>
         <div className="row x-gap-10 y-gap-30">
           <div className="col-12">
             <PirceSlider />
@@ -48,14 +50,14 @@ const Sidebar = () => {
       {/* End Nightly priceslider */}
 
       <div className="sidebar__item">
-        <h5 className="text-18 fw-500 mb-10">Xếp hạng sao</h5>
+        <h5 className="text-18 fw-500 mb-10">{t("COMMON.STAR_RATING")}</h5>
         <div className="row x-gap-10 y-gap-10 pt-10">
           <RatingsFilter />
         </div>
       </div>
 
       <div className="sidebar__item">
-        <h5 className="text-18 fw-500 mb-10">Đánh giá của khách</h5>
+        <h5 className="text-18 fw-500 mb-10">{t("COMMON.GUEST_RATING")}</h5>
         <div className="row x-gap-10 y-gap-10 pt-10">
           <RatingByCustomer />
         </div>
@@ -63,7 +65,7 @@ const Sidebar = () => {
       {/* End rating filter */}
 
       <div className="sidebar__item">
-        <h5 className="text-18 fw-500 mb-10">Vị trí</h5>
+        <h5 className="text-18 fw-500 mb-10">{t("COMMON.LOCATION")}</h5>
         <div className="sidebar-checkbox">
           <div className="row y-gap-5 items-center">
             <AmenitiesFilter />
@@ -71,7 +73,7 @@ const Sidebar = () => {
         </div>
       </div>
       <div className="sidebar__item">
-        <h5 className="text-18 fw-500 mb-10">Chọn phòng có</h5>
+        <h5 className="text-18 fw-500 mb-10">{t("COMMON.ROOM_HAS")}</h5>
         <div className="sidebar-checkbox">
           <div className="row y-gap-5 items-center">
             <BenefitGroup />
@@ -80,7 +82,7 @@ const Sidebar = () => {
       </div>
 
       <div className="sidebar__item">
-        <h5 className="text-18 fw-500 mb-10">Địa điểm</h5>
+        <h5 className="text-18 fw-500 mb-10">{t("COMMON.LOCATION")}</h5>
         <div className="sidebar-checkbox">
           <div className="row y-gap-5 items-center">
             <SubLocation />

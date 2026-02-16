@@ -13,10 +13,10 @@ export interface FindPlaceState {
 
 const initialState: FindPlaceState = {
   tabs: [
-    { id: 1, name: "Khách sạn", icon: "icon-bed" },
-    { id: 2, name: "Tours", icon: "icon-destination" },
+    { id: 1, name: "hotels", icon: "icon-bed" },
+    { id: 2, name: "tours", icon: "icon-destination" },
   ] as Tab[],
-  currentTab: "Khách sạn",
+  currentTab: "hotels",
 };
 
 export const findPlaceSlice = createSlice({

@@ -77,10 +77,11 @@ interface ShowMemberPriceProps {
 }
 
 const ShowMemberPrice = ({ price, currentCurrency = "đ" }: ShowMemberPriceProps) => {
+  const { t } = useTranslation();
   return (
     price > 0 && (
       <div className="d-flex items-center mt-16">
-        <p className="italic fw-400 text-14">Giá thành viên</p>
+        <p className="italic fw-400 text-14">{t("COMMON.MEMBER_PRICE")}</p>
         <p className="text-16 lg:text-15 fw-500 text-action-link">
           {formatCurrency(price)} {currentCurrency}
         </p>

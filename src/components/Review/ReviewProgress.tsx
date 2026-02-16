@@ -51,7 +51,7 @@ const ReviewProgress = ({ hotel }: ReviewProgressProps) => {
                     {voteSupplier?.votePoint || 10}
                   </div>
                   <div className="fw-600 text-24 xl:text-22 lg:text-20">
-                    {voteSupplier?.voteStatus || "Tuyệt vời"}
+                    {voteSupplier?.voteStatus || t("COMMON.RATING_WONDERFUL")}
                   </div>
                   <div className="text-16 xl:text-15 text-primary-500 fw-400 mt-5">
                     {voteSupplier?.totalReview} {t("COMMON.RATING")}
@@ -75,7 +75,7 @@ const ReviewProgress = ({ hotel }: ReviewProgressProps) => {
                           <div className="md:d-flex md:justify-between d-block">
                             <div className="d-flex items-center ">
                               <div className="text-15 lg:text-14 fw-500 ">
-                                {(voteSupplierInfo as Record<string, string>)[item?.label] || "Vị trí"}
+                                {(voteSupplierInfo as Record<string, string>)[item?.label] || t("COMMON.POSITION")}
                               </div>
                               <div className="text-15 lg:text-14 text-light-1 fw-500 text-primary-500 pl-5">
                                 {`(${

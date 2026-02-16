@@ -26,6 +26,7 @@ const languageContent = [
 
 const LanguageMegaMenu = ({ textClass }) => {
   const {
+    t,
     i18n: { changeLanguage, language },
   } = useTranslation();
   const dispatch = useDispatch();
@@ -77,7 +78,7 @@ const LanguageMegaMenu = ({ textClass }) => {
         <div className="currencyMenu__bg" onClick={handleCurrency}></div>
         <div className="langMenu__content bg-white rounded-4">
           <div className="d-flex items-center justify-between px-30 py-20 sm:px-15 border-bottom-light">
-            <div className="text-20 fw-500 lh-15">Chọn ngôn ngữ</div>
+            <div className="text-20 fw-500 lh-15">{t("COMMON.CHOOSE_LANGUAGE")}</div>
             {/* End title */}
             <button className="pointer" onClick={handleCurrency}>
               <i className="icon-close" />

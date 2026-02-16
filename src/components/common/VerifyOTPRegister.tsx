@@ -3,8 +3,10 @@ import OtpInput from "react-otp-input";
 import { verifyRegisterOTP } from "@/api/auth.api";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
 import { STEPS } from "../authen/AuthenModal";
+import { useTranslation } from "react-i18next";
 
 const VerifyOTPRegister = ({ email, setStep }) => {
+  const { t } = useTranslation();
   const [otp, setOtp] = useState("");
   const [isSubmmitting, setIsSubmmitting] = useState(false);
 
@@ -55,13 +57,13 @@ const VerifyOTPRegister = ({ email, setStep }) => {
             // }
             setIsSubmmitting(false);
             setOtp("");
-            handleRenderNoti("Mã OTP không chính xác", "error");
+            handleRenderNoti(t("COMMON.OTP_INCORRECT"), "error");
           }
         })
         .catch(() => {
           setIsSubmmitting(false);
           setOtp("");
-          handleRenderNoti("Vui lòng thử lại sau", "error");
+          handleRenderNoti(t("COMMON.PLEASE_TRY_AGAIN"), "error");
         });
     }
   }, [otp]);
@@ -71,7 +73,7 @@ const VerifyOTPRegister = ({ email, setStep }) => {
       <div className="d-flex items-center justify-between px-30 pb-20 sm:px-15 border-bottom-light mt-20">
         <div className="text-20 fw-500 lh-15 w-100 text-center">
           <img src="/img/general/logo-okdimall.svg" alt="logo" width={100} />
-          <p className="mt-10">Nhập mã xác thực OTP</p>
+          <p className="mt-10">{t("COMMON.ENTER_OTP")}</p>
         </div>
       </div>
 
@@ -79,7 +81,7 @@ const VerifyOTPRegister = ({ email, setStep }) => {
         {isSubmmitting ? (
           <div className="text-center">
             <span className="loader"></span>
-            <span className="ml-10">Đang xử lý...</span>
+            <span className="ml-10">{t("COMMON.PROCESSING_LOADING")}</span>
           </div>
         ) : (
           <>
@@ -87,7 +89,7 @@ const VerifyOTPRegister = ({ email, setStep }) => {
               {email}
             </p>
             <p className="text-center text-dark-1 mb-30">
-              Vui lòng kiểm tra email để lấy mã xác thực
+              {t("COMMON.CHECK_EMAIL_FOR_OTP")}
             </p>
           </>
         )}

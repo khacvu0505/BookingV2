@@ -180,7 +180,7 @@ const HotelItem = ({ item }) => {
                         ? `${item?.distanceCenter} km ${t(
                             "HOTELS.TO_THE_CENTER"
                           )}`
-                        : `Trung tâm`}{" "}
+                        : t("COMMON.CENTER")}{" "}
                     </p>
                   </div>
                 </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import MetaComponent from "@/components/common/MetaComponent";
 import PromotionBanner from "@/components/promotion/PromotonBanner/PromotionBanner";
 import PromotionDetailModal from "@/components/promotion/PromotionDetailModal";
@@ -20,6 +21,7 @@ const metadata = {
 };
 
 const Promotion = () => {
+  const { t } = useTranslation();
   const [params, setSearchParams] = useQueryParams();
   const refModalDetail = useRef(null);
   const [selected, setSelected] = useState(null);
@@ -185,7 +187,7 @@ const Promotion = () => {
           <div className="row">
             <div className="col-md-3">
               <div className="sectionTitle -md">
-                <p className="text-dark fw-500">Sản phẩm áp dụng được</p>
+                <p className="text-dark fw-500">{t("COMMON.APPLICABLE_PRODUCTS")}</p>
                 {supplierList.map((item, idx) => (
                   <div className="form-checkbox d-flex items-center" key={idx}>
                     <input
@@ -201,7 +203,7 @@ const Promotion = () => {
                 ))}
               </div>
               <div className="sectionTitle -md mt-10">
-                <p className="text-dark fw-500">Ưu đãi</p>
+                <p className="text-dark fw-500">{t("COMMON.OFFERS")}</p>
                 {voucherCategoryList.map((item, idx) => (
                   <div className="form-checkbox d-flex items-center" key={idx}>
                     <input
@@ -249,8 +251,8 @@ const Promotion = () => {
                               >
                                 {selected?.voucherCode === item.voucherCode &&
                                 isVisible
-                                  ? "Đã sao chép"
-                                  : "Lấy mã"}
+                                  ? t("COMMON.COPIED")
+                                  : t("COMMON.GET_CODE")}
                               </button>
                             </div>
                           </div>

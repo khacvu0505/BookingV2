@@ -5,8 +5,10 @@ import debounce from "lodash/debounce";
 import SearchContent from "./SearchContent";
 import Hashtag from "@/components/Search/SearchAll/Hashtag";
 import Regions from "@/components/Search/SearchAll/Regions";
+import { useTranslation } from "react-i18next";
 
 const OffCanvasHeaderSearch = () => {
+  const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState("");
   const [searchValueDebounce, setSearchValueDebounce] = useState("");
   const debouncedSearch = useCallback(
@@ -31,7 +33,7 @@ const OffCanvasHeaderSearch = () => {
       classNameBody="px-15 lg:px-10"
     >
       <Input
-        placeholder="Tìm kiếm địa điểm"
+        placeholder={t("COMMON.SEARCH_LOCATION_PLACEHOLDER")}
         value={searchValue}
         onChange={handleChangeInputSearch}
         onClick={handleClickInputSearch}

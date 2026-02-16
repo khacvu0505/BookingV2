@@ -196,7 +196,7 @@ const LocationSearch = ({ handleChangeValue, type, isOffCanvas = false }: Locati
         {isOffCanvas ? (
           <>
             <Input
-              placeholder="Tim kiem dia diem"
+              placeholder={t("COMMON.SEARCH_LOCATION_PLACEHOLDER")}
               value={searchValueInput}
               onChange={handleChangeInputSearch}
               onClick={handleClickInputSearch}

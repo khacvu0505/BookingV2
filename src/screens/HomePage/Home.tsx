@@ -12,13 +12,12 @@ import { useQuery } from "@tanstack/react-query";
 import { commonKeys } from "@/lib/query-keys";
 import { getImageHome } from "@/api/category.api";
 
-const metadata = {
-  title: "Home",
-  description: "OKdimall - Du lịch và trải nghiệm",
-};
-
 const Home = () => {
   const { t } = useTranslation();
+  const metadata = {
+    title: "Home",
+    description: `OKdimall - ${t("COMMON.META_DESCRIPTION")}`,
+  };
   const { data: imagesHome = null, isLoading } = useQuery({
     queryKey: commonKeys.imageHome(),
     queryFn: async () => {

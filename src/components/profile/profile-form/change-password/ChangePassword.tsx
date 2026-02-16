@@ -10,8 +10,10 @@ import { changePasswordSchema } from "@/schemas/changePasswordSchema";
 import { handleRenderMessageError } from "@/utils/handleRenderMessageError";
 import { updatePassword } from "@/api/auth.api";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
+import { useTranslation } from "react-i18next";
 
 const ChangePassword = (props: any, ref: any) => {
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [isSubmmitting, setIsSubmmitting] = useState(false);
 
@@ -54,10 +56,10 @@ const ChangePassword = (props: any, ref: any) => {
       .then(() => {
         setIsSubmmitting(false);
         setIsVisible(false);
-        handleRenderNoti("Cập nhật mật khẩu thành công", "success");
+        handleRenderNoti(t("COMMON.UPDATE_PASSWORD_SUCCESS"), "success");
       })
       .catch(() => {
-        handleRenderNoti("Vui lòng thử lại sau", "error");
+        handleRenderNoti(t("COMMON.PLEASE_TRY_AGAIN"), "error");
         setIsSubmmitting(false);
       });
   };
@@ -88,7 +90,7 @@ const ChangePassword = (props: any, ref: any) => {
         <div className="d-flex items-center justify-between px-30 pb-20 sm:px-15 border-bottom-light">
           <div className=" fw-500 lh-15 w-100 text-center">
             {/* <img src="/img/general/logo-okdimall.svg" alt="logo" width={100} /> */}
-            <p className="mt-10 text-dark-1 text-20">Cập nhật mật khẩu</p>
+            <p className="mt-10 text-dark-1 text-20">{t("COMMON.UPDATE_PASSWORD_TITLE")}</p>
           </div>
           {/* End Title */}
 
@@ -110,7 +112,7 @@ const ChangePassword = (props: any, ref: any) => {
               />
 
               <label className="lh-1 text-14 text-light-1">
-                Mật khẩu hiện tại
+                {t("COMMON.CURRENT_PASSWORD")}
               </label>
               <div></div>
             </div>
@@ -125,7 +127,7 @@ const ChangePassword = (props: any, ref: any) => {
                 name="newPassword"
                 {...register("newPassword")}
               />
-              <label className="lh-1 text-14 text-light-1">Mật khẩu mới</label>
+              <label className="lh-1 text-14 text-light-1">{t("COMMON.NEW_PASSWORD")}</label>
             </div>
             {errors.newPassword &&
               handleRenderMessageError(errors.newPassword.message)}
@@ -139,7 +141,7 @@ const ChangePassword = (props: any, ref: any) => {
                 {...register("confirmNewPassword")}
               />
               <label className="lh-1 text-14 text-light-1">
-                Nhập lại mật khẩu
+                {t("AUTH.SIGNUP/RE_ENTER_PASSWORD")}
               </label>
             </div>
             {errors.confirmNewPassword &&
@@ -152,7 +154,7 @@ const ChangePassword = (props: any, ref: any) => {
               disabled={isSubmmitting}
             >
               {isSubmmitting && <span className="loader mr-15"></span>}
-              Cập nhật <div className="icon-arrow-top-right ml-15" />
+              {t("COMMON.UPDATE")} <div className="icon-arrow-top-right ml-15" />
             </button>
           </div>
         </form>

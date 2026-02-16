@@ -16,8 +16,10 @@ import { Link } from "react-router-dom";
 import ShowQuantity from "@/components/price/ShowQuantity";
 import PromotionPrice from "@/components/promotion-price";
 import { Gallery, Item } from "react-photoswipe-gallery";
+import { useTranslation } from "react-i18next";
 
 const HotelProperties = () => {
+  const { t } = useTranslation();
   const [searchParams] = useQueryParams();
   const { checkIn, checkOut, adults, children, room, location } = searchParams;
   const _navigate = useNavigate();
@@ -74,7 +76,7 @@ const HotelProperties = () => {
   }
 
   if (hotelList.length === 0) {
-    return <p className="text-dark-1 text-center">Không tim thấy thông tin</p>;
+    return <p className="text-dark-1 text-center">{t("COMMON.NOT_FOUND_INFO")}</p>;
   }
 
   return (
@@ -171,7 +173,7 @@ const HotelProperties = () => {
                         data-x-click="mapFilter"
                         className="d-block text-14 text-blue-1 underline"
                       >
-                        bản đồ
+                        {t("COMMON.MAP")}
                       </button>
                     </div>
 
@@ -182,7 +184,7 @@ const HotelProperties = () => {
                     <div className="col-auto">
                       <p className="text-14 text-dark">
                         <i className="icon-location text-14 mr-5"></i>
-                        {item?.distanceCenter} km đến trung tâm thành phố
+                        {t("COMMON.KM_TO_CENTER", { distance: item?.distanceCenter })}
                       </p>
                     </div>
                   </div>
@@ -195,21 +197,21 @@ const HotelProperties = () => {
                           <i className="icon-bed text-14 pr-10"></i>
                           {item?.totalBedLarge > 0 && item?.totalBedMedium > 0
                             ? item?.totalBedLarge +
-                              ` giường đôi ${
-                                item?.both2RoomType ? "và" : "hoặc"
+                              ` ${t("COMMON.DOUBLE_BED")} ${
+                                item?.both2RoomType ? t("COMMON.AND") : t("COMMON.OR")
                               } ` +
                               item?.totalBedMedium +
-                              " giường đơn "
+                              ` ${t("COMMON.SINGLE_BED")} `
                             : item?.totalBedLarge > 0
-                            ? item?.totalBedLarge + " giường đôi "
+                            ? item?.totalBedLarge + ` ${t("COMMON.DOUBLE_BED")} `
                             : item?.totalBedMedium > 0
-                            ? item?.totalBedMedium + " giường đơn "
+                            ? item?.totalBedMedium + ` ${t("COMMON.SINGLE_BED")} `
                             : ""}
                         </p>
                       </div>
 
                       <div className="text-14 text-green-2 lh-15 mt-10">
-                        <div className="fw-500">Quyền lợi</div>
+                        <div className="fw-500">{t("COMMON.BENEFITS")}</div>
                         <div className="">
                           <svg
                             width="16"
@@ -285,7 +287,7 @@ const HotelProperties = () => {
                       </div>
                       {item?.totalReview > 0 && (
                         <div className="text-14 lh-14 text-light-1">
-                          {item?.totalReview} đánh giá
+                          {t("COMMON.REVIEWS_COUNT", { count: item?.totalReview })}
                         </div>
                       )}
                     </div>
@@ -320,7 +322,7 @@ const HotelProperties = () => {
                           className="button -md -dark-1 bg-blue-1 text-white mt-5"
                           style={{ width: 100, textAlign: "right" }}
                         >
-                          Chọn
+                          {t("COMMON.CHOOSE")}
                         </button>
                       </Link>
                     </div>

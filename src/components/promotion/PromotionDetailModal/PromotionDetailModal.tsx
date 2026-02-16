@@ -3,9 +3,11 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { sanitizeHtml } from "@/utils/sanitize";
 
 const PromotionDetailModal = (props, ref) => {
+  const { t } = useTranslation();
   const { selected } = props;
   const [isVisible, setIsVisible] = useState(false);
   const [value, setValue] = useState("");
@@ -58,7 +60,7 @@ const PromotionDetailModal = (props, ref) => {
               </div>
             </div>
             <div className="mt-30 w-75 w-md-50 mx-0 mx-md-auto">
-              <p className="text-dark fw-500">Điều kiện áp dụng</p>
+              <p className="text-dark fw-500">{t("COMMON.APPLICABLE_CONDITIONS")}</p>
               <p
                 className="text-dark"
                 dangerouslySetInnerHTML={{
@@ -71,7 +73,7 @@ const PromotionDetailModal = (props, ref) => {
               className="w-25 mx-auto button py-10 px-2 -dark-1 bg-blue-1 text-white mt-20"
               onClick={handleClickGetCode}
             >
-              {selected?.voucherCode === value ? "Đã sao chép" : "Lấy mã"}
+              {selected?.voucherCode === value ? t("COMMON.COPIED") : t("COMMON.GET_CODE")}
             </button>
           </div>
         </div>

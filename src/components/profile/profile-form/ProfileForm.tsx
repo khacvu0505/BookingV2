@@ -1,9 +1,11 @@
 import { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import ChangePassword from "./change-password/ChangePassword";
 import ForgotPassword from "./forgot-password/ForgotPassword";
 import { getProfile } from "@/utils/auth";
 
 const ProfileForm = () => {
+  const { t } = useTranslation();
   const dataUser = getProfile() as any;
   const [profileForm, setProfileForm] = useState({
     name: dataUser?.fullName || "",
@@ -118,7 +120,7 @@ const ProfileForm = () => {
                 onChange={handleChangeForm}
                 disabled
               />
-              <label className="lh-1 text-14 text-light-1">Tên</label>
+              <label className="lh-1 text-14 text-light-1">{t("COMMON.LABEL_FIRST_NAME")}</label>
             </div>
           </div>
 
@@ -138,7 +140,7 @@ const ProfileForm = () => {
           </div>
           <div className="col-12">
             <div className="form-input">
-              <label className="lh-1 text-14 text-light-1">Số điện thoại</label>
+              <label className="lh-1 text-14 text-light-1">{t("COMMON.LABEL_PHONE")}</label>
 
               <input
                 type="text"
@@ -158,7 +160,7 @@ const ProfileForm = () => {
               onClick={() => refChangePasswordModal.current.setIsVisible(true)}
             >
               <img src="/img/profile/lock.svg" alt="lock" className="mr-4" />
-              Cập nhật mật khẩu
+              {t("COMMON.UPDATE_PASSWORD_TITLE")}
             </div>
           </div>
           <div className="col-md-6">
@@ -167,7 +169,7 @@ const ProfileForm = () => {
               onClick={() => refForgotPasswordModal.current.setIsVisible(true)}
             >
               <img src="/img/profile/lock.svg" alt="lock" className="mr-4" />
-              Quên mật khẩu
+              {t("COMMON.FORGOT_PASSWORD")}
             </div>
           </div>
           {/* End .col */}
@@ -178,7 +180,7 @@ const ProfileForm = () => {
               // href="#"
               className="button py-20 -dark-1 bg-blue-1 text-white w-100"
             >
-              Cập nhật thông tin <div className="icon-arrow-top-right ml-15" />
+              {t("COMMON.UPDATE_INFO")} <div className="icon-arrow-top-right ml-15" />
             </button>
           </div>
           {/* End .col */}

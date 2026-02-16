@@ -45,7 +45,7 @@ const MobileMenu = () => {
         navigate("/");
       })
       .catch(() => {
-        handleRenderNoti("Đăng xuất thất bại", "error");
+        handleRenderNoti(t("COMMON.LOGOUT_FAILED"), "error");
       });
   };
 

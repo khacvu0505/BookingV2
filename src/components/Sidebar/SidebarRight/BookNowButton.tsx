@@ -88,12 +88,12 @@ const BookNowButton = ({ isOffcanvas = false }: BookNowButtonProps) => {
                 switch (res?.data) {
                   case "2":
                     Swal.fire({
-                      title: "Thong bao",
+                      title: t("COMMON.NOTIFICATION"),
                       icon: "info",
-                      text: "Khach san da het phong, vui long chon khach san khac",
-                      confirmButtonText: "Ve danh sach khach san",
+                      text: t("COMMON.HOTEL_SOLD_OUT"),
+                      confirmButtonText: t("COMMON.BACK_TO_HOTEL_LIST"),
                       confirmButtonColor: "#f52549",
-                      cancelButtonText: "Chon phong khac",
+                      cancelButtonText: t("COMMON.CHOOSE_ROOM_PLEASE"),
                       cancelButtonColor: "#051036",
                       showCancelButton: true,
                       allowEscapeKey: false,
@@ -114,20 +114,20 @@ const BookNowButton = ({ isOffcanvas = false }: BookNowButtonProps) => {
                     break;
                   case "3":
                     Swal.fire({
-                      title: "Thong bao",
+                      title: t("COMMON.NOTIFICATION"),
                       icon: "info",
-                      text: "Phong dang duoc giu boi nguoi khac, vui long dat phong khac hoac quay lai sau 6 phut",
-                      confirmButtonText: "Dong y",
+                      text: t("COMMON.ROOM_HELD_BY_ANOTHER"),
+                      confirmButtonText: t("COMMON.AGREE"),
                       confirmButtonColor: "#f52549",
                       allowEnterKey: true,
                     });
                     break;
                   case "5":
                     Swal.fire({
-                      title: "Thong bao",
+                      title: t("COMMON.NOTIFICATION"),
                       icon: "warning",
-                      text: "Ban da het luot dat phong trong hom nay",
-                      confirmButtonText: "Ve trang chu",
+                      text: t("COMMON.BOOKING_LIMIT_REACHED"),
+                      confirmButtonText: t("COMMON.BACK_TO_HOMEPAGE"),
                       confirmButtonColor: "#f52549",
                       allowEscapeKey: false,
                       allowEnterKey: true,
@@ -140,23 +140,23 @@ const BookNowButton = ({ isOffcanvas = false }: BookNowButtonProps) => {
                     break;
                   default:
                     handleRenderNoti(
-                      "Co loi xay ra, vui long thu lai sau",
+                      t("COMMON.ERROR_TRY_AGAIN"),
                       "error"
                     );
                 }
               }
             })
             .catch(() => {
-              handleRenderNoti("Co loi xay ra, vui long thu lai sau", "error");
+              handleRenderNoti(t("COMMON.ERROR_TRY_AGAIN"), "error");
             });
         } catch (error) {
-          handleRenderNoti("Co loi xay ra, vui long thu lai sau", "error");
+          handleRenderNoti(t("COMMON.ERROR_TRY_AGAIN"), "error");
           throw error;
         }
       }
 
       if (!infoBooking?.services?.[roomActive - 1]?.roomID) {
-        handleRenderNoti("Vui long chon phong", "warning");
+        handleRenderNoti(t("COMMON.CHOOSE_ROOM_PLEASE"), "warning");
       }
     }
     if (isAddonPage) {

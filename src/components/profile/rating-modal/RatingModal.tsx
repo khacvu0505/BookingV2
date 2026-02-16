@@ -3,44 +3,7 @@ import FileUpload from "@/components/upload-file/UploadFile";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
 import React, { useImperativeHandle, useRef, useState } from "react";
 import Rating from "react-rating";
-
-const ratingValue = [
-  {
-    id: 1,
-    name: "Vị trí",
-    key: "Location" as const,
-  },
-  {
-    id: 2,
-    name: "Nhân viên",
-    key: "Staff" as const,
-  },
-  {
-    id: 3,
-    name: "Sạch sẽ",
-    key: "Cleanliness" as const,
-  },
-  {
-    id: 4,
-    name: "Phù hợp với giá tiền",
-    key: "ValueForMoney" as const,
-  },
-  {
-    id: 5,
-    name: "Thoải mái",
-    key: "Comfort" as const,
-  },
-  {
-    id: 6,
-    name: "Cơ sở vật chất",
-    key: "Facilities" as const,
-  },
-  {
-    id: 7,
-    name: "Wifi miễn phí",
-    key: "FreeWifi" as const,
-  },
-];
+import { useTranslation } from "react-i18next";
 
 interface RatingState {
   Location: number;
@@ -64,8 +27,47 @@ interface RatingModalProps {
 }
 
 const RatingModal = (props: RatingModalProps, ref: React.Ref<unknown>) => {
+  const { t } = useTranslation();
   const refFileValue = useRef<FileUploadRef | null>(null);
   const { bookingId, handleRatingSuccess } = props;
+
+  const ratingValue = [
+    {
+      id: 1,
+      name: t("COMMON.LOCATION"),
+      key: "Location" as const,
+    },
+    {
+      id: 2,
+      name: t("COMMON.STAFF_TITLE"),
+      key: "Staff" as const,
+    },
+    {
+      id: 3,
+      name: t("COMMON.CLEAN_LINESS"),
+      key: "Cleanliness" as const,
+    },
+    {
+      id: 4,
+      name: t("COMMON.REASONABLE_PRICE"),
+      key: "ValueForMoney" as const,
+    },
+    {
+      id: 5,
+      name: t("COMMON.COMFORT"),
+      key: "Comfort" as const,
+    },
+    {
+      id: 6,
+      name: t("COMMON.FACILITIES"),
+      key: "Facilities" as const,
+    },
+    {
+      id: 7,
+      name: t("COMMON.WIFI_FREE"),
+      key: "FreeWifi" as const,
+    },
+  ];
   const [isVisible, setIsVisible] = useState(false);
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState<RatingState>({
@@ -116,14 +118,14 @@ const RatingModal = (props: RatingModalProps, ref: React.Ref<unknown>) => {
       .then((res) => {
         if (res.success) {
           handleRatingSuccess();
-          handleRenderNoti("Cảm ơn bạn đã đánh giá", "success");
+          handleRenderNoti(t("COMMON.THANK_FOR_REVIEW"), "success");
           handleCloseModal();
           return;
         }
-        handleRenderNoti("Vui lòng thử lại sau", "error");
+        handleRenderNoti(t("COMMON.PLEASE_TRY_AGAIN_LATER"), "error");
       })
       .catch(() => {
-        handleRenderNoti("Vui lòng thử lại sau", "error");
+        handleRenderNoti(t("COMMON.PLEASE_TRY_AGAIN_LATER"), "error");
       });
   };
 
@@ -146,7 +148,7 @@ const RatingModal = (props: RatingModalProps, ref: React.Ref<unknown>) => {
         <div className="d-flex items-center justify-between px-30  sm:px-15 ">
           <div className="text-20 fw-500 lh-15 w-100 text-center">
             <p className="mt-10 text-dark pb-30" style={{ fontSize: "30px" }}>
-              Đánh giá trải nghiệm của bạn
+              {t("COMMON.REVIEW_EXPERIENCE")}
             </p>
           </div>
         </div>
@@ -166,7 +168,7 @@ const RatingModal = (props: RatingModalProps, ref: React.Ref<unknown>) => {
                       <i className="icon-minus" />
                     </div>
                     <div className="button text-dark-1 text-start">
-                      Đánh giá chi tiết
+                      {t("COMMON.DETAILED_REVIEW")}
                     </div>
                   </div>
                   <div
@@ -229,7 +231,7 @@ const RatingModal = (props: RatingModalProps, ref: React.Ref<unknown>) => {
                   }}
                 />
                 <label className="lh-1 text-16 text-light-1">
-                  Nhận xét của bạn
+                  {t("COMMON.YOUR_COMMENT")}
                 </label>
               </div>
             </div>
@@ -244,7 +246,7 @@ const RatingModal = (props: RatingModalProps, ref: React.Ref<unknown>) => {
               className="button py-20 -dark-1 bg-blue-1 text-white px-30 mt-20"
               onClick={handleSubmitRating}
             >
-              Đăng <div className="icon-arrow-top-right ml-15" />
+              {t("COMMON.POST")} <div className="icon-arrow-top-right ml-15" />
             </button>
           </div>
         </div>

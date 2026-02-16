@@ -4,8 +4,10 @@ import GuestSearch from "./GuestSearch";
 import LocationSearch from "./LocationSearch";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const MainFilterSearchBox = () => {
+  const { t } = useTranslation();
   const [params, setSearchParams] = useQueryParams();
   const {
     location: locationParam,
@@ -60,7 +62,7 @@ const MainFilterSearchBox = () => {
         <div className="searchMenu-date px-20 py-10 bg-white rounded-4 -left js-form-dd js-calendar">
           <div>
             <h4 className="text-15 fw-500 ls-2 lh-16">
-              Nhận phòng - Trả phòng
+              {t("COMMON.CHECK_IN_CHECK_OUT")}
             </h4>
             <DateSearch handleChangeDataFilter={handleChangeDataFilter} />
           </div>
@@ -84,7 +86,7 @@ const MainFilterSearchBox = () => {
             aria-label="Close"
           >
             <i className="icon-search text-20 mr-10" />
-            Tìm kiếm
+            {t("HOME.SEARCH")}
           </button>
         </div>
         {/* End search button_item */}

@@ -1,7 +1,9 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const TestModal = (props, ref) => {
   const [isVisible, setIsVisible] = useState(true);
+  const { t } = useTranslation();
   const handleCloseModal = () => {
     setIsVisible(false);
   };
@@ -34,11 +36,10 @@ const TestModal = (props, ref) => {
         <section>
           <div className="bg-white shadow-4 rounded-4 px-20 pb-30">
             <p className="text-neutral-800 text-20 lg:text-18 md:text-16 text-center">
-              Thông báo
+              {t("COMMON.NOTIFICATION")}
             </p>
             <p className="text-neutral-800 text-14 text-center">
-              Website đang hoạt động ở chế độ thử nghiệm, đang thực hiện đăng ký
-              với Bộ Công Thương
+              {t("COMMON.TEST_MODE_NOTICE")}
             </p>
           </div>
         </section>

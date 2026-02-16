@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import BlogSidebar from "@/components/blog/blog-sidebar";
 import BlogPagination from "@/components/blog/BlogPagination";
 
@@ -19,6 +20,7 @@ const metadata = {
 };
 
 const BlogListV2 = () => {
+  const { t } = useTranslation();
   const { filter } = useSelector((state) => state.blogs);
 
   const { data: blogData, isLoading: loadingBlogs } = useQuery({
@@ -62,7 +64,7 @@ const BlogListV2 = () => {
           <div className="row justify-center text-center">
             <div className="col-auto">
               <div className="sectionTitle -md">
-                <h2 className="sectionTitle__title">Bài viết nổi bật</h2>
+                <h2 className="sectionTitle__title">{t("COMMON.FEATURED_POSTS")}</h2>
               </div>
             </div>
           </div>
@@ -85,7 +87,7 @@ const BlogListV2 = () => {
                   <BlogPagination totalPages={totalPages} />
                 </>
               ) : (
-                <div className="text-center">Không có thông tin bài viết</div>
+                <div className="text-center">{t("COMMON.NO_POST_INFO")}</div>
               )}
             </div>
 

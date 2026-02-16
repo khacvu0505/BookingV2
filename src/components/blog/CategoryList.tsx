@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { getListCategory } from "@/api/blogs.api";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter } from "@/features/blogs/blogSlice";
+import { useTranslation } from "react-i18next";
 
 const CategoryList = () => {
+  const { t } = useTranslation();
   const [listCategory, setListCategory] = useState([]);
   const dispatch = useDispatch();
 
@@ -47,7 +49,7 @@ const CategoryList = () => {
               }`}
               onClick={() => handleCategory(0)}
             >
-              Tất cả
+              {t("COMMON.ALL")}
             </button>
           </div>
           {listCategory?.map((option) => (

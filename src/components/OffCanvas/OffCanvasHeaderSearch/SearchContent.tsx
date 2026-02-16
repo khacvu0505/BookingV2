@@ -3,12 +3,14 @@ import React from "react";
 import { ResultSearchItem } from "./ResultSearchItem";
 import { useQuery } from "@tanstack/react-query";
 import { searchKeys } from "@/lib/query-keys";
+import { useTranslation } from "react-i18next";
 
 interface SearchContentProps {
   searchValueDebounce: string;
 }
 
 const SearchContent = ({ searchValueDebounce }: SearchContentProps) => {
+  const { t } = useTranslation();
   const { data: listSearchGeneral = [], isLoading: isSearchGeneralLoading } =
     useQuery({
       queryKey: searchKeys.general(searchValueDebounce),
@@ -45,7 +47,7 @@ const SearchContent = ({ searchValueDebounce }: SearchContentProps) => {
           ))
         ) : (
           <p className="text-center text-neutral-800 w-100 fw-400">
-            Chưa có kết quả phù hợp, bạn thử đổi từ khóa khác nhé!
+            {t("COMMON.NO_RESULTS_FOUND")}
           </p>
         )}
       </ul>

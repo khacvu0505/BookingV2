@@ -41,7 +41,7 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://sp.zalo.me",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: blob: https://*.okdimall.com",
+              "img-src 'self' data: blob: https://*.okdimall.com https://cdn.prod.website-files.com",
               "font-src 'self' data:",
               "connect-src 'self' https://extapi.okdimall.com",
               "frame-src 'self' https://www.youtube.com https://www.google.com https://*.okdimall.com",

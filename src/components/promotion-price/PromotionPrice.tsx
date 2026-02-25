@@ -3,8 +3,10 @@ import "./PromotionPrice.style.scss";
 import { formatCurrency } from "@/utils/utils";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const PromotionPrice = ({ promotion, memberPrice = 0, isTour = false }) => {
+  const { t } = useTranslation();
   const { currentCurrency } = useSelector((state) => state.app);
   return (
     <>
@@ -16,7 +18,7 @@ const PromotionPrice = ({ promotion, memberPrice = 0, isTour = false }) => {
         >
           {Boolean(!isTour) && (
             <div className="d-flex items-center justify-content-end flex-wrap">
-              <p className="text-dark mr-5">Nhập mã: </p>
+              <p className="text-dark mr-5">{t("COMMON.ENTER_CODE")}: </p>
               <p className="fw-600 text-info mr-5">{promotion?.voucherCode}</p>
               <p className="promotion-price-tag">{`-${promotion?.voucherPercent} %`}</p>
             </div>
@@ -28,7 +30,7 @@ const PromotionPrice = ({ promotion, memberPrice = 0, isTour = false }) => {
       )}
       {memberPrice > 0 && (
         <p className="text-dark text-14">
-          Giá thành viên: {formatCurrency(memberPrice)} {currentCurrency}
+          {t("COMMON.MEMBER_PRICE")}: {formatCurrency(memberPrice)} {currentCurrency}
         </p>
       )}
     </>

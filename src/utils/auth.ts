@@ -5,12 +5,14 @@ const isClient = typeof window !== "undefined";
 export const saveAccessTokenToLocalStorage = (access_token: string): void => {
   if (!isClient) return;
   localStorage.setItem("access_token", access_token);
+  document.cookie = `access_token=${access_token}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Strict; Secure`;
 };
 
 export const clearAccessTokenFromLocalStorage = (): void => {
   if (!isClient) return;
   localStorage.removeItem("access_token");
   localStorage.removeItem("profile");
+  document.cookie = "access_token=; path=/; max-age=0; SameSite=Strict; Secure";
   const clearLocalStorageEvent = new Event("clearLocalStorage");
   localStorageEventTarget.dispatchEvent(clearLocalStorageEvent);
 };

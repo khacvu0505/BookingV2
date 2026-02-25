@@ -1,6 +1,6 @@
 import { booking_id, create_invoice, info_booking, tax_include } from "@/utils/constants";
 import { clearSessionStorage } from "@/utils/utils";
-import React, { Component, ErrorInfo, ReactNode } from "react";
+import { Component, ErrorInfo, ReactNode } from "react";
 
 const isClient = typeof window !== "undefined";
 

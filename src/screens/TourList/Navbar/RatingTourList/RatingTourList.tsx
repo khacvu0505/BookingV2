@@ -1,7 +1,7 @@
-import RatingComponent from "@/apps/Rating";
+import RatingComponent from "@/components/ratings/Rating";
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const data = [

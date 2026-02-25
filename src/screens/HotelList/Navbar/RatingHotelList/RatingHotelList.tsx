@@ -1,10 +1,10 @@
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
-import React, { useEffect, useState, memo } from "react";
-import RatingComponent from "@/components/rating";
+import React, { useEffect, useState } from "react";
+import RatingComponent from "@/components/ratings/RatingSvg";
 import "./RatingHotelList.style.scss";
 import classNames from "classnames";
-import Checkbox from "@/apps/Checkbox";
+import Checkbox from "@/components/Form/Checkbox";
 import { useTranslation } from "react-i18next";
 
 const dataList = [

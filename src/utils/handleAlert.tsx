@@ -1,4 +1,5 @@
 import Swal, { SweetAlertIcon, SweetAlertResult } from "sweetalert2";
+import i18next from "i18next";
 
 interface HandleAlertParams {
   type: SweetAlertIcon;
@@ -12,7 +13,7 @@ export const handleAlert = ({
   type,
   title,
   html,
-  confirmButtonText = "Đóng",
+  confirmButtonText = i18next.t("COMMON.CLOSE"),
   confirmButtonColor = "var(--color-primary-500)",
 }: HandleAlertParams): Promise<SweetAlertResult> => {
   return Swal.fire({

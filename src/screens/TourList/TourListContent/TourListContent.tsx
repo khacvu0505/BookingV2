@@ -1,19 +1,26 @@
 /* eslint-disable no-undef */
-import React, { lazy } from "react";
+import React from "react";
+import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
-import RegisterMember from "@/apps/RegisterMember";
+import RegisterMember from "@/components/RegisterMember";
 
-const Pagination = lazy(() => import("@/apps/Pagination"));
-const TourListContentHeader = lazy(() => import("./TourListContentHeader"));
-const TourListData = lazy(() => import("./TourListData"));
-const SkeletonHeader = lazy(() => import("@/apps/SkeletonHeader"));
-const SkeletonCard = lazy(() => import("@/apps/SkeletonCard"));
+const Pagination = dynamic(() => import("@/components/Pagination"));
+const TourListContentHeader = dynamic(() => import("./TourListContentHeader"));
+const TourListData = dynamic(() => import("./TourListData"));
+const SkeletonHeader = dynamic(() => import("@/components/Skeleton/SkeletonHeader"));
+const SkeletonCard = dynamic(() => import("@/components/Skeleton/SkeletonCard"));
 
-const TourListContent = () => {
-  const totalPage = useSelector((state) => state.tours.totalPages);
-  const isLoading = useSelector((state) => state.tours.isLoadingTours);
-  const { isAuthenticated } = useSelector((state) => state.app) || {};
-  if (isLoading) {
+interface TourListContentProps {
+  tours: any[];
+  total: number;
+  totalPages: number;
+  isLoadingTours: boolean;
+}
+
+const TourListContent = ({ tours, total, totalPages, isLoadingTours }: TourListContentProps) => {
+  const { isAuthenticated } = useSelector((state: any) => state.app) || {};
+
+  if (isLoadingTours) {
     return (
       <div className="col-xl-9">
         <SkeletonHeader />
@@ -30,16 +37,16 @@ const TourListContent = () => {
 
   return (
     <div className="xxl:w-1/1 w-3/4 sm:px-12">
-      <TourListContentHeader />
+      <TourListContentHeader total={total} />
       {!isAuthenticated && <RegisterMember />}
 
-      <TourListData />
+      <TourListData tours={tours} />
       <Pagination
-        totalPage={totalPage}
+        totalPage={totalPages}
         onClick={() => {
           document
             .getElementById("tour_list_header")
-            .scrollIntoView({ behavior: "smooth" });
+            ?.scrollIntoView({ behavior: "smooth" });
         }}
       />
     </div>

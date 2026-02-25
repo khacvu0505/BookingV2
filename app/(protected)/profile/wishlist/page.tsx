@@ -1,6 +1,6 @@
 "use client";
 
-import ProfileWrapper from "@/apps/ProfileWrapper";
+import ProfileWrapper from "@/components/ProfileWrapper";
 import Wishlist from "@/screens/Wishlist";
 
 export default function WishlistPage() {

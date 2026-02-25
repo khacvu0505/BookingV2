@@ -1,13 +1,10 @@
 import React, { useMemo } from "react";
 import "./BookingTourInfo.style.scss";
-import { formatCurrency } from "@/utils/utils";
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import PriceWithVND from "@/components/PriceWithVND/PriceWithVND";
 
 const BookingTourInfo = ({ overview }) => {
   const { t } = useTranslation();
-  const { currentCurrency } = useSelector((state) => state.app);
 
   const data = useMemo(() => {
     return overview?.servicePrices || [];

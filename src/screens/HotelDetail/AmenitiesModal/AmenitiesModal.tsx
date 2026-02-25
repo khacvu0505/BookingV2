@@ -7,8 +7,10 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 
 const AmenitiesModal = (props, ref) => {
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const { data } = props;
   const [amenitiesByGroup, setAmenitiesByGroup] = useState<any>([]);
@@ -64,7 +66,7 @@ const AmenitiesModal = (props, ref) => {
       <div className="currencyMenu__content bg-white rounded-22 modal-custom-size4 h-600 px-20">
         <div className="row mx-20 mt-20 pb-10 border-bottom-light justify-content-between">
           <div className=" col-auto text-20 fw-500">
-            Tất cả tiện nghi trong phòng {data?.roomName}
+            {t("COMMON.ALL_AMENITIES_IN_ROOM", { roomName: data?.roomName })}
           </div>
           <div className="col-auto">
             <button className="pointer" onClick={handleCloseModal}>

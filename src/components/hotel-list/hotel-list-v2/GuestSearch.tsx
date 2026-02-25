@@ -1,7 +1,9 @@
 import useQueryParams from "@/hooks/useQueryParams";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Counter = ({ name, defaultValue, onCounterChange }) => {
+  const { t } = useTranslation();
   const [count, setCount] = useState(defaultValue);
   const incrementCount = () => {
     setCount(count + 1);
@@ -17,12 +19,12 @@ const Counter = ({ name, defaultValue, onCounterChange }) => {
   const handleRenderTextByName = (name) => {
     switch (name) {
       case "adults":
-        return "Người lớn";
+        return t("COMMON.ADULT");
 
       case "children":
-        return "Trẻ em";
+        return t("COMMON.CHILDREN");
       case "room":
-        return "Phòng";
+        return t("COMMON.ROOM");
       default:
         return "--";
     }
@@ -71,6 +73,7 @@ const Counter = ({ name, defaultValue, onCounterChange }) => {
 };
 
 const GuestSearch = ({ handleChangeDataFilter }) => {
+  const { t } = useTranslation();
   // const filterParams = useSelector((state) => state.hotels.filter);
   const [params, _] = useQueryParams();
   const {
@@ -137,13 +140,13 @@ const GuestSearch = ({ handleChangeDataFilter }) => {
         aria-expanded="false"
         data-bs-offset="0,22"
       >
-        <h4 className="text-15 fw-500 ls-2 lh-16">Số khách</h4>
+        <h4 className="text-15 fw-500 ls-2 lh-16">{t("COMMON.NUMBER_OF_GUESTS")}</h4>
         <div className="text-15 text-light-1 ls-2 lh-16">
           <span className="js-count-adult">{counters[0].defaultValue}</span>{" "}
-          người lớn -{" "}
-          <span className="js-count-child">{counters[1].defaultValue}</span> trẻ
-          em - <span className="js-count-room">{counters[2].defaultValue}</span>{" "}
-          phòng
+          {t("COMMON.ADULT")} -{" "}
+          <span className="js-count-child">{counters[1].defaultValue}</span>{" "}
+          {t("COMMON.CHILDREN")} - <span className="js-count-room">{counters[2].defaultValue}</span>{" "}
+          {t("COMMON.ROOM")}
         </div>
       </div>
       {/* End guest */}

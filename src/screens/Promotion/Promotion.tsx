@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import MetaComponent from "@/components/common/MetaComponent";
-import Header3 from "@/components/header/header-3";
 import PromotionBanner from "@/components/promotion/PromotonBanner/PromotionBanner";
 import PromotionDetailModal from "@/components/promotion/PromotionDetailModal";
-import Footer2 from "@/components/footer/footer-2";
 import {
   getPromotionList,
   getSupplierType,
@@ -12,8 +11,9 @@ import {
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
 import Skeleton from "react-loading-skeleton";
-import { useNavigate } from "react-router-dom";
-import Pagination from "@/components/hotel-list/common/Pagination";
+import Pagination from "@/components/Pagination";
+import { useQuery } from "@tanstack/react-query";
+import { promotionKeys } from "@/lib/query-keys";
 
 const metadata = {
   title: "Promotions || Travel & Tour",
@@ -21,18 +21,13 @@ const metadata = {
 };
 
 const Promotion = () => {
+  const { t } = useTranslation();
   const [params, setSearchParams] = useQueryParams();
-  const navigate = useNavigate();
   const refModalDetail = useRef(null);
   const [selected, setSelected] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [supplierList, setSupplierList] = useState([]);
-  const [voucherCategoryList, setVoucherCategoryList] = useState([]);
-  const [promotionList, setPromotionList] = useState([]);
   const [supplierTypeSelected, setSupplierTypeSelected] = useState([]);
   const [voucherGroupSelected, setVoucherGroupSelected] = useState([]);
-  const [totalPage, setTotalPage] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
 
   const {
     page: pageParam,
@@ -101,18 +96,47 @@ const Promotion = () => {
     }
   };
 
-  useEffect(() => {
-    const handleFetchData = async () => {
-      // eslint-disable-next-line no-undef
-      const [supplierType, voucherCategory] = await Promise.all([
-        getSupplierType(),
-        getVoucherCategory(),
-      ]);
-      setSupplierList(supplierType.data);
-      setVoucherCategoryList(voucherCategory.data);
-    };
-    handleFetchData();
-  }, []);
+  const { data: supplierList = [] } = useQuery({
+    queryKey: promotionKeys.supplierTypes(),
+    queryFn: async () => {
+      const res = await getSupplierType();
+      return res?.data || [];
+    },
+  });
+
+  const { data: voucherCategoryList = [] } = useQuery({
+    queryKey: promotionKeys.voucherCategories(),
+    queryFn: async () => {
+      const res = await getVoucherCategory();
+      return res?.data || [];
+    },
+  });
+
+  const promotionQueryParams = {
+    Page: Number(pageParam) || 1,
+    PageSize: Number(pageSizeParam) || 10,
+    SupplierType: supplierTypeParam || "",
+    VoucherGroup: voucherGroupParam || "",
+  };
+
+  const { data: promotionData, isLoading } = useQuery({
+    queryKey: promotionKeys.list(promotionQueryParams),
+    queryFn: async () => {
+      const res = await getPromotionList({
+        Page: promotionQueryParams.Page,
+        PageSize: promotionQueryParams.PageSize,
+        "Entity.SupplierType": promotionQueryParams.SupplierType,
+        "Entity.VoucherGroup": promotionQueryParams.VoucherGroup,
+      });
+      if (res?.success) {
+        return { list: res.data, totalPage: res.totalPage || 0 };
+      }
+      return { list: [], totalPage: 0 };
+    },
+  });
+
+  const promotionList = promotionData?.list || [];
+  const totalPage = promotionData?.totalPage || 0;
 
   useEffect(() => {
     let defaultParams = {
@@ -135,7 +159,6 @@ const Promotion = () => {
   }, []);
 
   useEffect(() => {
-    setIsLoading(true);
     if (supplierTypeParam) {
       setSupplierTypeSelected(supplierTypeParam.split(","));
     } else {
@@ -146,44 +169,7 @@ const Promotion = () => {
     } else {
       setVoucherGroupSelected([]);
     }
-
-    getPromotionList({
-      Page: Number(pageParam) || 1,
-      PageSize: Number(pageSizeParam) || 10,
-      "Entity.SupplierType": supplierTypeParam || "",
-      "Entity.VoucherGroup": voucherGroupParam || "",
-    })
-      .then((res) => {
-        setIsLoading(false);
-
-        if (res.success) {
-          setPromotionList(res.data);
-          setTotalPage(res.totalPage || 0);
-          return;
-        }
-        setTotalPage(0);
-        setPromotionList([]);
-      })
-      .catch(() => {
-        setPromotionList([]);
-        setTotalPage(1);
-        setIsLoading(false);
-      });
-  }, [pageParam, pageSizeParam, supplierTypeParam, voucherGroupParam]);
-
-  useEffect(() => {
-    const handleBackNavigation = (event) => {
-      navigate("/", { replace: true });
-    };
-
-    // eslint-disable-next-line no-undef
-    window.addEventListener("popstate", handleBackNavigation);
-
-    return () => {
-      // eslint-disable-next-line no-undef
-      window.removeEventListener("popstate", handleBackNavigation);
-    };
-  }, [navigate]);
+  }, [supplierTypeParam, voucherGroupParam]);
 
   useEffect(() => {
     // eslint-disable-next-line no-undef
@@ -201,7 +187,7 @@ const Promotion = () => {
           <div className="row">
             <div className="col-md-3">
               <div className="sectionTitle -md">
-                <p className="text-dark fw-500">Sản phẩm áp dụng được</p>
+                <p className="text-dark fw-500">{t("COMMON.APPLICABLE_PRODUCTS")}</p>
                 {supplierList.map((item, idx) => (
                   <div className="form-checkbox d-flex items-center" key={idx}>
                     <input
@@ -217,7 +203,7 @@ const Promotion = () => {
                 ))}
               </div>
               <div className="sectionTitle -md mt-10">
-                <p className="text-dark fw-500">Ưu đãi</p>
+                <p className="text-dark fw-500">{t("COMMON.OFFERS")}</p>
                 {voucherCategoryList.map((item, idx) => (
                   <div className="form-checkbox d-flex items-center" key={idx}>
                     <input
@@ -265,8 +251,8 @@ const Promotion = () => {
                               >
                                 {selected?.voucherCode === item.voucherCode &&
                                 isVisible
-                                  ? "Đã sao chép"
-                                  : "Lấy mã"}
+                                  ? t("COMMON.COPIED")
+                                  : t("COMMON.GET_CODE")}
                               </button>
                             </div>
                           </div>

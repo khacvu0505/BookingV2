@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import { useEffect, useState } from "react";
@@ -7,8 +6,6 @@ import Skeleton from "react-loading-skeleton";
 import classNames from "classnames";
 
 const Promotion = ({ initialVouchers }: { initialVouchers?: any[] }) => {
-  const navigate = useNavigate();
-
   const [swiperData, setSwiperData] = useState({
     activeIndex: 0,
     isEnd: false,
@@ -32,25 +29,6 @@ const Promotion = ({ initialVouchers }: { initialVouchers?: any[] }) => {
         setLoading(false);
       });
   }, []);
-
-  const handleVoucher = (e, value) => {
-    e.preventDefault();
-    navigate(`/promotions?page=1&pageSize=10&voucherGroup=${value}`);
-  };
-
-  useEffect(() => {
-    const handleBackNavigation = (event) => {
-      navigate("/", { replace: true });
-    };
-
-    // eslint-disable-next-line no-undef
-    window.addEventListener("popstate", handleBackNavigation);
-
-    return () => {
-      // eslint-disable-next-line no-undef
-      window.removeEventListener("popstate", handleBackNavigation);
-    };
-  }, [navigate]);
 
   if (loading) {
     return (

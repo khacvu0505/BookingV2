@@ -1,18 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import Dropdown from "@/apps/DropDown";
+import Dropdown from "@/components/DropDown";
 import "./TourListContentHeader.style.scss";
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
 import { useTranslation } from "react-i18next";
-import { t } from "i18next";
 import { useMemo } from "react";
 
-const TourListContentHeader = () => {
+interface TourListContentHeaderProps {
+  total: number;
+}
+
+const TourListContentHeader = ({ total }: TourListContentHeaderProps) => {
   const { t } = useTranslation();
   const [params, setSearchParams] = useQueryParams();
-
-  const total = useSelector((state) => state.tours.total);
 
   const filterOptions = useMemo(
     () => [

@@ -3,7 +3,8 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { paymentSchema } from "@/schemas/paymentSchema";
 import { handleRenderMessageError } from "@/utils/handleRenderMessageError";
-import { lazy, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { useVerifyIsLogin } from "@/hooks/useVerifyIsLogin";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
 import { saveBooking } from "@/api/booking.api";
@@ -25,19 +26,18 @@ import "./Booking.style.scss";
 import useStorageListener from "@/hooks/useStorageListener";
 import { refreshToken } from "@/api/auth.api";
 import { saveAccessTokenToLocalStorage } from "@/utils/auth";
-import AuthenModal from "@/apps/AuthenModal";
+import AuthenModal from "@/components/AuthenModal";
 
-const TimeRemainning = lazy(() => import("./TimeRemainning"));
-const MetaComponent = lazy(() => import("@/apps/MetaComponent"));
-const Breadcrumb = lazy(() => import("@/apps/Breadcrumb"));
-const Input = lazy(() => import("@/apps/Input"));
-const Select = lazy(() => import("@/apps/Select"));
-const TextArea = lazy(() => import("@/apps/TextArea"));
-const Checkbox = lazy(() => import("@/apps/Checkbox"));
-const Button = lazy(() => import("@/apps/Button"));
-const SidebarRight = lazy(() => import("@/apps/SidebarRight"));
-const VerifyOTPModal = lazy(() => import("./VerifyOTPModal"));
-const BookingOverView = lazy(() => import("./BookingOverview"));
+const TimeRemainning = dynamic(() => import("./TimeRemainning"));
+const MetaComponent = dynamic(() => import("@/components/MetaComponent"));
+const Breadcrumb = dynamic(() => import("@/components/Breadcrumb"));
+const Input = dynamic(() => import("@/components/Form/Input"));
+const Select = dynamic(() => import("@/components/Form/Select"));
+const TextArea = dynamic(() => import("@/components/Form/TextArea"));
+const Checkbox = dynamic(() => import("@/components/Form/Checkbox"));
+const Button = dynamic(() => import("@/components/Button"));
+const SidebarRight = dynamic(() => import("@/components/Sidebar/SidebarRight"));
+const BookingOverView = dynamic(() => import("./BookingOverview"));
 import { reset as resetApp } from "@/features/app/appSlice";
 import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
@@ -119,7 +119,6 @@ const Booking = () => {
     setFocus,
     control,
     setValue,
-    getValues,
     watch,
   } = useForm<any>({
     defaultValues: {
@@ -464,6 +463,7 @@ const Booking = () => {
                             <Checkbox
                               name={"smokingRoom"}
                               checked={item.code === smokingRoom}
+                              onChange={() => {}}
                               label={
                                 <div className="d-flex items-center">
                                   <img src={item.img} alt="Booking" />
@@ -494,6 +494,7 @@ const Booking = () => {
                             <Checkbox
                               name={"bigBed"}
                               checked={item.code === bigBed}
+                              onChange={() => {}}
                               label={
                                 <div className="d-flex items-center">
                                   <img src={item.img} alt="Booking" />
@@ -652,6 +653,7 @@ const Booking = () => {
                     <Checkbox
                       name={"paymentMethod"}
                       checked={payment.code === paymentType}
+                      onChange={() => {}}
                       label={payment.title}
                       isRadio
                     />

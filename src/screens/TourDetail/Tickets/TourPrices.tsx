@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from "react";
-import { personType } from "@/types/types";
 import {
   formatCurrency,
   getFromSessionStorage,
@@ -13,10 +12,12 @@ import Swal from "sweetalert2";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
 import { hold_code, info_booking_tour } from "@/utils/constants";
 import NumberControl from "./NumberControl";
-import Button from "@/apps/Button";
+import Button from "@/components/Button";
 import { checkAddOnServices } from "@/api/hotel.api";
+import { useTranslation } from "react-i18next";
 
 const TourPrices = ({ tourPrices }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showDetailPrices, setShowDetailPrices] = useState(false);
@@ -54,11 +55,11 @@ const TourPrices = ({ tourPrices }) => {
   const renderCondition = (typePersonName) => {
     switch (typePersonName) {
       case "Adult":
-        return <p className="text-14 fw-400">Trên 140 cm</p>;
+        return <p className="text-14 fw-400">{t("COMMON.OVER_140CM")}</p>;
       case "Child":
-        return <p className="text-14 fw-400">Từ 100 - 140cm</p>;
+        return <p className="text-14 fw-400">{t("COMMON.FROM_100_TO_140CM")}</p>;
       case "Old":
-        return <p className="text-14 fw-400">Trên 60 tuổi</p>;
+        return <p className="text-14 fw-400">{t("COMMON.OVER_60_YEARS")}</p>;
       default:
         break;
     }
@@ -67,11 +68,11 @@ const TourPrices = ({ tourPrices }) => {
   const renderTypePerson = (typePersonName) => {
     switch (typePersonName) {
       case "Adult":
-        return "Người lớn";
+        return t("COMMON.ADULT");
       case "Child":
-        return "Trẻ em";
+        return t("COMMON.CHILD");
       case "Old":
-        return "Người già";
+        return t("COMMON.OLD_PERSON");
       default:
         break;
     }
@@ -120,10 +121,10 @@ const TourPrices = ({ tourPrices }) => {
             switch (res?.data) {
               case "2":
                 Swal.fire({
-                  title: "Thông báo",
+                  title: t("COMMON.NOTIFICATION"),
                   icon: "info",
-                  text: "Tour đã hết số lượng, vui lòng chọn tour khác",
-                  confirmButtonText: "Về danh sách Tour",
+                  text: t("COMMON.TOUR_SOLD_OUT"),
+                  confirmButtonText: t("COMMON.BACK_TO_TOUR_LIST"),
                   confirmButtonColor: "#f52549",
                   // cancelButtonText: "Chọn tour khác",
                   // cancelButtonColor: "#051036",
@@ -139,20 +140,20 @@ const TourPrices = ({ tourPrices }) => {
                 break;
               case "3":
                 Swal.fire({
-                  title: "Thông báo",
+                  title: t("COMMON.NOTIFICATION"),
                   icon: "info",
-                  text: "Tour đang được giữ bởi người khác, vui lòng đặt tour khác hoặc quay lại sau 6 phút",
-                  confirmButtonText: "Đồng ý",
+                  text: t("COMMON.TOUR_HELD_BY_ANOTHER"),
+                  confirmButtonText: t("COMMON.AGREE"),
                   confirmButtonColor: "#f52549",
                   allowEnterKey: true,
                 });
                 break;
               case "5":
                 Swal.fire({
-                  title: "Thông báo",
+                  title: t("COMMON.NOTIFICATION"),
                   icon: "warning",
-                  text: "Bạn đã hết lượt đặt tour trong hôm nay",
-                  confirmButtonText: "Về trang chủ",
+                  text: t("COMMON.TOUR_BOOKING_LIMIT"),
+                  confirmButtonText: t("COMMON.BACK_TO_HOMEPAGE"),
                   confirmButtonColor: "#f52549",
                   allowEscapeKey: false,
                   allowEnterKey: true,
@@ -165,17 +166,17 @@ const TourPrices = ({ tourPrices }) => {
                 break;
               default:
                 handleRenderNoti(
-                  "Có lỗi xảy ra, vui lòng thử lại sau",
+                  t("COMMON.ERROR_TRY_AGAIN"),
                   "error"
                 );
             }
           }
         })
         .catch(() => {
-          handleRenderNoti("Có lỗi xảy ra, vui lòng thử lại sau", "error");
+          handleRenderNoti(t("COMMON.ERROR_TRY_AGAIN"), "error");
         });
     } catch (error) {
-      handleRenderNoti("Có lỗi xảy ra, vui lòng thử lại sau", "error");
+      handleRenderNoti(t("COMMON.ERROR_TRY_AGAIN"), "error");
       throw error;
     }
   };
@@ -190,7 +191,7 @@ const TourPrices = ({ tourPrices }) => {
           >
             <div className="mt-2">
               <p className="text-16 lg:text-14 fw-400 text-neutral-500">
-                {personType[item?.serviceName] || item?.serviceName}
+                {renderTypePerson(item?.serviceName) || item?.serviceName}
               </p>
               <h3 className="text-16 lg:text-14 fw-500">
                 {formatCurrency(item?.finalPrice)} {currentCurrency}
@@ -204,7 +205,7 @@ const TourPrices = ({ tourPrices }) => {
         <div className="lg:d-block d-flex justify-content-between align-items-end px-20 lg:px-15 pb-20 lg:pb-15">
           <div>
             <div className="d-flex align-items-center mt-12">
-              <p className="text-16 lg:text-14 fw-600 ">Tổng giá tiền</p>
+              <p className="text-16 lg:text-14 fw-600 ">{t("COMMON.TOTAL_PRICE")}</p>
               <span
                 className="ml-2 text-dark cursor-pointer"
                 onClick={() => setShowDetailPrices(!showDetailPrices)}
@@ -256,7 +257,7 @@ const TourPrices = ({ tourPrices }) => {
             }
             className="lg:mt-10 lg:w-1/1"
           >
-            Đặt ngay
+            {t("COMMON.BOOK_NOW")}
           </Button>
         </div>
       </div>

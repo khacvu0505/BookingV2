@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import AccordionContent from "./ItineraryContent";
 // import MapPropertyFinder from "./MapPropertyFinder";
 
 const ItineraryMobile = ({ data }) => {
   const [activeTab, setActiveTab] = useState(0);
+  const { t } = useTranslation();
 
   const handleTabClick = (index) => {
     setActiveTab(index);
@@ -21,7 +23,7 @@ const ItineraryMobile = ({ data }) => {
                 }`}
                 onClick={() => handleTabClick(index)}
               >
-                Ngày {index + 1}
+                {t("COMMON.DAY_X", { num: index + 1 })}
               </button>
             </div>
           ))}

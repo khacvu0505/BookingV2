@@ -18,7 +18,6 @@ const URL_GET_BOOKING_EXPIRED = "/booking/expired-booking";
 const URL_GET_BOOKING_HOLD = "/booking/hold-booking";
 const URL_FEEDBACK_BOOKING = "/supplier/feedback-booking";
 const URL_RESEND_INFO_BOOKING = "/booking/send-email-confirm-booking";
-const URL_APPLY_PROMOTION_CODE = "/booking/voucher-apply";
 const URL_GET_CART_SUMMARY = "/booking/get-cart-summary";
 const URL_GET_CART_TOUR_SUMMARY = "/booking/get-cart-tour-summary";
 const URL_GET_HOLD_BOOKING_TOUR = "/booking/hold-booking-tour";

@@ -1,65 +1,102 @@
 import "photoswipe/dist/photoswipe.css";
 import { useParams } from "react-router-dom";
 
-import { lazy, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import {
   getTourBySlug,
   getTourPoliciesBySlug,
   getTourPrices,
   getTourServices,
 } from "@/api/tours.api";
+import { getRelatedHotels } from "@/api/hotel.api";
 import useQueryParams from "@/hooks/useQueryParams";
 import { getFromSessionStorage } from "@/utils/utils";
-import { useFetchData } from "@/hooks/useFetchData";
-import { isNil, omitBy } from "lodash";
-import { useMutate } from "@/hooks/useMutateData";
+import isNil from "lodash/isNil";
+import omitBy from "lodash/omitBy";
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/store/hooks";
 import { setTourBookingInfo } from "@/features/tour/tourSlice";
 import { info_booking_tour } from "@/utils/constants";
-import { fetchRelatedHotels } from "@/features/hotel-detail/reducers";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { hotelKeys, tourKeys } from "@/lib/query-keys";
 
-import MetaComponent from "@/apps/MetaComponent";
-import Breadcrumb from "@/apps/Breadcrumb";
-import StickyHeader from "@/apps/StickyHeader";
-import GalleryComponent from "@/apps/Gallery";
-import PropertyHighlights from "@/apps/PropertyHighlights";
+import MetaComponent from "@/components/MetaComponent";
+import Breadcrumb from "@/components/Breadcrumb";
+import StickyHeader from "@/components/StickyHeader";
+import GalleryComponent from "@/components/Gallery";
+import PropertyHighlights from "@/components/PropertyHighlights";
 import Tickets from "./Tickets";
 import Overview from "./Overview";
 import HelpfulFacts from "./HelpfulFacts";
 import Itinerary from "./Itinerary";
-import ReviewProgress from "@/apps/Review/ReviewProgress";
-import DetailsReview from "@/apps/Review/DetailsReview";
-import QnA from "@/apps/QnA";
-import RelatedHotels from "@/apps/RelatedHotels";
-import CustomCalendar from "@/apps/CustomCalendar";
+import ReviewProgress from "@/components/Review/ReviewProgress";
+import DetailsReview from "@/components/Review/DetailsReview";
+import QnA from "@/components/QnA";
+import RelatedHotels from "@/components/RelatedHotels";
+import CustomCalendar from "@/components/Form/CustomCalendar";
 import { useTranslation } from "react-i18next";
 
 const TourDetail = () => {
   const { t } = useTranslation();
   const { slug } = useParams();
-  const [searchParams] = useQueryParams();
+  useQueryParams();
   const dispatch = useAppDispatch();
   const { tourBookingInfo } = useSelector((state: any) => state.tour);
-  const { relatedHotels } = useSelector((state: any) => state.hotel);
 
-  const [tour, isTourLoading] = useFetchData<any, any>(getTourBySlug, { Slug: slug });
-  const [policiesTour] = useFetchData<any, any>(getTourPoliciesBySlug, { Slug: slug });
-  const [services, serviceLoading] = useFetchData<any, any>(
-    getTourServices,
-    omitBy(
-      {
-        Date: tourBookingInfo.date,
-        supplierCode: tourBookingInfo?.supplierCode,
-      },
-      (v) => isNil(v)
-    )
-  );
+  const { data: tour, isLoading: isTourLoading } = useQuery({
+    queryKey: tourKeys.detail(String(slug ?? "")),
+    queryFn: async () => {
+      const res = await getTourBySlug({ Slug: slug });
+      if (res?.success) return res.data;
+      return null;
+    },
+    enabled: !!slug,
+  });
+
+  const { data: policiesTour } = useQuery({
+    queryKey: tourKeys.policies(String(slug ?? "")),
+    queryFn: async () => {
+      const res = await getTourPoliciesBySlug({ Slug: slug });
+      if (res?.success) return res.data;
+      return null;
+    },
+    enabled: !!slug,
+  });
+
+  const { data: services, isLoading: serviceLoading } = useQuery({
+    queryKey: tourKeys.services(
+      tourBookingInfo?.supplierCode ?? "",
+      tourBookingInfo?.date ?? ""
+    ),
+    queryFn: async () => {
+      const params = omitBy(
+        {
+          Date: tourBookingInfo.date,
+          supplierCode: tourBookingInfo.supplierCode,
+        },
+        (v) => isNil(v)
+      );
+      const res = await getTourServices(params);
+      if (res?.success) return res.data;
+      return null;
+    },
+    enabled: !!tourBookingInfo?.supplierCode,
+  });
+
+  const {
+    mutate: getTourServicePrice,
+    data: tourPrices,
+    isPending: tourPricesLoading,
+  } = useMutation({
+    mutationFn: async (params: Record<string, unknown>) => {
+      const res = await getTourPrices(params);
+      if (res?.success) return res.data;
+      return null;
+    },
+  });
+
   const offCanvasRef = useRef<any>();
-
-  const [getTourServicePrice, tourPrices, tourPricesLoading] =
-    useMutate<any, any>(getTourPrices);
 
   const breadcrumbData = useMemo(
     () => [
@@ -68,11 +105,11 @@ const TourDetail = () => {
         link: "/tour",
       },
       {
-        title: tour?.hotelName,
+        title: (tour as any)?.hotelName,
         link: "#",
       },
     ],
-    [tour?.hotelName]
+    [(tour as any)?.hotelName]
   );
 
   useEffect(() => {
@@ -87,8 +124,8 @@ const TourDetail = () => {
       dispatch(
         setTourBookingInfo({
           ...tourBookingInfo,
-          supplierCode: tour?.hotelCode,
-          supplierName: tour?.hotelName,
+          supplierCode: (tour as any)?.hotelCode,
+          supplierName: (tour as any)?.hotelName,
           slug: slug || "",
         })
       );
@@ -97,11 +134,11 @@ const TourDetail = () => {
 
   useEffect(() => {
     if (tourPrices) {
-      const data = tourPrices;
+      const data = tourPrices as any[];
       dispatch(
         setTourBookingInfo({
           ...tourBookingInfo,
-          ServicePrices: data.map((item, index) =>
+          ServicePrices: data.map((item: any, index: number) =>
             index === 0
               ? { ...item, quantity: 1, maxQuantity: item.quantity }
               : { ...item, quantity: 0, maxQuantity: item.quantity }
@@ -111,32 +148,39 @@ const TourDetail = () => {
     }
   }, [dispatch, tourPrices]);
 
-  useEffect(() => {
-    if (!tour?.hotelCode || !tour?.regionID) return;
-    const params = {
-      regionID: tour?.regionID || "",
-      supplierType: "Tour",
-      currentCode: tour?.hotelCode,
-    };
-    dispatch(fetchRelatedHotels(params) as any);
-  }, [tour?.hotelCode, tour?.regionID]);
+  const { data: relatedHotels = [] } = useQuery({
+    queryKey: hotelKeys.related(
+      (tour as any)?.regionID || "",
+      "Tour",
+      (tour as any)?.hotelCode ?? ""
+    ),
+    queryFn: async () => {
+      const res = await getRelatedHotels({
+        regionID: (tour as any)?.regionID || "",
+        supplierType: "Tour",
+        currentCode: (tour as any)?.hotelCode,
+      });
+      return res.data;
+    },
+    enabled: !!(tour as any)?.hotelCode && !!(tour as any)?.regionID,
+  });
 
-  const handleChooseService = (tour: any) => {
+  const handleChooseService = (tourItem: any) => {
     getTourServicePrice(
       omitBy(
         {
           Date: tourBookingInfo.date,
-          tourID: tour?.tourID,
+          tourID: tourItem?.tourID,
         },
         (v) => isNil(v)
-      )
+      ) as Record<string, unknown>
     );
 
     dispatch(
       setTourBookingInfo({
         ...tourBookingInfo,
-        tourID: tour?.tourID,
-        tourName: tour?.tourName,
+        tourID: tourItem?.tourID,
+        tourName: tourItem?.tourName,
       })
     );
   };
@@ -146,7 +190,7 @@ const TourDetail = () => {
       <MetaComponent
         meta={{
           title: "Tour Detail",
-          description: "OKdimall - Du lịch và trải nghiệm",
+          description: `OKdimall - ${t("COMMON.META_DESCRIPTION")}`,
         }}
       />
 
@@ -209,7 +253,7 @@ const TourDetail = () => {
           </div>
 
           <div className=" container pt-50 xl:pt-40 lg:pt-30">
-            <Overview content={tour?.overview} />
+            <Overview content={(tour as any)?.overview} />
           </div>
 
           <section className="pt-50 xl:pt-40 lg:pt-30">
@@ -232,7 +276,7 @@ const TourDetail = () => {
                 {t("TOUR.JOURNEY")}
               </h3>
               <div>
-                <Itinerary data={policiesTour?.itinerary || []} />
+                <Itinerary data={(policiesTour as any)?.itinerary || []} />
               </div>
             </div>
           </section>
@@ -257,7 +301,7 @@ const TourDetail = () => {
                 </h2>
 
                 <div className="accordion -simple row y-gap-10 js-accordion">
-                  <QnA listQnA={policiesTour?.qnA} />
+                  <QnA listQnA={(policiesTour as any)?.qnA} />
                 </div>
               </div>
             </div>
@@ -271,7 +315,7 @@ const TourDetail = () => {
                 </h2>
 
                 <div className="pt-20 lg:pt-10 item_gap-x10 ">
-                  <RelatedHotels isTour />
+                  <RelatedHotels isTour relatedHotels={relatedHotels} />
                 </div>
               </div>
             </section>

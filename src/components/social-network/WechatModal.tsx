@@ -1,4 +1,3 @@
-import useWindowSize from "@/utils/useWindowSize";
 import { forwardRef, useImperativeHandle, useState } from "react";
 
 const WechatModal = (props, ref) => {

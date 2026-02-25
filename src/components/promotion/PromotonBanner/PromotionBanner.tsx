@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 const PromotionBanner = () => {
+  const { t } = useTranslation();
   return (
     <div className="col-12 " data-aos="fade">
       <div className="relative d-flex promotion_banner">
@@ -18,11 +21,10 @@ const PromotionBanner = () => {
           }}
         >
           <h1 className="text-50 fw-600 text-white lg:text-40 md:text-30">
-            Ưu đãi cho hôm nay
+            {t("COMMON.OFFERS_FOR_TODAY")}
           </h1>
           <p className="text-white fw-bold">
-            Khuyến mãi đặc biệt. Không có ở nơi khác. Hãy lưu lại trang này để
-            nhận ưu đãi hằng ngày.
+            {t("COMMON.OFFERS_FOR_TODAY_DESC")}
           </p>
         </div>
       </div>

@@ -1,19 +1,15 @@
-import CallToActions from "@/components/common/CallToActions";
-import DefaultHeader from "@/components/header/default-header";
-import Header3 from "@/components/header/header-3";
-
-import DefaultFooter from "@/components/footer/default";
 import NotFound from "@/components/common/NotFound";
-import Footer2 from "@/components/footer/footer-2";
 
 import MetaComponent from "@/components/common/MetaComponent";
-
-const metadata = {
-  title: "404 || Du lịch và trải nghiệm",
-  description: "OKdimall - Du lịch và trải nghiệm",
-};
+import { useTranslation } from "react-i18next";
 
 const NotFoundPage = () => {
+  const { t } = useTranslation();
+  const metadata = {
+    title: `404 || ${t("COMMON.META_DESCRIPTION")}`,
+    description: `OKdimall - ${t("COMMON.META_DESCRIPTION")}`,
+  };
+
   return (
     <>
       <MetaComponent meta={metadata} />

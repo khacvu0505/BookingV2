@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://extapi.okdimall.com/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const DEFAULT_HEADERS = {
   "Content-Type": "application/json",
@@ -8,15 +8,17 @@ const DEFAULT_HEADERS = {
 
 async function serverFetch<T>(
   path: string,
-  options?: { method?: string; body?: unknown }
+  options?: { method?: string; body?: unknown; revalidate?: number | false }
 ): Promise<T | null> {
-  const { method = "GET", body } = options || {};
+  const { method = "GET", body, revalidate = 300 } = options || {};
   try {
     const res = await fetch(`${API_BASE_URL}${path}`, {
       method,
       headers: DEFAULT_HEADERS,
       body: body ? JSON.stringify(body) : undefined,
-      next: { revalidate: 60 },
+      ...(revalidate === false
+        ? { cache: "no-store" as const }
+        : { next: { revalidate } }),
     });
 
     if (!res.ok) return null;

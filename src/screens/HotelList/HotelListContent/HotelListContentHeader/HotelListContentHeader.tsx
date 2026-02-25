@@ -1,12 +1,15 @@
 import React, { useMemo } from "react";
 import "./HotelListContentHeader.style.scss";
-import { useSelector } from "react-redux";
-import Dropdown from "@/apps/DropDown";
+import Dropdown from "@/components/DropDown";
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
 import { useTranslation } from "react-i18next";
 
-const HotelListContentHeader = () => {
+interface HotelListContentHeaderProps {
+  total: number;
+}
+
+const HotelListContentHeader = ({ total }: HotelListContentHeaderProps) => {
   const { t } = useTranslation();
   const [params, setSearchParams] = useQueryParams();
 
@@ -40,8 +43,6 @@ const HotelListContentHeader = () => {
     ],
     []
   );
-
-  const total = useSelector((state) => state.hotels.total) || 0;
 
   return (
     <div className="border-bottom-light pb-12">
@@ -88,7 +89,7 @@ const HotelListContentHeader = () => {
       </div>
       <div className="d-none sm:d-flex items-center w-100">
         <p className="text-18 lg:text-17 md:text-15 text-neutral-800 w-25">
-          Sắp xếp:{" "}
+          {t("COMMON.SORT")}:{" "}
         </p>
         <div className="w-75">
           <Dropdown

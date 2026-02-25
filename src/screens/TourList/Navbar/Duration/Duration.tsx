@@ -3,14 +3,13 @@ import { cleanedObject } from "@/utils/utils";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-const durationOptions = [
-  { label: "Tối đa 1 tiếng", id: "0" },
-  { label: "1 đến 4 tiếng", id: "1" },
-  { label: "Hơn 4 tiếng", id: "4" },
-];
-
 const Duration = () => {
   const { t } = useTranslation();
+  const durationOptions = [
+    { label: t("COMMON.MAX_1_HOUR"), id: "0" },
+    { label: t("COMMON.FROM_1_TO_4_HOURS"), id: "1" },
+    { label: t("COMMON.MORE_THAN_4_HOURS"), id: "4" },
+  ];
   const [params, setSearchParams] = useQueryParams();
   const [selected, setSelected] = useState("");
 
@@ -66,7 +65,7 @@ const Duration = () => {
                 checked={
                   selected ? Number(selected) === Number(option.id) : false
                 }
-                onClick={() => handleChooseDuration(option.id)}
+                onChange={() => handleChooseDuration(option.id)}
               />
               <div className="form-checkbox__mark">
                 <div className="form-checkbox__icon icon-check" />

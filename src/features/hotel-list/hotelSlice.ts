@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchRecommendHotels } from "./reducers";
 import type { Hotel, HotelListFilter, Region } from "@/types";
 
 export interface HotelListState {
@@ -10,8 +9,6 @@ export interface HotelListState {
   regions: Region[];
   filter: HotelListFilter;
   secondaryLocation: unknown;
-  recommendHotels: Hotel[];
-  isLoadingRecommendHotels: boolean;
 }
 
 const initialState: HotelListState = {
@@ -20,7 +17,6 @@ const initialState: HotelListState = {
   totalPages: 0,
   isLoadingHotels: false,
   regions: [],
-  // regionsFilter: [],
   filter: {
     location: "",
     checkIn: "",
@@ -37,8 +33,6 @@ const initialState: HotelListState = {
     "Entity.SecondaryLocation": "",
   },
   secondaryLocation: undefined,
-  recommendHotels: [],
-  isLoadingRecommendHotels: true,
 };
 
 export const hotelSlice = createSlice({
@@ -85,35 +79,6 @@ export const hotelSlice = createSlice({
       });
       state.hotels = newData;
     },
-    updateHotelRecommendList: (state, { payload }: PayloadAction<{ supplierCode: string; wishListID: string | null }>) => {
-      const newData = state.recommendHotels.map((hotel) => {
-        if (hotel.supplierCode === payload.supplierCode) {
-          return {
-            ...hotel,
-            wishListID: payload.wishListID,
-          };
-        }
-        return hotel;
-      });
-      state.recommendHotels = newData;
-    },
-    setRecommendHotels: (state, { payload }: PayloadAction<Hotel[]>) => {
-      state.recommendHotels = payload;
-      state.isLoadingRecommendHotels = false;
-    },
-  },
-  extraReducers: (builder) => {
-    // recommend hotels
-    builder.addCase(fetchRecommendHotels.fulfilled, (state, action) => {
-      state.recommendHotels = action.payload;
-      state.isLoadingRecommendHotels = false;
-    });
-    builder.addCase(fetchRecommendHotels.pending, (state) => {
-      state.isLoadingRecommendHotels = true;
-    });
-    builder.addCase(fetchRecommendHotels.rejected, (state) => {
-      state.isLoadingRecommendHotels = false;
-    });
   },
 });
 
@@ -122,11 +87,8 @@ export const {
   setSecondaryLocation,
   setRequestingHotels,
   setRegions,
-  setLoaded,
   setFilterHotels,
   updateHotelList,
-  updateHotelRecommendList,
-  setRecommendHotels,
-} = hotelSlice.actions as any;
+} = hotelSlice.actions;
 
 export default hotelSlice.reducer;

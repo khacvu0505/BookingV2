@@ -1,12 +1,11 @@
 import {
   formatCurrency,
   getFromSessionStorage,
-  setToSessionStorage,
 } from "@/utils/utils";
 import { useEffect, useRef, useState } from "react";
-import DetailModal from "./DetailModal";
+import DetailModal from "@/components/AddonServicesPage/DetailModal";
 import { useSelector } from "react-redux";
-import "./AddonServices.styles.scss";
+import "@/components/AddonServicesPage/AddonServices.styles.scss";
 import { useTranslation } from "react-i18next";
 import { info_booking_tour } from "@/utils/constants";
 import { handleSetAddonTour } from "@/utils/handleSetDefaultBooking";

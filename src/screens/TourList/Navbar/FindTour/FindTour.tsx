@@ -1,6 +1,5 @@
-import SearchInput from "@/apps/SearchInput";
+import SearchInput from "@/components/Search/SearchInput";
 import useQueryParams from "@/hooks/useQueryParams";
-import { cleanedObject } from "@/utils/utils";
 import debounce from "lodash/debounce";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";

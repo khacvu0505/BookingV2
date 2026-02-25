@@ -1,20 +1,20 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import HotelList from "./HotelList";
-import { fetchRecommendHotels } from "@/features/hotel-list/reducers";
-import { setRecommendHotels } from "@/features/hotel-list/hotelSlice";
-import { useAppDispatch } from "@/store/hooks";
+import { getRecommendHotels } from "@/api/hotel.api";
 
 import RecommentIcon1 from "./components/RecommentIcon1";
 import RecommentIcon2 from "./components/RecommentIcon2";
 import RecommentIcon3 from "./components/RecommentIcon3";
 import RecommentIcon4 from "./components/RecommentIcon4";
 import RecommentIcon5 from "./components/RecommentIcon5";
-import TabRecomment from "@/apps/TabRecomment";
+import TabRecomment from "@/components/TabRecomment";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import { hotelKeys } from "@/lib/query-keys";
 
 const RecommentHotel = ({ initialHotels }: { initialHotels?: any[] }) => {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const [activeType, setActiveType] = useState(3);
 
   const listRecommendLabel = useMemo(
     () => [
@@ -52,18 +52,17 @@ const RecommentHotel = ({ initialHotels }: { initialHotels?: any[] }) => {
     [t]
   );
 
-  useEffect(() => {
-    if (initialHotels && initialHotels.length > 0) {
-      dispatch(setRecommendHotels(initialHotels));
-    } else {
-      const params = { type: 3 };
-      dispatch(fetchRecommendHotels(params) as any);
-    }
-  }, []);
+  const { data: recommendHotels = [] } = useQuery({
+    queryKey: hotelKeys.recommended(activeType),
+    queryFn: async () => {
+      const res = await getRecommendHotels({ type: activeType });
+      return res.data ?? [];
+    },
+    initialData: activeType === 3 && initialHotels?.length ? initialHotels : undefined,
+  });
 
   const handleRecommentItem = (value: any) => {
-    const params = { type: value };
-    dispatch(fetchRecommendHotels(params) as any);
+    setActiveType(value);
   };
 
   return (
@@ -74,7 +73,7 @@ const RecommentHotel = ({ initialHotels }: { initialHotels?: any[] }) => {
         listTabs={listRecommendLabel}
       />
 
-      <HotelList />
+      <HotelList hotels={recommendHotels} />
     </div>
   );
 };

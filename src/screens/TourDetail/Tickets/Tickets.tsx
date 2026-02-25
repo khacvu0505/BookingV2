@@ -1,15 +1,15 @@
-import ShowPrice from "@/apps/ShowPrice";
+import ShowPrice from "@/components/ShowPrice";
 import React, { useCallback, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import TourPrices from "./TourPrices";
 import ShowMoreModal from "./ShowMoreModal";
-import Button from "@/apps/Button";
-import ReturnPolicy from "@/apps/ReturnPolicy";
-import NeedApproval from "@/apps/ReturnPolicy/NeedApproval";
-import { isEmpty } from "lodash";
+import Button from "@/components/Button";
+import ReturnPolicy from "@/components/ReturnPolicy";
+import NeedApproval from "@/components/ReturnPolicy/NeedApproval";
+import isEmpty from "lodash/isEmpty";
 import RadomText from "./RadomText";
 import classNames from "classnames";
-import ShowQuantity from "@/apps/ShowQuantity";
+import ShowQuantity from "@/components/ShowQuantity";
 import { useTranslation } from "react-i18next";
 
 const Tickets = ({
@@ -20,7 +20,7 @@ const Tickets = ({
 }) => {
   const { t } = useTranslation();
   const showMoreModalRef = useRef();
-  const [modalDetail, setModalDetail] = useState(undefined);
+  const [modalDetail] = useState(undefined);
   const { tourBookingInfo } = useSelector((state) => state.tour);
   const previousTour = useRef(tourBookingInfo?.tourID);
   const [showMoreIds, setShowMoreIds] = useState([]);

@@ -1,11 +1,18 @@
 import { getNewsRelated } from "@/api/news.api";
-import { useFetchData } from "@/hooks/useFetchData";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { newsKeys } from "@/lib/query-keys";
 
 const RelatedPosts = () => {
   const navigate = useNavigate();
-  const [newsData, isLoading, totalPage] = useFetchData(getNewsRelated, {});
+  const { data: newsData = [] } = useQuery({
+    queryKey: newsKeys.relatedPosts(),
+    queryFn: async () => {
+      const res = await getNewsRelated();
+      return res?.success ? res.data : [];
+    },
+  });
   return (
     <div className="md:px-16">
       {newsData?.length > 0 &&

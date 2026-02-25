@@ -4,7 +4,7 @@ import useQueryParams from "@/hooks/useQueryParams";
 import { getAccomordationType } from "@/api/hotel.api";
 import { cleanedObject } from "@/utils/utils";
 import classNames from "classnames";
-import Checkbox from "@/apps/Checkbox";
+import Checkbox from "@/components/Form/Checkbox";
 import { useTranslation } from "react-i18next";
 
 const AccommodationType = () => {

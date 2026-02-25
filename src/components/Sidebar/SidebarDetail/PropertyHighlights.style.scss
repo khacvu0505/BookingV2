@@ -1,0 +1,22 @@
+.property-highlights-masonry {
+  columns: 3;
+  column-gap: 1.5rem;
+  overflow: hidden;
+
+  &__item {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 1199px) {
+  .property-highlights-masonry {
+    columns: 2;
+  }
+}
+
+@media (max-width: 575px) {
+  .property-highlights-masonry {
+    columns: 1;
+  }
+}

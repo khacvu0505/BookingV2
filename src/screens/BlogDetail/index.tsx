@@ -1,21 +1,11 @@
-import CallToActions from "@/components/common/CallToActions";
-import Header3 from "@/components/header/header-3";
-import DefaultFooter from "@/components/footer/default";
-import LocationTopBar from "@/components/common/LocationTopBar";
 import RelatedBlog from "@/components/blog/blog-details/RelatedBlog";
-import blogsData from "@/data/blogs";
 import DetailsContent from "@/components/blog/blog-details/DetailsContent";
-import FormReply from "@/components/blog/blog-details/FormReply";
-import TopComment from "@/components/blog/blog-details/TopComment";
-import BlogNavigator from "@/components/blog/blog-details/BlogNavigator";
-import Comments from "@/components/blog/blog-details/Comments";
 import { useParams } from "react-router-dom";
 
 import MetaComponent from "@/components/common/MetaComponent";
 import { useEffect, useState } from "react";
 import { getBlogDetail } from "@/api/blog.api";
 import { formatStringToDate } from "@/utils/utils";
-import Footer2 from "@/components/footer/footer-2";
 import { useTranslation } from "react-i18next";
 
 const metadata = {
@@ -28,7 +18,6 @@ const BlogSingleDynamic = () => {
   let params = useParams();
   const [blogDetail, setBlogDetail] = useState(null);
   const { slug } = params;
-  const blog = blogsData[0];
 
   useEffect(() => {
     getBlogDetail(slug as string)

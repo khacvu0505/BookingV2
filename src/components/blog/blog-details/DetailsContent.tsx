@@ -1,4 +1,5 @@
 import Social2 from "@/components/common/social/Social2";
+import { sanitizeHtml } from "@/utils/sanitize";
 
 const DetailsContent = ({ blogDetail }) => {
   const { content = "" } = blogDetail || {};
@@ -6,7 +7,7 @@ const DetailsContent = ({ blogDetail }) => {
     <>
       <div
         dangerouslySetInnerHTML={{
-          __html: content,
+          __html: sanitizeHtml(content),
         }}
       />
       <div className="row y-gap-20 justify-between pt-30">

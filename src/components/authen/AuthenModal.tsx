@@ -2,13 +2,12 @@ import React, {
   forwardRef,
   useImperativeHandle,
   useState,
-  useRef,
 } from "react";
 import LoginForm from "@/components/common/LoginForm";
 import SignUpForm from "@/components/common/SignUpForm";
 import EmailForm from "@/components/common/EmailForm";
 import VerifyOTPRegister from "@/components/common/VerifyOTPRegister";
-import ForgotPassword from "@/apps/ForgotPassword";
+import ForgotPassword from "@/components/ForgotPassword";
 
 export const STEPS = {
   LOGIN: 1,

@@ -1,7 +1,6 @@
 import { getAccessTokenFromLocalStorage, getProfile } from "@/utils/auth";
 import {
   current_currency,
-  current_language,
   DEFAULT_CURRENCY,
   defaultDateRange,
 } from "@/utils/constants";

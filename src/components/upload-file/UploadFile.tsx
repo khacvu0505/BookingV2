@@ -5,8 +5,10 @@ import React, {
   useState,
 } from "react";
 import "./FileUpload.css";
+import { useTranslation } from "react-i18next";
 
 const FileUpload = (_, ref) => {
+  const { t } = useTranslation();
   const inputRef = useRef<any>();
 
   const [selectedFile, setSelectedFile] = useState<any[]>([]);
@@ -37,7 +39,7 @@ const FileUpload = (_, ref) => {
 
   return (
     <div>
-      <p className="text-14 fw-500 text-neutral-800 mb-10">Tải ảnh lên</p>
+      <p className="text-14 fw-500 text-neutral-800 mb-10">{t("COMMON.UPLOAD_IMAGE")}</p>
       <input
         ref={inputRef}
         type="file"

@@ -1,13 +1,7 @@
 import React from "react";
-import CallToActions from "@/components/common/CallToActions";
-import DefaultHeader from "@/components/header/default-header";
-import DefaultFooter from "@/components/footer/default";
-import LocationTopBar from "@/components/common/LocationTopBar";
-import Blog2 from "@/components/blog/Blog2";
+import { useTranslation } from "react-i18next";
 import BlogSidebar from "@/components/blog/blog-sidebar";
 import BlogPagination from "@/components/blog/BlogPagination";
-import Header3 from "@/components/header/header-3";
-import Footer2 from "@/components/footer/footer-2";
 
 import MetaComponent from "@/components/common/MetaComponent";
 import BannerBlogs from "@/components/blog/Banner";
@@ -16,6 +10,9 @@ import CategoryList from "@/components/blog/CategoryList";
 import BlogList from "@/components/blog/BlogList";
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
+import { blogKeys } from "@/lib/query-keys";
+import { getSearchBlogs } from "@/api/blogs.api";
 
 const metadata = {
   title: "Blogs || Travel & Tour",
@@ -23,7 +20,24 @@ const metadata = {
 };
 
 const BlogListV2 = () => {
-  const { loadingBlogs, listBlogs } = useSelector((state) => state.blogs);
+  const { t } = useTranslation();
+  const { filter } = useSelector((state) => state.blogs);
+
+  const { data: blogData, isLoading: loadingBlogs } = useQuery({
+    queryKey: blogKeys.search(filter as any),
+    queryFn: async () => {
+      const res = await getSearchBlogs(filter as any);
+      return {
+        blogs: (res as any)?.data || [],
+        totalPages: (res as any)?.totalPage || 0,
+        totalRecords: (res as any)?.totalRecords || 0,
+      };
+    },
+  });
+
+  const listBlogs = blogData?.blogs ?? [];
+  const totalPages = blogData?.totalPages ?? 0;
+
   return (
     <div className="mt-100">
       <MetaComponent meta={metadata} />
@@ -50,7 +64,7 @@ const BlogListV2 = () => {
           <div className="row justify-center text-center">
             <div className="col-auto">
               <div className="sectionTitle -md">
-                <h2 className="sectionTitle__title">Bài viết nổi bật</h2>
+                <h2 className="sectionTitle__title">{t("COMMON.FEATURED_POSTS")}</h2>
               </div>
             </div>
           </div>
@@ -68,12 +82,12 @@ const BlogListV2 = () => {
               ) : listBlogs?.length > 0 ? (
                 <>
                   <div className="row y-gap-30">
-                    <BlogList />
+                    <BlogList listBlogs={listBlogs} />
                   </div>
-                  <BlogPagination />
+                  <BlogPagination totalPages={totalPages} />
                 </>
               ) : (
-                <div className="text-center">Không có thông tin bài viết</div>
+                <div className="text-center">{t("COMMON.NO_POST_INFO")}</div>
               )}
             </div>
 

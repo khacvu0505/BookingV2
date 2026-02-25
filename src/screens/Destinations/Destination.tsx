@@ -1,7 +1,7 @@
-import MetaComponent from "@/apps/MetaComponent";
+import MetaComponent from "@/components/MetaComponent";
 import React, { useEffect, useState } from "react";
 import BannerDestinations from "./BannerDestinations";
-import PopularLocation from "@/apps/PopularLocation";
+import PopularLocation from "@/components/PopularLocation";
 import Intro from "./Intro";
 import Popular from "./Popular";
 import Information from "./Information";

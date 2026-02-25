@@ -1,16 +1,19 @@
 import { DEFAULT_CURRENCY } from "@/utils/constants";
 import { formatCurrency } from "@/utils/utils";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 const ShowPrice = ({
   discountPrice = 0,
   listedPrice = 0,
   promotionPrice = 0,
-  unit = "đêm",
+  unit = "",
   hasTags = [],
   finalPrice = 0,
 }) => {
+  const { t } = useTranslation();
+  const displayUnit = unit || t("COMMON.NIGHT");
   const { currentCurrency = DEFAULT_CURRENCY } =
     useSelector((state) => state.app) || {};
   return (
@@ -44,7 +47,7 @@ const ShowPrice = ({
           >
             {formatCurrency(listedPrice)} {currentCurrency}
             {listedPrice === finalPrice && (
-              <span className="text-12 text-danger"> / {unit}</span>
+              <span className="text-12 text-danger"> / {displayUnit}</span>
             )}
           </p>
         )}
@@ -57,7 +60,7 @@ const ShowPrice = ({
           >
             {formatCurrency(promotionPrice)} {currentCurrency}
             {promotionPrice === finalPrice && (
-              <span className="text-12 text-danger"> / {unit}</span>
+              <span className="text-12 text-danger"> / {displayUnit}</span>
             )}
           </p>
         )}

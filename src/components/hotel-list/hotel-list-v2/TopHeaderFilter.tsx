@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
 import useWindowSize from "@/utils/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 const TopHeaderFilter = () => {
+  const { t } = useTranslation();
   const isMobileScreen = useWindowSize().width < 768;
   const total = useSelector((state) => state.hotels.total) || 0;
   return (
@@ -9,7 +11,7 @@ const TopHeaderFilter = () => {
       <div className="row y-gap-10 items-center justify-between items-center sm:mt-20 mt-sm-0 mt-20">
         <div className="col-auto">
           <div className="text-18">
-            <span className="fw-500">{total} thông tin</span>
+            <span className="fw-500">{t("COMMON.TOTAL_INFO", { total })}</span>
           </div>
         </div>
         {/* End .col */}
@@ -21,7 +23,7 @@ const TopHeaderFilter = () => {
                 {!isMobileScreen && (
                   <button className="button -blue-1 h-40 px-20 rounded-100 bg-blue-1-05 text-15 text-blue-1">
                     <i className="icon-up-down text-14 mr-10" />
-                    Lựa chọn hàng đầu cho tìm kiếm của bạn
+                    {t("COMMON.TOP_CHOICE")}
                   </button>
                 )}
               </>

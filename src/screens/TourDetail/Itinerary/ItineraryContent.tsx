@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { sanitizeHtml } from "@/utils/sanitize";
 
 const ItineraryContent = ({ data }) => {
   const { t } = useTranslation();
@@ -44,7 +45,7 @@ const ItineraryContent = ({ data }) => {
                     <div
                       className="text-14  lg:text-13 mt-10"
                       dangerouslySetInnerHTML={{
-                        __html: item?.text?.replaceAll("\n", "<br/>") || "",
+                        __html: sanitizeHtml(item?.text?.replaceAll("\n", "<br/>") || ""),
                       }}
                     />
                   </div>
@@ -55,7 +56,7 @@ const ItineraryContent = ({ data }) => {
                   onClick={() => toggleCollapse(index)}
                 >
                   <button className="d-block lh-15 text-14 lg:text-13 underline fw-500 mt-5">
-                    {openIndex === index ? "Ẩn bớt" : "Xem thêm"}
+                    {openIndex === index ? t("COMMON.SHOW_LESS") : t("COMMON.SEE_MORE")}
                   </button>
                 </div>
               </div>

@@ -1,12 +1,13 @@
 /* eslint-disable no-undef */
 import axios, { AxiosError, HttpStatusCode } from "axios";
-import { escapeRegExp, pickBy } from "lodash";
-import moment from "moment";
+import escapeRegExp from "lodash/escapeRegExp";
+import pickBy from "lodash/pickBy";
+import { sanitizeIframe } from "@/utils/sanitize";
 import { DateObject } from "react-multi-date-picker";
-import { CURRENCY, DEFAULT_CURRENCY, DEFAULT_LANGUAGE } from "./constants";
-import i18n from "@/i18n";
+import { CURRENCY, DEFAULT_LANGUAGE } from "./constants";
 import classNames from "classnames";
 import React from "react";
+import i18next from "i18next";
 
 export function isAxiosError(error: unknown): error is AxiosError {
   return axios.isAxiosError(error);
@@ -75,30 +76,50 @@ interface FormatStringToDateOptions {
   format?: string | null;
 }
 
+const formatDateToken = (date: Date, format: string): string => {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  const tokens: Record<string, string> = {
+    YYYY: String(date.getFullYear()),
+    YY: String(date.getFullYear()).slice(-2),
+    MM: pad(date.getMonth() + 1),
+    M: String(date.getMonth() + 1),
+    DD: pad(date.getDate()),
+    D: String(date.getDate()),
+    HH: pad(date.getHours()),
+    mm: pad(date.getMinutes()),
+    ss: pad(date.getSeconds()),
+  };
+  let result = format;
+  for (const [token, value] of Object.entries(tokens)) {
+    result = result.replace(token, value);
+  }
+  return result;
+};
+
 export const formatStringToDate = (dateString: string, options: FormatStringToDateOptions | boolean = {}): string => {
   const normalizedOptions: FormatStringToDateOptions = typeof options === 'boolean' ? { isHideDay: options } : options;
   const { isHideDay = false, format = null } = normalizedOptions;
 
+  const dateObject = new Date(dateString);
+
   if (format) {
-    return moment(dateString).format(format);
+    return formatDateToken(dateObject, format);
   }
 
-  const dayNamesVi = [
-    "Chủ Nhật",
-    "Thứ 2",
-    "Thứ 3",
-    "Thứ 4",
-    "Thứ 5",
-    "Thứ 6",
-    "Thứ 7",
+  const dayNames = [
+    i18next.t("COMMON.WEEKDAY_SUN"),
+    i18next.t("COMMON.WEEKDAY_MON"),
+    i18next.t("COMMON.WEEKDAY_TUE"),
+    i18next.t("COMMON.WEEKDAY_WED"),
+    i18next.t("COMMON.WEEKDAY_THU"),
+    i18next.t("COMMON.WEEKDAY_FRI"),
+    i18next.t("COMMON.WEEKDAY_SAT"),
   ];
-
-  const dateObject = new Date(dateString);
 
   const year = dateObject.getFullYear();
   const month = String(dateObject.getMonth() + 1).padStart(2, "0");
   const day = String(dateObject.getDate()).padStart(2, "0");
-  const dayName = dayNamesVi[dateObject.getDay()];
+  const dayName = dayNames[dateObject.getDay()];
 
   const formattedDate = isHideDay
     ? `${day}-${month}-${year}`
@@ -258,7 +279,7 @@ export function insertIframe(iframeString: string, idContainer: string, width = 
   if (iframeString && !iframeContainerTempDiv) {
     const tempDiv = document.createElement("div");
     tempDiv.setAttribute("id", "iframeContainerTempDiv");
-    tempDiv.innerHTML = iframeString;
+    tempDiv.innerHTML = sanitizeIframe(iframeString);
 
     const iframe = tempDiv.querySelector("iframe");
     if (iframe) {
@@ -295,32 +316,30 @@ interface DayInfo {
 }
 
 export function getDaysBetween(startDate: string | Date, endDate: string | Date, locale = "vi"): DayInfo[] {
-  let start = moment(startDate).locale(locale);
-  const end = moment(endDate).locale(locale);
+  const start = new Date(startDate);
+  const end = new Date(endDate);
   const days: DayInfo[] = [];
 
-  while (start <= end) {
-    let dayDisplay: string;
-    if (locale === "vi") {
-      const dayOfWeek = start.day();
-      dayDisplay = dayOfWeek === 0 ? "CN" : `Thứ ${dayOfWeek + 1}`;
-    } else {
-      dayDisplay = start.format("ddd");
-    }
+  const current = new Date(start);
+  while (current <= end) {
+    const dayOfWeek = current.getDay();
+    const dayDisplay = dayOfWeek === 0
+      ? i18next.t("COMMON.SUNDAY_SHORT")
+      : i18next.t("COMMON.DAY_NUMBER", { num: dayOfWeek + 1 });
 
-    const monthDisplay =
-      locale === "vi" ? `Tháng ${start.format("M")}` : start.format("MMMM");
+    const monthDisplay = i18next.t("COMMON.MONTH_NUMBER", { num: current.getMonth() + 1 });
 
-    const uniqueKey = start.format("YYYY-MM-DD");
+    const pad = (n: number) => String(n).padStart(2, "0");
+    const uniqueKey = `${current.getFullYear()}-${pad(current.getMonth() + 1)}-${pad(current.getDate())}`;
 
     days.push({
       key: uniqueKey,
       day: dayDisplay,
       month: monthDisplay,
-      year: start.format("YYYY"),
-      date: start.format("D"),
+      year: String(current.getFullYear()),
+      date: String(current.getDate()),
     });
-    start = start.add(1, "day");
+    current.setDate(current.getDate() + 1);
   }
 
   return days;

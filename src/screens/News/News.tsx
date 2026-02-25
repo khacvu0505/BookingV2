@@ -1,7 +1,7 @@
-import MetaComponent from "@/apps/MetaComponent";
+import MetaComponent from "@/components/MetaComponent";
 import React, { useState } from "react";
 import BannerNews from "./BannerNews";
-import PopularLocation from "@/apps/PopularLocation";
+import PopularLocation from "@/components/PopularLocation";
 import TourRelated from "./TourRelated";
 import Posts from "./Posts";
 import { useTranslation } from "react-i18next";

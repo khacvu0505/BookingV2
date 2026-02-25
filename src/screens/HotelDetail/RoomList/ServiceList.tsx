@@ -1,21 +1,21 @@
 import { useState } from "react";
 import ServiceDetail from "./ServiceDetail";
 import { useDispatch, useSelector } from "react-redux";
-import Skeleton from "react-loading-skeleton";
 import {
-  arrayWithUniqueObject,
   fillArrayWithObject,
   getFromSessionStorage,
   setToSessionStorage,
 } from "@/utils/utils";
-import { defaultServices, info_booking } from "@/utils/constants";
+import { info_booking } from "@/utils/constants";
 import { setRoomActive } from "@/features/hotel-detail/hotelDetailSlice";
 import useQueryParams from "@/hooks/useQueryParams";
+import { useTranslation } from "react-i18next";
 
-const ServiceList = ({ roomID, roomName, source, roomIdButtonChoose }: { roomID: any; roomName: any; source: any; roomIdButtonChoose?: any }) => {
+const ServiceList = ({ roomID, roomName, source, roomIdButtonChoose, servicesRoom = [] }: { roomID: any; roomName: any; source: any; roomIdButtonChoose?: any; servicesRoom?: any[] }) => {
+  const { t } = useTranslation();
   const [isViewMore, setIsViewMore] = useState(false);
   const [searchParams, setSearchParams] = useQueryParams();
-  const { servicesRoom, roomActive, isLoadingService } =
+  const { roomActive } =
     useSelector((state) => state.hotel) || {};
   const dispatch = useDispatch();
 
@@ -107,7 +107,7 @@ const ServiceList = ({ roomID, roomName, source, roomIdButtonChoose }: { roomID:
         {servicesRoom?.length > 3 && !isViewMore && (
           <div className="w-100 d-flex justify-content-center">
             <button className="button text-blue-1" onClick={handleViewMore}>
-              Xem thêm
+              {t("COMMON.SEE_MORE")}
             </button>
           </div>
         )}

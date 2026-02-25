@@ -1,16 +1,16 @@
-import { fetchGetSearchBlogs } from "@/features/blogs/reducers";
+import { setFilter } from "@/features/blogs/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const BlogPagination = () => {
+const BlogPagination = ({ totalPages = 0 }: { totalPages?: number }) => {
   const dispatch = useDispatch();
-  const { filter, totalPages } = useSelector((state) => state.blogs);
+  const { filter } = useSelector((state) => state.blogs);
 
   const handlePageClick = (pageNumber) => {
     const dataFilter = {
       ...filter,
       Page: pageNumber,
     };
-    (dispatch as any)(fetchGetSearchBlogs(dataFilter));
+    dispatch(setFilter(dataFilter));
   };
 
   const renderPage = (pageNumber, isActive = false) => {
@@ -66,12 +66,6 @@ const BlogPagination = () => {
           <div className="row x-gap-10 y-gap-20 justify-center items-center d-none md:d-flex">
             {renderPages()}
           </div>
-
-          {/* <div className="text-center mt-30 md:mt-10">
-            <div className="text-14 text-light-1">
-              1 – 20 of 300+ properties found
-            </div>
-          </div> */}
         </div>
 
         <div className="col-auto md:order-2">

@@ -1,6 +1,5 @@
-import { formatCurrency, formatStringToDate } from "@/utils/utils";
+import { formatStringToDate } from "@/utils/utils";
 import React from "react";
-import { useSelector } from "react-redux";
 import "./Invoice.style.scss";
 import useWindowSize from "@/utils/useWindowSize";
 import { useTranslation } from "react-i18next";
@@ -8,7 +7,6 @@ import PriceWithVND from "@/components/PriceWithVND/PriceWithVND";
 
 export default function InvoiceComponent({ bookingInfo }) {
   const { t } = useTranslation();
-  const { currentCurrency } = useSelector((state) => state.app);
   const isMobile = useWindowSize().width < 768;
   const contactData = [
     { url: "#", text: "https://OKdimall.com/" },
@@ -41,7 +39,7 @@ export default function InvoiceComponent({ bookingInfo }) {
 
                 <div className="col-md-6">
                   <div className="text-16 lg:text-15 md:text-14 fw-400 text-neutral-500">
-                    {t("BOOKING_SUCCESS_HOTEL.CHECK_OUT_DATE")}:
+                    {t("COMMON.CHECK_OUT_DATE")}:
                   </div>
                   <div className="text-18 lg:text-17 md:text-16 fw-600 text-neutral-800">
                     {formatStringToDate(bookingInfo?.checkOutDate)}
@@ -122,7 +120,7 @@ export default function InvoiceComponent({ bookingInfo }) {
                           </div>
                           <div className="d-flex justify-between mb-24 md:mb-6">
                             <p className="text-16 lg:text-15 md:text-14 fw-600 text-neutral-800">
-                              {t("BOOKING_SUCCESS_HOTEL.REMAINING_AMOUNT")}
+                              {t("COMMON.REMAINING_AMOUNT")}
                             </p>
 
                             <PriceWithVND
@@ -143,7 +141,7 @@ export default function InvoiceComponent({ bookingInfo }) {
                           <th>{t("COMMON.ROOM")}</th>
                           <th>{t("BOOKING_SUCCESS_HOTEL.PRICE")}</th>
                           <th>{t("COMMON.DISCOUNT")}</th>
-                          <th>{t("BOOKING_SUCCESS_HOTEL.REMAINING_AMOUNT")}</th>
+                          <th>{t("COMMON.REMAINING_AMOUNT")}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -255,7 +253,7 @@ export default function InvoiceComponent({ bookingInfo }) {
                                     fontSize: "13px",
                                   }}
                                 >
-                                  {t("BOOKING_SUCCESS_HOTEL.PROMOTION")}
+                                  {t("COMMON.PROMOTION")}
                                 </span>
                                 <br />
                                 {voucher?.voucherName}

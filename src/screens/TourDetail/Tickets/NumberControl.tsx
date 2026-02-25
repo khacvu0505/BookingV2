@@ -1,5 +1,6 @@
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const NumberControl = ({
   handleIncrement,
@@ -9,11 +10,12 @@ const NumberControl = ({
   allowZero = true,
   maxQuantity = 0,
 }: { handleIncrement?: any; handleDecrement?: any; count: any; setCount: any; allowZero?: boolean; maxQuantity?: number }) => {
+  const { t } = useTranslation();
   const incrementCount = (e) => {
     e.stopPropagation();
     const nextQuantity = count + 1;
     if (maxQuantity && nextQuantity > maxQuantity) {
-      handleRenderNoti("Tối đa " + maxQuantity + " người", "warning");
+      handleRenderNoti(t("COMMON.MAX_PEOPLE", { max: maxQuantity }), "warning");
       return;
     }
     setCount(nextQuantity);

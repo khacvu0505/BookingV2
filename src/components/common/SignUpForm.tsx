@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signUpSchema } from "@/schemas/signUpSchema";
-import { handleRenderMessageError } from "@/utils/handleRenderMessageError";
 import { registerAccount } from "@/api/auth.api";
-import { toast } from "react-toastify";
 import { setIsAuthenticated } from "@/features/app/appSlice";
 import { useDispatch } from "react-redux";
 import { STEPS } from "@/components/authen/AuthenModal";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
-import Input from "@/apps/Input";
-import Button from "@/apps/Button";
+import Input from "@/components/Form/Input";
+import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 
 interface SignUpFormProps {
@@ -23,7 +20,6 @@ interface SignUpFormProps {
 const SignUpForm = ({ setStep, emailVerify, handleCloseModal }: SignUpFormProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const {
     handleSubmit,
     reset,
@@ -64,7 +60,7 @@ const SignUpForm = ({ setStep, emailVerify, handleCloseModal }: SignUpFormProps)
 
       //     setIsSubmmitting(false);
       //   });
-      const result = await registerAccount(data as any);
+      await registerAccount(data as any);
       reset();
       dispatch(setIsAuthenticated(true));
       handleCloseModal();
@@ -77,7 +73,7 @@ const SignUpForm = ({ setStep, emailVerify, handleCloseModal }: SignUpFormProps)
   };
 
   return (
-    <form className="row y-gap-20">
+    <form className="row y-gap-20" onSubmit={handleSubmit(handleSubmitForm as any)}>
       <div className="col-12">
         <h1 className="text-22 fw-500">{t("AUTH.SIGNUP/TITLE")}</h1>
         <p className="mt-10">
@@ -199,7 +195,7 @@ const SignUpForm = ({ setStep, emailVerify, handleCloseModal }: SignUpFormProps)
       <div className="col-12">
         <Button
           className="w-100"
-          onClick={handleSubmit(handleSubmitForm as any)}
+          htmlType="submit"
           disabled={isSubmmitting}
         >
           {isSubmmitting ? (

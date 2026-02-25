@@ -1,0 +1,129 @@
+.show_price {
+  .listed_price {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    .listed_price-text {
+      font-family: Be Vietnam Pro;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 28px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #3a3e4d;
+    }
+    .highlight {
+      //styleName: H3/Medium - size 24px;
+      font-family: Be Vietnam Pro;
+      font-size: 20px;
+      font-weight: 500;
+      // line-height: 30.36px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #f52549;
+    }
+    .unhighlight {
+      font-family: Be Vietnam Pro;
+      font-size: 16.68px;
+      font-weight: 400;
+      line-height: 29.19px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #3a3e4d;
+      text-align: right;
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        top: 13px;
+        left: 0;
+        height: 2px;
+        background-color: #6a718a;
+        transform: rotateZ(-15deg);
+      }
+    }
+  }
+
+  .best_price-title {
+    font-family: Be Vietnam Pro;
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 28px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #f52549;
+  }
+  .promotion_price {
+    display: flex;
+    justify-content: flex-end;
+    .promotion_price-tag {
+      background-color: #f52549;
+      color: #fff;
+      display: inline-block;
+      border-radius: 16px;
+      padding: 0 4px;
+      margin-right: 4px;
+    }
+    .promotion_price-text {
+      font-family: Be Vietnam Pro;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 28px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #00aeed;
+    }
+  }
+  .member_price {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 18px;
+    .member_price-title {
+      font-family: Be Vietnam Pro;
+      font-size: 14px;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 20px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #0053f3;
+      margin-right: 8px;
+    }
+    .member_price-text {
+      font-family: Be Vietnam Pro;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #0053f3;
+    }
+  }
+}
+
+.draft_price {
+  position: relative;
+  display: inline-block;
+  text-align: end;
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    top: 13px;
+    left: 0%;
+    height: 2px;
+    background-color: #6a718a;
+    transform: rotateZ(-10deg);
+  }
+}

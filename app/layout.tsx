@@ -3,23 +3,15 @@ import { Be_Vietnam_Pro } from "next/font/google";
 import Script from "next/script";
 import ClientProvider from "@/components/ClientLayout/ClientProvider";
 
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import "swiper/css/scrollbar";
-import "swiper/css/effect-cards";
-import "aos/dist/aos.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
-import "lightgallery/scss/lightgallery.scss";
-import "lightgallery/scss/lg-zoom.scss";
 import "remixicon/fonts/remixicon.css";
 import "@/styles/index.scss";
 import "@/App.style.scss";
 
 const beVietnamPro = Be_Vietnam_Pro({
   subsets: ["vietnamese", "latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 

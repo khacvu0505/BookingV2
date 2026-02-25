@@ -1,22 +1,18 @@
-import { useState, useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/schemas/loginSchema";
-import { handleRenderMessageError } from "@/utils/handleRenderMessageError";
 import { loginAccount } from "@/api/auth.api";
-import { toast } from "react-toastify";
 import { setIsAuthenticated } from "@/features/app/appSlice";
 import { useDispatch } from "react-redux";
 import { STEPS } from "@/components/authen/AuthenModal";
-import { handleRenderNoti } from "@/utils/handleRenderNoti";
-import Input from "@/apps/Input";
-import Button from "@/apps/Button";
+import Input from "@/components/Form/Input";
+import Button from "@/components/Button";
 import { useTranslation } from "react-i18next";
 
 const LoginForm = ({ handleCloseModal, setStep }: { handleCloseModal?: any; setStep?: any }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { t } = useTranslation();
   const [isSubmmitting, setIsSubmmitting] = useState(false);
   const { pathname } = useLocation();
@@ -27,7 +23,6 @@ const LoginForm = ({ handleCloseModal, setStep }: { handleCloseModal?: any; setS
     reset,
     register,
     formState: { errors },
-    setFocus,
   } = useForm({
     defaultValues: {
       email: "",
@@ -55,7 +50,7 @@ const LoginForm = ({ handleCloseModal, setStep }: { handleCloseModal?: any; setS
 
   return (
     <>
-      <form className="row y-gap-20">
+      <form className="row y-gap-20" onSubmit={handleSubmit(handleSubmitForm)}>
         <div className="col-12">
           <h1 className="text-22 fw-500"></h1>
           {pathname !== "/login" && (
@@ -114,7 +109,7 @@ const LoginForm = ({ handleCloseModal, setStep }: { handleCloseModal?: any; setS
         {/* End .col */}
 
         <div className="col-12">
-          <Button onClick={handleSubmit(handleSubmitForm)} className="w-100">
+          <Button htmlType="submit" className="w-100">
             {isSubmmitting ? (
               <span className="loader mr-15"></span>
             ) : (

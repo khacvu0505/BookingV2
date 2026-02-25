@@ -1,8 +1,9 @@
-import MapComponent from "@/apps/MapComponent";
+import MapComponent from "@/components/MapComponent";
 import React, { useState, useRef, useEffect } from "react";
-import { Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 const Information = ({ data }) => {
+  const { t } = useTranslation();
   const [showFullText, setShowFullText] = useState(false);
   const [height, setHeight] = useState("300px");
   const [showToggle, setShowToggle] = useState(false); // Kiểm tra có cần hiện nút "Xem thêm"
@@ -52,7 +53,7 @@ const Information = ({ data }) => {
               className="d-inline-block text-primary-500 pointer fw-bold mt-3"
               onClick={toggleText}
             >
-              {showFullText ? "Ẩn bớt" : "... Xem thêm"}
+              {showFullText ? t("COMMON.SHOW_LESS") : `... ${t("COMMON.SEE_MORE")}`}
             </span>
           )}
         </div>

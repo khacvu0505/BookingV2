@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { getListCategory } from "@/api/blogs.api";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchGetSearchBlogs } from "@/features/blogs/reducers";
+import { setFilter } from "@/features/blogs/blogSlice";
+import { useTranslation } from "react-i18next";
 
 const CategoryList = () => {
+  const { t } = useTranslation();
   const [listCategory, setListCategory] = useState([]);
   const dispatch = useDispatch();
 
@@ -19,7 +21,7 @@ const CategoryList = () => {
               ...filter,
               Entity: { ...filter.Entity, CateID: 0 },
             };
-            (dispatch as any)(fetchGetSearchBlogs(dataFilter));
+            dispatch(setFilter(dataFilter));
           }
         } else {
           setListCategory([]);
@@ -33,7 +35,7 @@ const CategoryList = () => {
       ...filter,
       Entity: { ...filter.Entity, CateID: categoryCode },
     };
-    (dispatch as any)(fetchGetSearchBlogs(dataFilter));
+    dispatch(setFilter(dataFilter));
   };
 
   return (
@@ -47,7 +49,7 @@ const CategoryList = () => {
               }`}
               onClick={() => handleCategory(0)}
             >
-              Tất cả
+              {t("COMMON.ALL")}
             </button>
           </div>
           {listCategory?.map((option) => (

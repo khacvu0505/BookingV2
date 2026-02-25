@@ -1,13 +1,10 @@
 import "photoswipe/dist/photoswipe.css";
 import {
-  createSearchParams,
-  useLocation,
-  useNavigate,
   useParams,
 } from "react-router-dom";
 
 import MetaComponent from "@/components/common/MetaComponent";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import {
   addDate,
   cleanedObject,
@@ -20,38 +17,38 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/store/hooks";
 import { defaultServices, info_booking, tax_include } from "@/utils/constants";
 import {
-  clearHotelInfo,
   setRoomActive,
 } from "@/features/hotel-detail/hotelDetailSlice";
 import {
-  fetchHotelBySlug,
-  fetchRelatedHotels,
-  fetchRoomList,
-  fetchServicesByRoom,
-} from "@/features/hotel-detail/reducers";
-import { getHotelPolicies } from "@/api/hotel.api";
+  getHotelBySlug,
+  getHotelPolicies,
+  getRelatedHotels,
+  getRoomList,
+} from "@/api/hotel.api";
+import { useQuery } from "@tanstack/react-query";
+import { hotelKeys } from "@/lib/query-keys";
 import { handleSetDefaultBooking } from "@/utils/handleSetDefaultBooking";
 import isEmpty from "lodash/isEmpty";
 import "./HotelDetail.styles.scss";
 import useWindowSize from "@/utils/useWindowSize";
 import { BREAKPOINT_LG } from "@/utils/constants";
-import GalleryComponent from "@/apps/Gallery";
+import GalleryComponent from "@/components/Gallery";
 import classNames from "classnames";
-import QnA from "@/apps/QnA";
-import Breadcrumb from "@/apps/Breadcrumb";
-import StickyHeader from "@/apps/StickyHeader";
+import QnA from "@/components/QnA";
+import Breadcrumb from "@/components/Breadcrumb";
+import StickyHeader from "@/components/StickyHeader";
 import RoomList from "./RoomList";
-import SidebarRight from "@/apps/SidebarRight";
-import SearchBarWithoutLocation from "@/apps/MasterSearch/SearchBarWithoutLocation";
+import SidebarRight from "@/components/Sidebar/SidebarRight";
+import SearchBarWithoutLocation from "@/components/Search/MasterSearch/SearchBarWithoutLocation";
 import Overview from "./Overview";
 import Surrounding from "./Surrounding";
 import HelpfulFacts from "./HelpfulFacts";
-import ReviewProgress from "@/apps/Review/ReviewProgress";
-import DetailsReview from "@/apps/Review/DetailsReview";
-import PropertyHighlights from "@/apps/PropertyHighlights";
-import RelatedHotels from "@/apps/RelatedHotels";
+import ReviewProgress from "@/components/Review/ReviewProgress";
+import DetailsReview from "@/components/Review/DetailsReview";
+import PropertyHighlights from "@/components/PropertyHighlights";
+import RelatedHotels from "@/components/RelatedHotels";
 import HotelDetailSkeleton from "./SkeletonHotelDetail";
-import TabHotelDetail from "@/apps/OffCanvasHotelDetailMobile";
+import TabHotelDetail from "@/components/OffCanvas/OffCanvasHotelDetailMobile";
 import { useTranslation } from "react-i18next";
 
 const HotelDetail = () => {
@@ -60,15 +57,78 @@ const HotelDetail = () => {
   const { slug } = useParams();
   const [searchParams, setSearchParams] = useQueryParams();
   const dispatch = useAppDispatch();
-  const { hotelInfo, isLoadingHotelInfo, relatedHotels, roomInfos } =
-    useSelector((state: any) => state.hotel);
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [hotelPolicies, setHotelPolicies] = useState<any>(null);
   const offCanvasRef = useRef<any>();
 
   const { checkIn, checkOut, adults, children, room, location, roomActive } =
     searchParams || {};
+
+  const { data: hotelInfo, isLoading: isLoadingHotelInfo } = useQuery({
+    queryKey: hotelKeys.detail(String(slug ?? "")),
+    queryFn: async () => {
+      const params = {
+        Slug: slug,
+        FromDate: searchParams.checkIn,
+        ToDate: searchParams.checkOut,
+        TotalRoom: searchParams.room,
+      };
+      const res = await getHotelBySlug(cleanedObject(params));
+      return res.data;
+    },
+    enabled: !!slug,
+  });
+
+  const roomParams = useMemo(() => ({
+    supplierCode: hotelInfo?.hotelCode,
+    fromDate: checkIn,
+    toDate: checkOut,
+    adult: +(adults || 0),
+    children: +(children || 0),
+    totalRoom: +(room || 0),
+  }), [hotelInfo?.hotelCode, checkIn, checkOut, adults, children, room]);
+
+  const { data: roomInfos = [], isLoading: isLoadingRoomList } = useQuery({
+    queryKey: hotelKeys.rooms(roomParams),
+    queryFn: async () => {
+      const res = await getRoomList(roomParams);
+      return res.data;
+    },
+    enabled: !!hotelInfo?.hotelCode,
+  });
+
+  const { data: relatedHotels = [] } = useQuery({
+    queryKey: hotelKeys.related(
+      searchParams.location || "",
+      "Hotel",
+      hotelInfo?.hotelCode ?? ""
+    ),
+    queryFn: async () => {
+      const res = await getRelatedHotels({
+        regionID: searchParams.location,
+        supplierType: "Hotel",
+        currentCode: hotelInfo?.hotelCode,
+      });
+      return res.data;
+    },
+    enabled: !!hotelInfo?.hotelCode,
+  });
+
+  const { data: hotelPolicies } = useQuery({
+    queryKey: hotelKeys.policies(String(slug ?? "")),
+    queryFn: async () => {
+      const params = {
+        Slug: slug,
+        FromDate: searchParams.checkIn,
+        ToDate: searchParams.checkOut,
+        TotalRoom: searchParams.room,
+      };
+      const res = await getHotelPolicies(params);
+      if (res?.success) {
+        return res.data;
+      }
+      return [];
+    },
+    enabled: !!slug,
+  });
 
   const breadcrumbData = useMemo(
     () => [
@@ -91,44 +151,6 @@ const HotelDetail = () => {
   );
 
   useEffect(() => {
-    // get hotel info
-    const params = {
-      Slug: slug,
-      FromDate: searchParams.checkIn,
-      ToDate: searchParams.checkOut,
-      TotalRoom: searchParams.room,
-    };
-    dispatch(fetchHotelBySlug(cleanedObject(params)) as any);
-    //get hotel policies
-    getHotelPolicies(params)
-      .then((res) => {
-        if (res?.success) {
-          setHotelPolicies(res?.data);
-        } else {
-          setHotelPolicies([]);
-        }
-      })
-      .catch(() => {
-        setHotelPolicies([]);
-      });
-
-    //set default active room
-    if (!searchParams.roomActive) {
-      navigate(
-        {
-          pathname,
-          search: createSearchParams({
-            ...searchParams,
-            roomActive: 1,
-          } as any).toString(),
-        }
-        // { replace: true }
-      );
-      dispatch(setRoomActive(1));
-    }
-  }, [slug]);
-
-  useEffect(() => {
     const infoBooking = getFromSessionStorage(info_booking);
     if ((!infoBooking || isEmpty(infoBooking)) && hotelInfo) {
       handleSetDefaultBooking({
@@ -138,28 +160,9 @@ const HotelDetail = () => {
       });
     }
     if (hotelInfo) {
-      const paramsRoom = {
-        supplierCode: hotelInfo?.hotelCode,
-        fromDate: searchParams?.checkIn,
-        toDate: searchParams?.checkOut,
-        adult: +searchParams?.adults,
-        children: +searchParams?.children,
-        totalRoom: +searchParams?.room,
-      };
-      dispatch(fetchRoomList(paramsRoom) as any);
       setToSessionStorage(tax_include, hotelInfo?.taxInclude);
     }
   }, [hotelInfo]);
-
-  useEffect(() => {
-    if (!hotelInfo?.hotelCode) return;
-    const params = {
-      regionID: searchParams.location,
-      supplierType: "Hotel",
-      currentCode: hotelInfo?.hotelCode,
-    };
-    dispatch(fetchRelatedHotels(params) as any);
-  }, [hotelInfo?.hotelCode, searchParams.location]);
 
   useEffect(() => {
     if (!isLoadingHotelInfo) {
@@ -167,51 +170,6 @@ const HotelDetail = () => {
       window.scroll({ top: 0, behavior: "smooth" });
     }
   }, [isLoadingHotelInfo]);
-
-  useEffect(() => {
-    let infoBooking = getFromSessionStorage(info_booking) as any;
-    if (
-      infoBooking &&
-      infoBooking.services &&
-      infoBooking.services.length > 0
-    ) {
-      infoBooking.services.map((item: any) => {
-        dispatch(
-          fetchServicesByRoom({
-            roomID: item?.roomID,
-            roomName: item?.roomName,
-            source: item?.source,
-            searchParams,
-            isRefreshServiceRoom: true,
-          }) as any
-        );
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    const handleBackNavigation = (event: any) => {
-      navigate({
-        pathname: "/hotels",
-        search: createSearchParams({
-          checkIn: searchParams?.checkIn || formatDate(new Date()),
-          checkOut: searchParams?.checkOut || addDate(new Date(), 3),
-          adults: searchParams?.adults || 2,
-          children: searchParams?.children || 0,
-          room: searchParams?.room || 1,
-          location: searchParams?.location || "",
-        } as any).toString(),
-      });
-    };
-
-    // eslint-disable-next-line no-undef, no-restricted-globals
-    window.addEventListener("popstate", handleBackNavigation);
-
-    return () => {
-      // eslint-disable-next-line no-restricted-globals, no-undef
-      window.removeEventListener("popstate", handleBackNavigation);
-    };
-  }, [navigate]);
 
   useEffect(() => {
     let infoBooking = getFromSessionStorage(info_booking);
@@ -252,10 +210,6 @@ const HotelDetail = () => {
     }
     setSearchParams(defaultParams);
     dispatch(setRoomActive(+searchParams?.roomActive || 1));
-
-    return () => {
-      dispatch(clearHotelInfo());
-    };
   }, []);
 
   return (
@@ -263,7 +217,7 @@ const HotelDetail = () => {
       <MetaComponent
         meta={{
           title: "Hotel Detail",
-          description: "OKdimall - Du lịch và trải nghiệm",
+          description: `OKdimall - ${t("COMMON.META_DESCRIPTION")}`,
         }}
       />
 
@@ -320,7 +274,7 @@ const HotelDetail = () => {
                 </div>
                 <div className="row">
                   <div className="col-xl-8 xl:order-2 px-10">
-                    <RoomList hotelsData={roomInfos} />
+                    <RoomList hotelsData={roomInfos} isLoadingRoomList={isLoadingRoomList} />
                   </div>
 
                   <div className="col-xl-4 xl:order-1 d-block xl:d-none px-0">
@@ -403,7 +357,7 @@ const HotelDetail = () => {
                 </h2>
 
                 <div className="pt-20 sm:pt-20 item_gap-x10 ">
-                  <RelatedHotels />
+                  <RelatedHotels relatedHotels={relatedHotels} />
                 </div>
               </div>
             </section>

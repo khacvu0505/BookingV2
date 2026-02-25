@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
-import blogsData from "../../data/blogs";
-import { useSelector } from "react-redux";
 import { formatDate } from "@/utils/utils";
 
-const BlogList = () => {
-  const { listBlogs } = useSelector((state) => state.blogs);
+const BlogList = ({ listBlogs = [] }: { listBlogs?: any[] }) => {
   return (
     <>
       {listBlogs?.map((item) => (

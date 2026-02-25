@@ -1,9 +1,6 @@
-import CallToActions from "@/components/common/CallToActions";
-
 import SignUpForm from "@/components/common/SignUpForm";
 
 import MetaComponent from "@/components/common/MetaComponent";
-import Footer2 from "@/components/footer/footer-2";
 import { useTranslation } from "react-i18next";
 
 const metadata = {

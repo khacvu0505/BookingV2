@@ -1,13 +1,13 @@
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
 import React, { useEffect, useState, memo } from "react";
-import RatingComponent from "@/components/rating";
+import RatingComponent from "@/components/ratings/RatingSvg";
 
 const RatingsFilter = () => {
   const [params, setSearchParams] = useQueryParams();
   const { rating: ratingParam } = params;
 
-  const [dataList, setDataList] = useState([
+  const [dataList, _setDataList] = useState([
     {
       id: 1,
       value: 3,

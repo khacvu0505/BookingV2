@@ -1,9 +1,8 @@
-// import Social from "@/components/common/social/Social";
-import { BREAKPOINT_MD } from "@/utils/constants";
-import useWindowSize from "@/utils/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 const Copyright = () => {
-  const isMobile = useWindowSize().width < BREAKPOINT_MD;
+  const { t } = useTranslation();
+
   return (
     <div className="row justify-between items-center y-gap-10 w-100">
       <div className="col-auto w-100">
@@ -17,22 +16,9 @@ const Copyright = () => {
           >
             OKdimall Travel Co., Ltd -
           </a>
-          All rights reserved - Tax code: 4201934832 - International Tour
-          Operator Licence: 56-173/2022/CDLQGVN-GP LHQT.
+          {t("COMMON.COPYRIGHT_INFO")}
         </div>
       </div>
-
-      {/* <div className="col-auto">
-        <div className="row y-gap-10 items-center">
-          {!isMobile && (
-            <div className="col-auto">
-              <div className="d-flex x-gap-20 items-center">
-                <Social />
-              </div>
-            </div>
-          )}
-        </div>
-      </div> */}
     </div>
   );
 };

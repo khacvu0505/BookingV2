@@ -4,6 +4,7 @@ import React, {
   forwardRef,
   useEffect,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { getCanceBookingInfo, requestCancelBooking } from "@/api/user.api";
 import "./CancelBookingInformationModal.style.scss";
 import { formatCurrency, formatStringToDate } from "@/utils/utils";
@@ -48,6 +49,7 @@ const CancelBookingInformationModal = (
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
   const { currentCurrency } = useSelector((state) => state.app);
+  const { t } = useTranslation();
 
   const handleCloseModal = () => {
     setIsVisible(false);
@@ -65,13 +67,13 @@ const CancelBookingInformationModal = (
           switch (res?.data) {
             case "waiting":
               handleRenderNoti(
-                "Yêu cầu hủy và hoàn tiền thành công, vui lòng đợi admin xác nhận",
+                t("COMMON.CANCEL_REQUEST_WAITING"),
                 "success"
               );
               break;
             case "completed":
               handleRenderNoti(
-                "Yêu cầu hủy và hoàn tiền thành công, vui lòng đợi hoàn tiền từ hệ thồng",
+                t("COMMON.CANCEL_REQUEST_COMPLETED"),
                 "success"
               );
               break;
@@ -82,10 +84,10 @@ const CancelBookingInformationModal = (
           return;
         }
         setIsSubmitting(false);
-        handleRenderNoti("Vui lòng thử lại sau", "error");
+        handleRenderNoti(t("COMMON.PLEASE_TRY_AGAIN_LATER"), "error");
       })
       .catch(() => {
-        handleRenderNoti("Vui lòng thử lại sau", "error");
+        handleRenderNoti(t("COMMON.PLEASE_TRY_AGAIN_LATER"), "error");
         setIsSubmitting(false);
       });
   };
@@ -137,14 +139,14 @@ const CancelBookingInformationModal = (
         <div className="d-flex items-center justify-between px-30 pb-20 sm:px-15 ">
           <div className="text-20 fw-500 lh-15 w-100 text-center">
             <p className="text-24 fw-500 text-neutral-800">
-              {requestSuccess ? "Thông báo" : "Thông tin hủy đặt phòng"}
+              {requestSuccess ? t("COMMON.NOTIFICATION") : t("COMMON.CANCEL_BOOKING_INFO")}
             </p>
           </div>
         </div>
         {requestSuccess ? (
           <div className="w-75 mx-auto mb-30">
             <p className="text-dark">
-              Quý khách cần hỗ trợ, vui lòng liên hệ ngay cho chúng tôi
+              {t("COMMON.SUPPORT_CONTACT_MSG")}
             </p>
             <p className="text-dark">Hotline: +84 886 479 456</p>
             <p className="text-dark">
@@ -161,21 +163,21 @@ const CancelBookingInformationModal = (
           >
             <div className="d-flex items-center">
               <div className="d-flex items-center mr-24">
-                <p className="text-14 fw-400 mr-4">Tên khách sạn: </p>
+                <p className="text-14 fw-400 mr-4">{t("COMMON.HOTEL_NAME_LABEL")}: </p>
                 <div className="text-14 fw-600 ">
                   {" "}
                   {bookingDetail?.supplierName}
                 </div>
               </div>
               <div className="d-flex items-center mr-24">
-                <div className="text-14 fw-400 mr-4">Ngày nhận phòng:</div>
+                <div className="text-14 fw-400 mr-4">{t("COMMON.CHECK_IN_DATE")}:</div>
                 <div className="text-14 fw-600 ">
                   {formatStringToDate(bookingDetail?.checkInDate ?? "")}
                 </div>
               </div>
 
               <div className="d-flex  items-center">
-                <div className="text-14 fw-400 mr-4">Ngày trả phòng:</div>
+                <div className="text-14 fw-400 mr-4">{t("COMMON.CHECK_OUT_DATE")}:</div>
                 <div className="text-14 fw-600">
                   {formatStringToDate(bookingDetail?.checkOutDate ?? "")}
                 </div>
@@ -184,10 +186,10 @@ const CancelBookingInformationModal = (
             <table className="table-cancel-booking-info">
               <thead>
                 <tr>
-                  <th>Tên</th>
-                  <th>Số tiền đã thanh toán</th>
-                  <th>Số tiền được hoàn</th>
-                  <th>Ghi chú</th>
+                  <th>{t("COMMON.NAME")}</th>
+                  <th>{t("COMMON.AMOUNT_PAID")}</th>
+                  <th>{t("COMMON.REFUND_AMOUNT")}</th>
+                  <th>{t("COMMON.NOTES")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -210,15 +212,15 @@ const CancelBookingInformationModal = (
                         <td>
                           {item?.lastDateFree &&
                             ((item?.totalRefund ?? 0) > 0
-                              ? `Huỷ trước ngày ${formatStringToDate(
+                              ? t("COMMON.CANCEL_BEFORE_REFUND", { date: formatStringToDate(
                                   item.lastDateFree,
                                   { isHideDay: true }
-                                )}: hoàn 100% tổng tiền`
+                                ) })
                               : item?.totalRefund === 0 &&
-                                `Huỷ sau ${formatStringToDate(
+                                t("COMMON.CANCEL_AFTER_NO_REFUND", { date: formatStringToDate(
                                   item?.lastDateFree,
                                   { isHideDay: true }
-                                )}: Không hoàn tiền `)}
+                                ) }))}
                         </td>
                       </tr>
                     ))
@@ -226,11 +228,11 @@ const CancelBookingInformationModal = (
                 {(data?.items?.length ?? 0) > 0 && (
                   <>
                     <tr>
-                      <td>Tổng cộng</td>
+                      <td>{t("COMMON.TOTAL")}</td>
                       <td className="text-danger fw-600 text-18">
                         {formatCurrency(data?.totalPayment ?? 0)} {currentCurrency}
                         <p className="text-14 text-dark-1">
-                          (Giá đã bao gồm dịch vụ mua thêm)
+                          ({t("COMMON.PRICE_INCLUDES_ADDON")})
                         </p>
                       </td>
                       <td className="text-success fw-600 text-18">
@@ -242,8 +244,7 @@ const CancelBookingInformationModal = (
                     {(data?.totalRefund ?? 0) <= 0 && (
                       <tr className="hide-border-bottom">
                         <td colSpan={4} className="text-danger">
-                          * Booking này đã quá thời hạn hủy, nếu bạn không nhận
-                          phòng thì sẽ mất toàn bộ phí!
+                          * {t("COMMON.BOOKING_EXPIRED_WARNING")}
                         </td>
                       </tr>
                     )}
@@ -262,7 +263,7 @@ const CancelBookingInformationModal = (
                         style={{ width: 100, height: 50 }}
                         onClick={handleCloseModal}
                       >
-                        <span>Thoát</span>
+                        <span>{t("COMMON.EXIT")}</span>
                       </button>
                       {(data?.totalRefund ?? 0) > 0 && (
                         <button
@@ -273,10 +274,10 @@ const CancelBookingInformationModal = (
                           {isSubmitting ? (
                             <>
                               <span className="loader"></span>
-                              <span className="ml-10">Đang xử lý...</span>
+                              <span className="ml-10">{t("COMMON.PROCESSING")}</span>
                             </>
                           ) : (
-                            <span>Huỷ đặt phòng</span>
+                            <span>{t("COMMON.CANCEL_BOOKING")}</span>
                           )}
                         </button>
                       )}

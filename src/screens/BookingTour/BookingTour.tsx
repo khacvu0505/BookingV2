@@ -1,12 +1,13 @@
-import MetaComponent from "@/apps/MetaComponent";
-import React, { lazy, useEffect, useMemo, useRef, useState } from "react";
+import MetaComponent from "@/components/MetaComponent";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 
-import Input from "@/apps/Input";
+import Input from "@/components/Form/Input";
 import { Controller, useForm } from "react-hook-form";
-import Select from "@/apps/Select";
-import TextArea from "@/apps/TextArea";
-import Checkbox from "@/apps/Checkbox";
-import Button from "@/apps/Button";
+import Select from "@/components/Form/Select";
+import TextArea from "@/components/Form/TextArea";
+import Checkbox from "@/components/Form/Checkbox";
+import Button from "@/components/Button";
 import useWindowSize from "@/utils/useWindowSize";
 import {
   clearSessionStorage,
@@ -18,7 +19,6 @@ import {
   BREAKPOINT_XL,
   create_invoice,
   info_booking_tour,
-  previous_item,
   hold_code,
   tax_include,
 } from "@/utils/constants";
@@ -38,14 +38,14 @@ import useStorageListener from "@/hooks/useStorageListener";
 import { refreshToken } from "@/api/auth.api";
 import { saveAccessTokenToLocalStorage } from "@/utils/auth";
 import { reset as resetApp } from "@/features/app/appSlice";
-import AuthenModal from "@/apps/AuthenModal";
+import AuthenModal from "@/components/AuthenModal";
 import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
 
-const Breadcrumb = lazy(() => import("@/apps/Breadcrumb"));
-const SidebarRight = lazy(() => import("@/apps/SidebarRightTour"));
-const TimeRemainning = lazy(() => import("./TimeRemainning"));
-const BookingOverviewTour = lazy(() => import("./BookingOverview"));
+const Breadcrumb = dynamic(() => import("@/components/Breadcrumb"));
+const SidebarRight = dynamic(() => import("@/components/Sidebar/SidebarRightTour"));
+const TimeRemainning = dynamic(() => import("./TimeRemainning"));
+const BookingOverviewTour = dynamic(() => import("./BookingOverview"));
 
 const metadata = {
   title: "Booking Tours",
@@ -119,7 +119,6 @@ const BookingTour = () => {
     setFocus,
     control,
     setValue,
-    getValues,
     watch,
   } = useForm<any>({
     defaultValues: {
@@ -577,6 +576,7 @@ const BookingTour = () => {
                     <Checkbox
                       name={"paymentMethod"}
                       checked={payment.code === paymentType}
+                      onChange={() => {}}
                       label={payment.title}
                       isRadio
                     />

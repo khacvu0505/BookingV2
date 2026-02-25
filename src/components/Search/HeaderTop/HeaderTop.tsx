@@ -19,17 +19,18 @@ const HeaderTop = () => {
   return (
     <div className=" header-banner bg-primary-50 py-12">
       <div className="container d-flex xxl:d-none justify-between items-center px-0">
-        <div>
+        <div className="d-flex align-items-center" style={{ minWidth: 0, flexShrink: 1, whiteSpace: "nowrap", overflow: "hidden" }}>
           <i
             className="ri-map-pin-2-fill text-white text-14 bg-primary-500 rounded-circle py-6 px-6 mr-4"
             aria-hidden="true"
+            style={{ flexShrink: 0 }}
           />
-          <span className="text-14 text-neutral-800 fw-400">
+          <span className="text-14 text-neutral-800 fw-400" style={{ overflow: "hidden", textOverflow: "ellipsis" }}>
             {t("COMMON.COMPANY_ADDRESS")}
           </span>
         </div>
 
-        <div className="d-flex align-items-center gap-4">
+        <div className="d-flex align-items-center gap-4" style={{ flexShrink: 0, whiteSpace: "nowrap" }}>
           <div className="d-flex align-items-center justify-center gap-1">
             {displayPhoneInfo()}
           </div>

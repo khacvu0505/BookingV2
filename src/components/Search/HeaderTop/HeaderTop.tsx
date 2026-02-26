@@ -26,7 +26,8 @@ const HeaderTop = () => {
             style={{ flexShrink: 0 }}
           />
           <span className="text-14 text-neutral-800 fw-400" style={{ overflow: "hidden", textOverflow: "ellipsis" }}>
-            {t("COMMON.COMPANY_ADDRESS")}
+            {/* {t("COMMON.COMPANY_ADDRESS")} */}
+            Nguyễn Lộ Trạch, Nha Trang, Khánh Hòa, Việt Nam
           </span>
         </div>
 

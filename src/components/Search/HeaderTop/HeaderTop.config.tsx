@@ -5,7 +5,7 @@ export const displayPhoneInfo = () => (
   <>
     <div>
       <i
-        className="ri-phone-fill text-white text-14 bg-primary-500 rounded-circle py-6 px-6 mr-4"
+        className="ri-phone-fill text-white text-14 bg-primary-500 size-26 flex-center rounded-full mr-4"
         aria-hidden="true"
       />
     </div>

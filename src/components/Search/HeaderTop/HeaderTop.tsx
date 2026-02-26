@@ -21,13 +21,12 @@ const HeaderTop = () => {
       <div className="container d-flex xxl:d-none justify-between items-center px-0">
         <div className="d-flex align-items-center" style={{ minWidth: 0, flexShrink: 1, whiteSpace: "nowrap", overflow: "hidden" }}>
           <i
-            className="ri-map-pin-2-fill text-white text-14 bg-primary-500 rounded-circle py-6 px-6 mr-4"
+            className="ri-map-pin-2-fill text-white text-14 bg-primary-500 size-26 flex-center rounded-full mr-4"
             aria-hidden="true"
             style={{ flexShrink: 0 }}
           />
           <span className="text-14 text-neutral-800 fw-400" style={{ overflow: "hidden", textOverflow: "ellipsis" }}>
-            {/* {t("COMMON.COMPANY_ADDRESS")} */}
-            Nguyễn Lộ Trạch, Nha Trang, Khánh Hòa, Việt Nam
+            {t("COMMON.HEADER_COMPANY_ADDRESS")}
           </span>
         </div>
 

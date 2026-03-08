@@ -5,7 +5,7 @@ import ClientProvider from "@/components/ClientLayout/ClientProvider";
 
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
-import "remixicon/fonts/remixicon.css";
+// remixicon CSS loaded via <link> in <head> for font preloading
 import "@/styles/index.scss";
 import "@/App.style.scss";
 
@@ -30,6 +30,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vi" className={beVietnamPro.className} suppressHydrationWarning>
+      <head>
+        <link
+          rel="preload"
+          href="/fonts/remixicon.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="/fonts/remixicon.css"
+        />
+      </head>
       <body suppressHydrationWarning>
         <ClientProvider>{children}</ClientProvider>
         <Script

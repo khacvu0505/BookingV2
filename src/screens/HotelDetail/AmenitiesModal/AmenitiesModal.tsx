@@ -3,19 +3,17 @@ import { groupBy } from "@/utils/utils";
 import classNames from "classnames";
 import React, {
   forwardRef,
-  useEffect,
+  useMemo,
   useImperativeHandle,
   useState,
 } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 const AmenitiesModal = (props, ref) => {
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const { data } = props;
-  const [amenitiesByGroup, setAmenitiesByGroup] = useState<any>([]);
-  const [isLoading, setIsLoading] = useState(false);
-
   useImperativeHandle(ref, () => ({
     isVisible,
     setIsVisible,
@@ -25,34 +23,24 @@ const AmenitiesModal = (props, ref) => {
     setIsVisible(false);
   };
 
-  useEffect(() => {
+  const { data: fetchedBenefits, isLoading } = useQuery({
+    queryKey: ["benefitByRoom", data?.roomID],
+    queryFn: async () => {
+      const res = await getBenefitByRoom(data?.roomID);
+      return res?.success ? res.data : [];
+    },
+    enabled: isVisible && !!data?.roomID,
+  });
+
+  const amenitiesByGroup = useMemo(() => {
+    if (fetchedBenefits) {
+      return groupBy(fetchedBenefits, "group");
+    }
     if (data?.amenities) {
-      setAmenitiesByGroup(groupBy(data?.amenities, "group"));
+      return groupBy(data.amenities, "group");
     }
-  }, [data?.amenities]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const res = await getBenefitByRoom(data?.roomID);
-        if (res?.success) {
-          // setBenefitByRoom(res?.data);
-          setAmenitiesByGroup(groupBy(res?.data, "group"));
-        } else {
-          setAmenitiesByGroup([]);
-        }
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-
-        setAmenitiesByGroup([]);
-      }
-    };
-    if (isVisible && data?.roomID) {
-      fetchData();
-    }
-  }, [isVisible, data?.roomID]);
+    return [];
+  }, [fetchedBenefits, data?.amenities]);
 
   if (isLoading) return <></>;
 

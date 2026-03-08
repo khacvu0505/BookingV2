@@ -1,34 +1,24 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getRegions } from "@/api/category.api";
+import { useQuery } from "@tanstack/react-query";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter } from "@/features/blogs/blogSlice";
 
 const Destinations = () => {
   const { t } = useTranslation();
-  const [regions, setRegions] = useState([]);
-  const [loading, setLoading] = useState(true);
   const { filter } = useSelector((state) => state.blogs);
   const dispatch = useDispatch();
-  useEffect(() => {
-    setLoading(true);
-    getRegions()
-      .then((res) => {
-        if (res?.success) {
-          setRegions(res.data as any);
-        } else {
-          setRegions([]);
-        }
-        setLoading(false);
-      })
-      .catch(() => {
-        setRegions([]);
-        setLoading(false);
-      });
-  }, []);
+
+  const { data: regions = [], isLoading: loading } = useQuery({
+    queryKey: ["blogRegions"],
+    queryFn: async () => {
+      const res = await getRegions();
+      return res?.success ? (res.data as any) : [];
+    },
+  });
   const handleRegion = (idRegion) => {
     const dataFilter = {
       ...filter,

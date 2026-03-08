@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getCartTourSummary } from "@/api/booking.api";
+import { useQuery } from "@tanstack/react-query";
 import "./SidebarRight.style.scss";
 import useStorageListener from "@/hooks/useStorageListener";
 import TotalPrice from "./TotalPrice";
@@ -61,8 +62,9 @@ const SidebarRight = ({ isOffcanvas = false }: SidebarRightProps) => {
     );
   }, [infoBooking]);
 
-  useEffect(() => {
-    if (isBookingPage) {
+  const { data: cartTourData } = useQuery({
+    queryKey: ["cartTourSummary"],
+    queryFn: async () => {
       const dataRequest = {
         date: infoBookingFromSession?.date,
         tourID: infoBookingFromSession?.tourID,
@@ -72,41 +74,33 @@ const SidebarRight = ({ isOffcanvas = false }: SidebarRightProps) => {
         })),
         addOns: infoBookingFromSession?.addons || [],
       };
-
-      if (!dataRequest?.tourInfos?.length) {
-        setInfoBooking(infoBookingFromSession);
-        return;
+      const res: any = await getCartTourSummary(dataRequest);
+      if (res?.success) {
+        const { data } = res || {};
+        const { tourInfo, services, addOns, ...rest } = data || {};
+        return {
+          ...tourInfo,
+          ...rest,
+          supplierCode: tourInfo.tourCode,
+          supplierName: tourInfo.tourName,
+          tourID: tourInfo.tourPackageID,
+          tourName: tourInfo.tourPackageName,
+          slug: infoBookingFromSession?.slug || "",
+          ServicePrices: services,
+          addons: addOns,
+        } as TourBookingData;
       }
+      return null;
+    },
+    enabled: isBookingPage && (infoBookingFromSession?.ServicePrices?.length ?? 0) > 0,
+  });
 
-      getCartTourSummary(dataRequest)
-        .then((res: any) => {
-          if (res?.success) {
-            const { data } = res || {};
-            const { tourInfo, services, addOns, ...rest } = data || {};
-            const convertedInfoBooking: TourBookingData = {
-              ...tourInfo,
-              ...rest,
-              supplierCode: tourInfo.tourCode,
-              supplierName: tourInfo.tourName,
-              tourID: tourInfo.tourPackageID,
-              tourName: tourInfo.tourPackageName,
-              slug: infoBookingFromSession?.slug || "",
-              ServicePrices: services,
-              addons: addOns,
-            };
-            setInfoBooking(convertedInfoBooking);
-            setToSessionStorage(info_booking_tour, convertedInfoBooking);
-            return;
-          }
-          setInfoBooking(infoBookingFromSession);
-        })
-        .catch(() => {
-          setInfoBooking(infoBookingFromSession);
-        });
-    } else {
-      setInfoBooking(infoBookingFromSession);
+  useEffect(() => {
+    if (cartTourData) {
+      setInfoBooking(cartTourData);
+      setToSessionStorage(info_booking_tour, cartTourData);
     }
-  }, [isBookingPage]);
+  }, [cartTourData]);
 
   useEffect(() => {
     if (infoBookingFromSession) {

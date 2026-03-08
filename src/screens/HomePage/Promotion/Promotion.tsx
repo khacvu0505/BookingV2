@@ -1,7 +1,8 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getVoucherCategory } from "@/api/promotion.api";
+import { useQuery } from "@tanstack/react-query";
 import Skeleton from "react-loading-skeleton";
 import classNames from "classnames";
 
@@ -10,25 +11,16 @@ const Promotion = ({ initialVouchers }: { initialVouchers?: any[] }) => {
     activeIndex: 0,
     isEnd: false,
   });
-  const [vouchers, setVouchers] = useState(initialVouchers || []);
-  const [loading, setLoading] = useState(!initialVouchers);
-  useEffect(() => {
-    if (initialVouchers && initialVouchers.length > 0) return;
-    setLoading(true);
-    getVoucherCategory()
-      .then((res) => {
-        if (res?.success) {
-          setVouchers(res.data);
-        } else {
-          setVouchers([]);
-        }
-        setLoading(false);
-      })
-      .catch(() => {
-        setVouchers([]);
-        setLoading(false);
-      });
-  }, []);
+
+  const { data: vouchers = [], isLoading: loading } = useQuery({
+    queryKey: ["voucherCategory"],
+    queryFn: async () => {
+      const res = await getVoucherCategory();
+      return res?.success ? res.data : [];
+    },
+    initialData: initialVouchers?.length ? initialVouchers : undefined,
+    enabled: !initialVouchers?.length,
+  });
 
   if (loading) {
     return (

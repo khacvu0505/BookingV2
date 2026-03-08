@@ -1,23 +1,16 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { getRecommendBlogs } from "@/api/blogs.api";
+import { useQuery } from "@tanstack/react-query";
 import { formatDate } from "@/utils/utils";
 
 const RecommendPost = () => {
-  const [listRecommend, setListRecommend] = useState([]);
-  useEffect(() => {
-    getRecommendBlogs()
-      .then((res) => {
-        if (res?.success) {
-          setListRecommend(res?.data);
-        } else {
-          setListRecommend([]);
-        }
-      })
-      .catch(() => {
-        setListRecommend([]);
-      });
-  }, []);
+  const { data: listRecommend = [] } = useQuery({
+    queryKey: ["recommendBlogs"],
+    queryFn: async () => {
+      const res = await getRecommendBlogs();
+      return res?.success ? res.data : [];
+    },
+  });
   return (
     <>
       {listRecommend?.map((item) => (

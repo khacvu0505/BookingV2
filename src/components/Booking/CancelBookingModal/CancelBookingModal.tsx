@@ -2,9 +2,9 @@ import React, {
   useState,
   useImperativeHandle,
   forwardRef,
-  useEffect,
 } from "react";
 import { getCanceBookingInfo, requestCancelBooking } from "@/api/user.api";
+import { useQuery } from "@tanstack/react-query";
 import "./CancelBookingModal.style.scss";
 import { formatStringToDate } from "@/utils/utils";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
@@ -38,7 +38,6 @@ const CancelBookingModal = (
 ) => {
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
-  const [data, setData] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
   const config = SUPPLIER_CONFIG[supplierType];
@@ -75,20 +74,15 @@ const CancelBookingModal = (
     [isVisible]
   );
 
-  useEffect(() => {
-    if (!isVisible) return;
-    getCanceBookingInfo(bookingDetail?.bookingID)
-      .then((res) => {
-        if (res?.success) {
-          setData(res?.data);
-          return;
-        }
-        setData({});
-      })
-      .catch(() => {
-        setData({});
-      });
-  }, [isVisible]);
+  const cancelInfoQuery = useQuery({
+    queryKey: ["cancelBookingInfo", bookingDetail?.bookingID],
+    queryFn: async () => {
+      const res = await getCanceBookingInfo(bookingDetail?.bookingID);
+      return res?.success ? res.data : {};
+    },
+    enabled: isVisible && !!bookingDetail?.bookingID,
+  });
+  const data: any = cancelInfoQuery.data ?? {};
 
   return (
     <div

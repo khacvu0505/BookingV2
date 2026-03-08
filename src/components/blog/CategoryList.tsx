@@ -1,34 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getListCategory } from "@/api/blogs.api";
+import { useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter } from "@/features/blogs/blogSlice";
 import { useTranslation } from "react-i18next";
 
 const CategoryList = () => {
   const { t } = useTranslation();
-  const [listCategory, setListCategory] = useState([]);
   const dispatch = useDispatch();
 
   const { filter } = useSelector((state) => state.blogs);
 
+  const { data: listCategory = [], isSuccess } = useQuery({
+    queryKey: ["blogCategories"],
+    queryFn: async () => {
+      const res = await getListCategory();
+      return res?.success ? (res.data as any) : [];
+    },
+  });
+
   useEffect(() => {
-    getListCategory()
-      .then((res) => {
-        if (res.success) {
-          setListCategory(res?.data as any);
-          if ((res?.data as any)?.length > 0) {
-            const dataFilter = {
-              ...filter,
-              Entity: { ...filter.Entity, CateID: 0 },
-            };
-            dispatch(setFilter(dataFilter));
-          }
-        } else {
-          setListCategory([]);
-        }
-      })
-      .catch(() => setListCategory([]));
-  }, []);
+    if (isSuccess && listCategory.length > 0) {
+      const dataFilter = {
+        ...filter,
+        Entity: { ...filter.Entity, CateID: 0 },
+      };
+      dispatch(setFilter(dataFilter));
+    }
+  }, [isSuccess]);
 
   const handleCategory = (categoryCode) => {
     const dataFilter = {

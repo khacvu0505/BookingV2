@@ -2,10 +2,10 @@ import React, {
   useState,
   useImperativeHandle,
   forwardRef,
-  useEffect,
 } from "react";
 import { useTranslation } from "react-i18next";
 import { getCanceBookingInfo, requestCancelBooking } from "@/api/user.api";
+import { useQuery } from "@tanstack/react-query";
 import "./CancelBookingInformationModal.style.scss";
 import { formatCurrency, formatStringToDate } from "@/utils/utils";
 import { handleRenderNoti } from "@/utils/handleRenderNoti";
@@ -45,7 +45,6 @@ const CancelBookingInformationModal = (
   ref: React.Ref<unknown>
 ) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [data, setData] = useState<CancelBookingData>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
   const { currentCurrency } = useSelector((state) => state.app);
@@ -101,19 +100,14 @@ const CancelBookingInformationModal = (
     [isVisible]
   );
 
-  useEffect(() => {
-    getCanceBookingInfo(bookingDetail?.bookingID ?? "")
-      .then((res) => {
-        if (res?.success) {
-          setData(res?.data as CancelBookingData);
-          return;
-        }
-        setData({});
-      })
-      .catch(() => {
-        setData({});
-      });
-  }, []);
+  const cancelInfoQuery = useQuery({
+    queryKey: ["cancelBookingInfo", bookingDetail?.bookingID],
+    queryFn: async () => {
+      const res = await getCanceBookingInfo(bookingDetail?.bookingID ?? "");
+      return res?.success ? (res.data as CancelBookingData) : ({} as CancelBookingData);
+    },
+  });
+  const data: CancelBookingData = cancelInfoQuery.data ?? ({} as CancelBookingData);
 
   return (
     <div

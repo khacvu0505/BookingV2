@@ -7,6 +7,7 @@ import MobileMenu from "../MobileMenu";
 import HotPlaces from "../HotPlaces";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "@/api/user.api";
+import { useQuery } from "@tanstack/react-query";
 import { reset, setProfile } from "@/features/app/appSlice";
 import {
   clearAccessTokenFromLocalStorage,
@@ -91,14 +92,18 @@ const Header1 = (props, ref) => {
     setNavbar(true);
   }, [isDesktop]);
 
+  const { data: profileData } = useQuery({
+    queryKey: ["profile"],
+    queryFn: async (): Promise<any> => getProfile(),
+    enabled: !!isAuthenticated,
+  });
+
   useEffect(() => {
-    if (isAuthenticated) {
-      getProfile().then((data: any) => {
-        dispatch(setProfile(data));
-        saveProfileToLocalStorage(data);
-      });
+    if (profileData) {
+      dispatch(setProfile(profileData));
+      saveProfileToLocalStorage(profileData);
     }
-  }, [dispatch, isAuthenticated]);
+  }, [profileData]);
 
   return (
     <>

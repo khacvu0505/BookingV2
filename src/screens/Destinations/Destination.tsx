@@ -1,5 +1,6 @@
 import MetaComponent from "@/components/MetaComponent";
 import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import BannerDestinations from "./BannerDestinations";
 import PopularLocation from "@/components/PopularLocation";
 import Intro from "./Intro";
@@ -22,19 +23,15 @@ const Destination = () => {
   };
 
   const [selected, setSelected] = useState(region);
-  const [data, setData] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (selected) {
-        const res = await getDestinationByRegion(selected.id);
-        setData(res?.data || null);
-      } else {
-        setData(null);
-      }
-    };
-    fetchData();
-  }, [selected]);
+  const { data = null } = useQuery({
+    queryKey: ["destinationByRegion", selected?.id],
+    queryFn: async () => {
+      const res = await getDestinationByRegion(selected.id);
+      return res?.data || null;
+    },
+    enabled: !!selected,
+  });
 
   useEffect(() => {
     // eslint-disable-next-line no-undef

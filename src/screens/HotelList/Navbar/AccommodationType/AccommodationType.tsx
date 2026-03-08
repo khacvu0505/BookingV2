@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./AccommodationType.style.scss";
 import useQueryParams from "@/hooks/useQueryParams";
 import { getAccomordationType } from "@/api/hotel.api";
+import { useQuery } from "@tanstack/react-query";
 import { cleanedObject } from "@/utils/utils";
 import classNames from "classnames";
 import Checkbox from "@/components/Form/Checkbox";
@@ -11,7 +12,6 @@ const AccommodationType = () => {
   const { t } = useTranslation();
   const [params, setSearchParams] = useQueryParams();
   const { accommodationType: AccommodationTypeParams } = params;
-  const [benefitList, setBenefitList] = useState([]);
   const [selected, setSelected] = useState([]);
 
   const handleChooseBenefit = (id) => {
@@ -45,15 +45,13 @@ const AccommodationType = () => {
     }
   }, [AccommodationTypeParams]);
 
-  useEffect(() => {
-    getAccomordationType()
-      .then((res) => {
-        setBenefitList(res.data);
-      })
-      .catch(() => {
-        setBenefitList([]);
-      });
-  }, []);
+  const { data: benefitList = [] } = useQuery({
+    queryKey: ["accommodationType"],
+    queryFn: async () => {
+      const res = await getAccomordationType();
+      return res?.data ?? [];
+    },
+  });
 
   return (
     <div className="accommodation_type mb-32 lg:mb-20 md:mb-16 mt-16">

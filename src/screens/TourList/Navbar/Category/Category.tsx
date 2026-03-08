@@ -1,4 +1,5 @@
 import { getCategoryByTourService } from "@/api/tours.api";
+import { useQuery } from "@tanstack/react-query";
 import useQueryParams from "@/hooks/useQueryParams";
 import { cleanedObject } from "@/utils/utils";
 import { useEffect, useState } from "react";
@@ -8,7 +9,6 @@ const Category = () => {
   const { t } = useTranslation();
   const [params, setSearchParams] = useQueryParams();
 
-  const [categories, setCategories] = useState([]);
   // const [selected, setSelected] = useState([]);
   const [selected, setSelected] = useState("");
 
@@ -59,21 +59,19 @@ const Category = () => {
   //   }
   // };
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const data = await getCategoryByTourService();
-      if (data?.success) {
-        const dataFormatted = data?.data.map((item) => ({
+  const { data: categories = [] } = useQuery({
+    queryKey: ["tourCategories"],
+    queryFn: async () => {
+      const res = await getCategoryByTourService();
+      if (res?.success) {
+        return res.data.map((item) => ({
           name: item.text,
           id: item.valueString,
         }));
-        setCategories(dataFormatted);
-      } else {
-        setCategories([]);
       }
-    };
-    fetchCategories();
-  }, []);
+      return [];
+    },
+  });
 
   useEffect(() => {
     if (categoryParam) {

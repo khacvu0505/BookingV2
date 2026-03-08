@@ -2,10 +2,10 @@ import { getPolicyBySupplier } from "@/api/booking.api";
 import Button from "@/components/Button";
 import React, {
   forwardRef,
-  useEffect,
   useImperativeHandle,
   useState,
 } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 interface PolicyProps {
@@ -21,8 +21,6 @@ export interface PolicyHandle {
 const Policy = ({ bookingDetail, isTour = false }: PolicyProps, ref: React.Ref<PolicyHandle>) => {
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
-  const [data, setData] = useState<any[]>([]);
-
   useImperativeHandle(
     ref,
     () => ({
@@ -36,18 +34,15 @@ const Policy = ({ bookingDetail, isTour = false }: PolicyProps, ref: React.Ref<P
     setIsVisible(false);
   };
 
-  useEffect(() => {
-    if (!isVisible || !bookingDetail?.supplierCode) return;
-    const fetchData = async () => {
+  const policyQuery = useQuery({
+    queryKey: ["policyBySupplier", bookingDetail?.supplierCode],
+    queryFn: async () => {
       const res = await getPolicyBySupplier(bookingDetail?.supplierCode);
-      if (res?.success) {
-        setData(res.data);
-      } else {
-        setData([]);
-      }
-    };
-    fetchData();
-  }, [isVisible, bookingDetail]);
+      return res?.success ? res.data : [];
+    },
+    enabled: isVisible && !!bookingDetail?.supplierCode,
+  });
+  const data: any[] = policyQuery.data ?? [];
 
   return (
     <div

@@ -1,23 +1,16 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { getRecentBlogs } from "@/api/blogs.api";
+import { useQuery } from "@tanstack/react-query";
 import { formatDate } from "@/utils/utils";
 
 const RecentPost = () => {
-  const [listRecent, setListRecent] = useState([]);
-  useEffect(() => {
-    getRecentBlogs()
-      .then((res) => {
-        if (res?.success) {
-          setListRecent(res?.data);
-        } else {
-          setListRecent([]);
-        }
-      })
-      .catch(() => {
-        setListRecent([]);
-      });
-  }, []);
+  const { data: listRecent = [] } = useQuery({
+    queryKey: ["recentBlogs"],
+    queryFn: async () => {
+      const res = await getRecentBlogs();
+      return res?.success ? res.data : [];
+    },
+  });
   return (
     <>
       {listRecent?.map((item) => (

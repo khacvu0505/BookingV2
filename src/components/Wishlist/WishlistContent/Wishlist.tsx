@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import {
   getCategoryTypeFavourite,
@@ -15,10 +16,8 @@ const Wishlist = () => {
   const [params, setSearchParams] = useQueryParams();
   const { page: pageParam = 1, type = "Hotel" } = params;
 
-  const [category, setCategory] = useState<any[]>([]);
   const [favourites, setFavourites] = useState<any[]>([]);
   const [totalPage, setTotalPage] = useState(0);
-  const [isLoading] = useState(false);
 
   const handleTabClick = (tab: string) => {
     setSearchParams({ ...params, type: tab, page: 1 });
@@ -32,44 +31,35 @@ const Wishlist = () => {
     });
   };
 
-  useEffect(() => {
-    getCategoryTypeFavourite()
-      .then((res) => {
-        if (res.success) {
-          setCategory(res.data);
-        } else {
-          setCategory([]);
-        }
-      })
-      .catch((err) => {
-        setCategory([]);
+  const { data: category = [] } = useQuery({
+    queryKey: ["categoryTypeFavourite"],
+    queryFn: async () => {
+      const res = await getCategoryTypeFavourite();
+      return res?.success ? res.data : [];
+    },
+  });
+
+  const { data: favouritesData } = useQuery({
+    queryKey: ["favouriteList", pageParam, type],
+    queryFn: async () => {
+      const res = await getFavouriteList({
+        page: Number(pageParam),
+        pageSize: 10,
+        entity: { supplierType: type },
       });
-  }, []);
+      if (res?.success) {
+        return { data: res.data, totalPage: res?.totalPage || 0 };
+      }
+      return { data: [], totalPage: 0 };
+    },
+  });
 
   useEffect(() => {
-    getFavouriteList({
-      page: Number(pageParam),
-      pageSize: 10,
-      entity: {
-        supplierType: type,
-      },
-    })
-      .then((res) => {
-        if (res.success) {
-          setFavourites(res.data);
-          setTotalPage(res?.totalPage || 0);
-        } else {
-          setFavourites([]);
-        }
-      })
-      .catch((err) => {
-        setFavourites([]);
-      });
-  }, [pageParam, type]);
-
-  if (isLoading) {
-    return;
-  }
+    if (favouritesData) {
+      setFavourites(favouritesData.data);
+      setTotalPage(favouritesData.totalPage);
+    }
+  }, [favouritesData]);
 
   return (
     <>

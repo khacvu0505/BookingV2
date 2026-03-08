@@ -3,8 +3,8 @@ import DetailsContent from "@/components/blog/blog-details/DetailsContent";
 import { useParams } from "react-router-dom";
 
 import MetaComponent from "@/components/common/MetaComponent";
-import { useEffect, useState } from "react";
 import { getBlogDetail } from "@/api/blog.api";
+import { useQuery } from "@tanstack/react-query";
 import { formatStringToDate } from "@/utils/utils";
 import { useTranslation } from "react-i18next";
 
@@ -16,22 +16,16 @@ const metadata = {
 const BlogSingleDynamic = () => {
   const { t } = useTranslation();
   let params = useParams();
-  const [blogDetail, setBlogDetail] = useState(null);
   const { slug } = params;
 
-  useEffect(() => {
-    getBlogDetail(slug as string)
-      .then((res) => {
-        if (res.success) {
-          setBlogDetail(res.data);
-          return;
-        }
-        setBlogDetail(null);
-      })
-      .catch(() => {
-        setBlogDetail(null);
-      });
-  }, []);
+  const { data: blogDetail = null } = useQuery({
+    queryKey: ["blogDetail", slug],
+    queryFn: async () => {
+      const res = await getBlogDetail(slug as string);
+      return res?.success ? res.data : null;
+    },
+    enabled: !!slug,
+  });
 
   if (!blogDetail) return null;
 

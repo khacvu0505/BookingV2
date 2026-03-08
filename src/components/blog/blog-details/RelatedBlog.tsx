@@ -1,32 +1,20 @@
-import { useEffect, useState } from "react";
 import { getBlogRelated } from "@/api/blog.api";
+import { useQuery } from "@tanstack/react-query";
 import { formatStringToDate } from "@/utils/utils";
 
 const RelatedBlog = ({ blogDetail }) => {
-  const [blogRelated, setBlogRelated] = useState([]);
-
-  useEffect(() => {
-    if (blogDetail) {
-      getBlogRelated({
+  const { data: blogRelated = [] } = useQuery({
+    queryKey: ["blogRelated", blogDetail?.id],
+    queryFn: async () => {
+      const res = await getBlogRelated({
         RegionID: blogDetail?.regionID,
         CateID: blogDetail?.cateID,
         id: blogDetail?.id,
-      })
-        .then((res) => {
-          if (res.success) {
-            setBlogRelated(res.data);
-            return;
-          }
-          setBlogRelated([]);
-        })
-        .catch(() => {
-          setBlogRelated([]);
-        });
-    } else {
-      // In case blog detail is falsy
-      setBlogRelated([]);
-    }
-  }, [blogDetail]);
+      });
+      return res?.success ? res.data : [];
+    },
+    enabled: !!blogDetail,
+  });
 
   if (blogRelated?.length === 0) return null;
 

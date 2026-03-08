@@ -14,6 +14,7 @@ import {
   info_booking_tour,
 } from "@/utils/constants";
 import { getRegions } from "@/api/category.api";
+import { useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { setRegions } from "@/features/hotel-list/hotelSlice";
 import { setSearchValue } from "@/features/app/appSlice";
@@ -37,15 +38,19 @@ const SearchBar = ({ activeTab, showTab, type = "hotel" }: SearchBarProps) => {
   const regions = useSelector((state) => state.hotels.regions) || [];
   const defaultLocation = regions[0]?.id || "";
 
+  const { data: regionsData } = useQuery({
+    queryKey: ["regions"],
+    queryFn: async () => {
+      const res: any = await getRegions();
+      return res?.data ?? [];
+    },
+  });
+
   useEffect(() => {
-    getRegions()
-      .then((res: any) => {
-        dispatch(setRegions(res.data));
-      })
-      .catch(() => {
-        dispatch(setRegions([]));
-      });
-  }, []);
+    if (regionsData) {
+      dispatch(setRegions(regionsData));
+    }
+  }, [regionsData]);
 
   const handleChangeValue = (value: Record<string, any>) => {
     dispatch(setSearchValue(value));

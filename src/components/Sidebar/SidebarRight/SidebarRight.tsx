@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setRoomActive } from "@/features/hotel-detail/hotelDetailSlice";
 import { useEffect, useState } from "react";
 import { getCartSummary } from "@/api/booking.api";
+import { useQuery } from "@tanstack/react-query";
 import { handleSetDefaultBooking } from "@/utils/handleSetDefaultBooking";
 import "./SidebarRight.style.scss";
 import BookNowButton from "./BookNowButton";
@@ -108,42 +109,41 @@ const SidebarRight = ({ isOffcanvas = false }: SidebarRightProps) => {
     );
   }, [infoBooking, isBookingPage]);
 
-  useEffect(() => {
-    if (isBookingPage) {
+  const { data: cartSummaryData } = useQuery({
+    queryKey: ["cartSummary"],
+    queryFn: async () => {
+      const currentBooking = getFromSessionStorage(info_booking) as BookingInfo | null;
       const dataRequest = {
-        fromDate: infoBooking?.hotelInfo?.fromDate,
-        toDate: infoBooking?.hotelInfo?.toDate,
-        adults: infoBooking?.hotelInfo?.adults || 2,
-        childrens: infoBooking?.hotelInfo?.children || 0,
-        totalRoom: infoBooking?.hotelInfo?.room || 1,
-        roomInfos: infoBooking?.services?.map((item: any) => ({
+        fromDate: currentBooking?.hotelInfo?.fromDate,
+        toDate: currentBooking?.hotelInfo?.toDate,
+        adults: currentBooking?.hotelInfo?.adults || 2,
+        childrens: currentBooking?.hotelInfo?.children || 0,
+        totalRoom: currentBooking?.hotelInfo?.room || 1,
+        roomInfos: currentBooking?.services?.map((item: any) => ({
           roomID: item.roomID,
           serviceID: item.serviceID,
           addOns: item.addOn,
         })),
-        voucherCode: infoBooking?.services?.[0]?.voucherCodes || "",
+        voucherCode: currentBooking?.services?.[0]?.voucherCodes || "",
       };
+      const res: any = await getCartSummary(dataRequest);
+      if (res?.success) {
+        return {
+          ...res.data,
+          voucherCodes: currentBooking?.services?.[0]?.voucherCodes || "",
+        };
+      }
+      return null;
+    },
+    enabled: isBookingPage,
+  });
 
-      getCartSummary(dataRequest)
-        .then((res: any) => {
-          if (res?.success) {
-            const dataResponse = {
-              ...res.data,
-              voucherCodes: infoBooking?.services?.[0]?.voucherCodes || "",
-            };
-            setInfoBooking(dataResponse);
-            setToSessionStorage(info_booking, dataResponse);
-            return;
-          }
-          setInfoBooking(infoBooking);
-        })
-        .catch(() => {
-          setInfoBooking(infoBooking);
-        });
-    } else {
-      setInfoBooking(infoBooking);
+  useEffect(() => {
+    if (cartSummaryData) {
+      setInfoBooking(cartSummaryData);
+      setToSessionStorage(info_booking, cartSummaryData);
     }
-  }, [isBookingPage]);
+  }, [cartSummaryData]);
 
   return (
     <>

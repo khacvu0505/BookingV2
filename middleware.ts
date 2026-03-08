@@ -3,11 +3,6 @@ import type { NextRequest } from "next/server";
 
 const protectedPaths = [
   "/profile",
-  "/booking",
-  "/booking-hotel",
-  "/booking-tour",
-  "/addon-services",
-  "/addon-services-tour",
 ];
 const authPaths = ["/login", "/signup"];
 
@@ -35,11 +30,6 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/profile/:path*",
-    "/booking/:path*",
-    "/booking-hotel/:path*",
-    "/booking-tour/:path*",
-    "/addon-services/:path*",
-    "/addon-services-tour/:path*",
     "/login",
     "/signup",
   ],

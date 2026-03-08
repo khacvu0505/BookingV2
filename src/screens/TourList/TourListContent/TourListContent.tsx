@@ -22,11 +22,11 @@ const TourListContent = ({ tours, total, totalPages, isLoadingTours }: TourListC
 
   if (isLoadingTours) {
     return (
-      <div className="col-xl-9">
+      <div className="xxl:w-1/1 w-3/4 sm:px-12">
         <SkeletonHeader />
         <div className="row mt-16">
           {[...Array(9)].map((_, index) => (
-            <div className="col-xl-4 mb-16" key={index}>
+            <div className="col-lg-4 col-sm-6 mb-16" key={index}>
               <SkeletonCard />
             </div>
           ))}

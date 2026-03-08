@@ -62,7 +62,7 @@ const HotelDetail = () => {
   const { checkIn, checkOut, adults, children, room, location, roomActive } =
     searchParams || {};
 
-  const { data: hotelInfo, isLoading: isLoadingHotelInfo } = useQuery({
+  const { data: hotelInfo, isPending: isLoadingHotelInfo } = useQuery({
     queryKey: hotelKeys.detail(String(slug ?? "")),
     queryFn: async () => {
       const params = {
@@ -77,6 +77,9 @@ const HotelDetail = () => {
     enabled: !!slug,
   });
 
+  // Show skeleton until hotel info AND room list are both ready
+  const isPageLoading = isLoadingHotelInfo || (!hotelInfo?.hotelCode);
+
   const roomParams = useMemo(() => ({
     supplierCode: hotelInfo?.hotelCode,
     fromDate: checkIn,
@@ -86,7 +89,7 @@ const HotelDetail = () => {
     totalRoom: +(room || 0),
   }), [hotelInfo?.hotelCode, checkIn, checkOut, adults, children, room]);
 
-  const { data: roomInfos = [], isLoading: isLoadingRoomList } = useQuery({
+  const { data: roomInfos = [], isPending: isLoadingRoomList } = useQuery({
     queryKey: hotelKeys.rooms(roomParams),
     queryFn: async () => {
       const res = await getRoomList(roomParams);
@@ -165,11 +168,11 @@ const HotelDetail = () => {
   }, [hotelInfo]);
 
   useEffect(() => {
-    if (!isLoadingHotelInfo) {
+    if (!isPageLoading) {
       // eslint-disable-next-line no-undef
       window.scroll({ top: 0, behavior: "smooth" });
     }
-  }, [isLoadingHotelInfo]);
+  }, [isPageLoading]);
 
   useEffect(() => {
     let infoBooking = getFromSessionStorage(info_booking);
@@ -208,7 +211,7 @@ const HotelDetail = () => {
       // eslint-disable-next-line no-undef
       window.dispatchEvent(event);
     }
-    setSearchParams(defaultParams);
+    setSearchParams(defaultParams, { replace: true });
     dispatch(setRoomActive(+searchParams?.roomActive || 1));
   }, []);
 
@@ -223,13 +226,13 @@ const HotelDetail = () => {
 
       <div className="header-margin"></div>
 
-      {isLoadingHotelInfo && (
+      {isPageLoading && (
         <div className="container py-60">
           <HotelDetailSkeleton />
         </div>
       )}
 
-      {!isLoadingHotelInfo && (
+      {!isPageLoading && (
         <>
           <div className="container pt-10">
             <Breadcrumb data={breadcrumbData} />

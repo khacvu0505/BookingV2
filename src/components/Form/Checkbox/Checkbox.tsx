@@ -5,7 +5,6 @@ interface CheckboxProps {
   required?: boolean;
   label?: any;
   register?: any;
-  isRadio?: boolean;
   checked?: any;
   [key: string]: any;
 }
@@ -15,28 +14,21 @@ const Checkbox = ({
   required = false,
   label,
   register,
-  isRadio = false,
-  checked, // Nhận checked từ props
+  checked,
   ...rest
 }: CheckboxProps) => {
   return (
-    <div className={`okdimall_checkbox ${isRadio ? "radio" : ""}`}>
+    <div className="okdimall_checkbox">
       <input
         {...rest}
-        type={isRadio ? "radio" : "checkbox"}
+        type="checkbox"
         name={name}
         {...(checked !== undefined ? { checked } : {})}
         {...(register && register(name, { required }))}
       />
-      {isRadio ? (
-        <div className="form-checkbox__mark">
-          <span className="form-checkbox__mark_radio_item form-checkbox__icon ri-circle-fill fw-bold text-14 text-primary-500" />
-        </div>
-      ) : (
-        <div className="form-checkbox__mark">
-          <div className="form-checkbox__icon icon-check" />
-        </div>
-      )}
+      <div className="form-checkbox__mark">
+        <div className="form-checkbox__icon icon-check" />
+      </div>
       <label className="okdimall_checkbox-label">
         {label} {required && <span className="text-danger"> *</span>}
       </label>

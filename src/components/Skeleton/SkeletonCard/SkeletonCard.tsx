@@ -41,10 +41,10 @@ const SkeletonCard = () => {
         <Skeleton height={25} width="90%" />
         <div className="d-flex">
           <Skeleton width={25} height={25} className="mr-5" />
-          <Skeleton height={25} width={200} />
+          <Skeleton height={25} width="70%" />
         </div>
         <div className="mt-20 text-right">
-          <Skeleton width={150} height={15} />
+          <Skeleton width="50%" height={15} />
           <Skeleton height={15} width="100%" />
         </div>
       </div>

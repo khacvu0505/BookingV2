@@ -16,6 +16,15 @@ import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { bookingKeys } from "@/lib/query-keys";
 
+const clearBookingStorage = () => {
+  clearSessionStorage(hold_code);
+  clearSessionStorage(info_booking);
+  clearSessionStorage(previous_item);
+  clearSessionStorage(tax_include);
+  clearSessionStorage(booking_id);
+  clearSessionStorage(create_invoice);
+};
+
 const TimeRemainning = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -41,12 +50,35 @@ const TimeRemainning = () => {
       .padStart(2, "0")}`;
   }
 
+  const showInvalidSessionPopup = () => {
+    Swal.fire({
+      title: t("COMMON.NOTIFICATION"),
+      imageUrl: "/images/Booking/icon-info.png",
+      imageWidth: 72,
+      imageHeight: 72,
+      imageAlt: "Custom icon",
+      text: t("HOTEL_BOOKING.ROOM_EXPIRED"),
+      confirmButtonText: t("HOTEL_BOOKING.BACK_HOTEL_LIST"),
+      confirmButtonColor: "#00AEED",
+      allowEscapeKey: false,
+      allowEnterKey: true,
+      allowOutsideClick: false,
+      position: "top",
+      customClass: {
+        popup: "mt-30",
+      },
+    }).then(() => {
+      clearBookingStorage();
+      navigate("/hotels");
+    });
+  };
+
   const { data: holdTime = "" } = useQuery({
     queryKey: [...bookingKeys.all, "holdTime", holdCode],
     queryFn: async () => {
       const res = await getHoldTime(holdCode);
-      if (res?.success) {
-        return res?.data || "";
+      if (res?.success && res?.data) {
+        return res.data;
       }
       Swal.fire({
         title: t("COMMON.NOTIFICATION"),
@@ -61,33 +93,14 @@ const TimeRemainning = () => {
         allowEnterKey: true,
         allowOutsideClick: false,
       }).then((result) => {
+        clearBookingStorage();
         if (result.isConfirmed) {
-          clearSessionStorage(hold_code);
-          clearSessionStorage(info_booking);
-          clearSessionStorage(previous_item);
-          clearSessionStorage(tax_include);
-          clearSessionStorage(booking_id);
-          clearSessionStorage(create_invoice);
           navigate("/hotels");
-          return;
-        }
-        if (infoBooking && slug) {
-          clearSessionStorage(hold_code);
-          clearSessionStorage(info_booking);
-          clearSessionStorage(previous_item);
-          clearSessionStorage(tax_include);
-          clearSessionStorage(booking_id);
-          clearSessionStorage(create_invoice);
+        } else if (infoBooking && slug) {
           navigate(
             `${slug}?checkIn=${hotelInfo?.fromDate}&checkOut=${hotelInfo?.toDate}&adults=${hotelInfo?.adults}&children=${hotelInfo?.children}&room=${hotelInfo?.room}`
           );
         } else {
-          clearSessionStorage(hold_code);
-          clearSessionStorage(info_booking);
-          clearSessionStorage(previous_item);
-          clearSessionStorage(tax_include);
-          clearSessionStorage(booking_id);
-          clearSessionStorage(create_invoice);
           navigate("/hotels");
         }
       });
@@ -98,6 +111,13 @@ const TimeRemainning = () => {
     staleTime: Infinity,
   });
 
+  // No holdCode in session — show popup and redirect
+  useEffect(() => {
+    if (!holdCode) {
+      showInvalidSessionPopup();
+    }
+  }, []);
+
   // Cleanup: expire booking on unmount
   useEffect(() => {
     return () => {
@@ -106,6 +126,7 @@ const TimeRemainning = () => {
       }
     };
   }, []);
+
   useEffect(() => {
     // eslint-disable-next-line no-undef
     const intervalID = setInterval(() => {
@@ -119,33 +140,7 @@ const TimeRemainning = () => {
 
   useEffect(() => {
     if (typeof remainingTime === "number" && remainingTime <= 0) {
-      Swal.fire({
-        title: t("COMMON.NOTIFICATION"),
-        imageUrl: "/images/Booking/icon-info.png", // Đường dẫn đến hình ảnh
-        imageWidth: 72, // Độ rộng của hình ảnh (tùy chỉnh)
-        imageHeight: 72, // Độ cao của hình ảnh (tùy chỉnh)
-        imageAlt: "Custom icon", // Văn bản thay thế nếu không hiển thị được hình ảnh
-        text: t("HOTEL_BOOKING.ROOM_EXPIRED"),
-        confirmButtonText: t("HOTEL_BOOKING.BACK_HOTEL_LIST"),
-        confirmButtonColor: "#00AEED",
-        allowEscapeKey: false,
-        allowEnterKey: true,
-        allowOutsideClick: false,
-        position: "top",
-        customClass: {
-          popup: "mt-30", // Thêm class để tùy chỉnh khoảng cách
-        },
-      }).then((result) => {
-        if (result.isConfirmed) {
-          clearSessionStorage(hold_code);
-          clearSessionStorage(info_booking);
-          clearSessionStorage(previous_item);
-          clearSessionStorage(tax_include);
-          clearSessionStorage(booking_id);
-          clearSessionStorage(create_invoice);
-          navigate("/");
-        }
-      });
+      showInvalidSessionPopup();
     }
   }, [remainingTime]);
 

@@ -35,6 +35,7 @@ const Input = dynamic(() => import("@/components/Form/Input"));
 const Select = dynamic(() => import("@/components/Form/Select"));
 const TextArea = dynamic(() => import("@/components/Form/TextArea"));
 const Checkbox = dynamic(() => import("@/components/Form/Checkbox"));
+const Radio = dynamic(() => import("@/components/Form/Radio"));
 const Button = dynamic(() => import("@/components/Button"));
 const SidebarRight = dynamic(() => import("@/components/Sidebar/SidebarRight"));
 const BookingOverView = dynamic(() => import("./BookingOverview"));
@@ -451,19 +452,16 @@ const Booking = () => {
                       <p className="text-16 md:text-15 fw-600 text-neutral-800">
                         {t("HOTEL_BOOKING.SMOKING_POLICY")}
                       </p>
-                      <div className="row w-100">
+                      <div className="row">
                         {smokingInfo.map((item) => (
                           <div
                             key={item.id}
-                            className={classNames(
-                              "form-checkbox items-center justify-content-between flex-wrap border-bottom-light rounded-4 py-10 my-10 col-12 col-md-6"
-                            )}
-                            onClick={() => handleChooseSmokingInfo(item.code)}
+                            className="border-bottom-light rounded-4 py-10 my-10 col-12 col-md-6"
                           >
-                            <Checkbox
-                              name={"smokingRoom"}
+                            <Radio
+                              name="smokingRoom"
                               checked={item.code === smokingRoom}
-                              onChange={() => {}}
+                              onClick={() => handleChooseSmokingInfo(item.code)}
                               label={
                                 <div className="d-flex items-center">
                                   <img src={item.img} alt="Booking" />
@@ -472,7 +470,6 @@ const Booking = () => {
                                   </p>
                                 </div>
                               }
-                              isRadio
                             />
                           </div>
                         ))}
@@ -482,19 +479,16 @@ const Booking = () => {
                       <p className="text-16 md:text-15 fw-600 text-neutral-800">
                         {t("HOTEL_BOOKING.CHOOSE_BED")}
                       </p>
-                      <div className="row w-100">
+                      <div className="row">
                         {roomType.map((item) => (
                           <div
                             key={item.id}
-                            className={classNames(
-                              "form-checkbox items-center justify-content-between flex-wrap border-bottom-light rounded-4 py-10 my-10 col-12 col-md-6"
-                            )}
-                            onClick={() => handleChooseBigBed(item.code)}
+                            className="border-bottom-light rounded-4 py-10 my-10 col-12 col-md-6"
                           >
-                            <Checkbox
-                              name={"bigBed"}
+                            <Radio
+                              name="bigBed"
                               checked={item.code === bigBed}
-                              onChange={() => {}}
+                              onClick={() => handleChooseBigBed(item.code)}
                               label={
                                 <div className="d-flex items-center">
                                   <img src={item.img} alt="Booking" />
@@ -503,7 +497,6 @@ const Booking = () => {
                                   </p>
                                 </div>
                               }
-                              isRadio
                             />
                           </div>
                         ))}
@@ -642,7 +635,7 @@ const Booking = () => {
                   <div
                     key={payment.id}
                     className={classNames(
-                      "form-checkbox items-center justify-content-between flex-wrap border-bottom-light rounded-4 py-10 my-10",
+                      "items-center justify-content-between flex-wrap border-bottom-light rounded-4 py-10 my-10",
                       {
                         "d-flex": !isMobile,
                         "d-block": isMobile,
@@ -650,12 +643,10 @@ const Booking = () => {
                     )}
                     onClick={() => handleChoosePaymentTye(payment.code)}
                   >
-                    <Checkbox
-                      name={"paymentMethod"}
+                    <Radio
+                      name="paymentMethod"
                       checked={payment.code === paymentType}
-                      onChange={() => {}}
                       label={payment.title}
-                      isRadio
                     />
                     <div className="text-15 ml-10 d-flex justify-content-end justify-content-md-between align-items-center mt-10 md-md-0 xl:justify-start xl:ml-25">
                       {payment.img.map((img, index) => (

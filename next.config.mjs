@@ -12,11 +12,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "extapi.okdimall.com",
-      },
-      {
-        protocol: "https",
-        hostname: "**.okdimall.com",
+        hostname: "**",
       },
     ],
     formats: ["image/avif", "image/webp"],
@@ -41,7 +37,7 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://sp.zalo.me",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: blob: https://*.okdimall.com https://cdn.prod.website-files.com",
+              "img-src 'self' data: blob: https:",
               "font-src 'self' data:",
               "connect-src 'self' https://extapi.okdimall.com",
               "frame-src 'self' https://www.youtube.com https://www.google.com https://*.okdimall.com",

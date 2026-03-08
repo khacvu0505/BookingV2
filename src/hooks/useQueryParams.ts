@@ -5,11 +5,13 @@ import { useCallback } from "react";
 
 type ParamValue = string | number | boolean | undefined | null;
 type ParamsObject = Record<string, ParamValue>;
+type SetSearchParamsOptions = { replace?: boolean };
 type SetSearchParamsFn = (
   newParams:
     | URLSearchParams
     | ParamsObject
-    | ((prev: URLSearchParams) => URLSearchParams)
+    | ((prev: URLSearchParams) => URLSearchParams),
+  options?: SetSearchParamsOptions
 ) => void;
 
 // Convert querystring to object
@@ -21,7 +23,7 @@ export default function useQueryParams(): [Record<string, any>, SetSearchParamsF
   const params: Record<string, string> = Object.fromEntries(searchParams.entries());
 
   const setSearchParams: SetSearchParamsFn = useCallback(
-    (newParams) => {
+    (newParams, options) => {
       let newSearch: string;
 
       if (newParams instanceof URLSearchParams) {
@@ -42,7 +44,12 @@ export default function useQueryParams(): [Record<string, any>, SetSearchParamsF
       // Skip navigation if params haven't changed
       if (newSearch === searchParams.toString()) return;
 
-      router.push(`${pathname}?${newSearch}`);
+      const url = `${pathname}?${newSearch}`;
+      if (options?.replace) {
+        router.replace(url);
+      } else {
+        router.push(url);
+      }
     },
     [router, pathname, searchParams]
   );

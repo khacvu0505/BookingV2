@@ -7,6 +7,7 @@ import { Controller, useForm } from "react-hook-form";
 import Select from "@/components/Form/Select";
 import TextArea from "@/components/Form/TextArea";
 import Checkbox from "@/components/Form/Checkbox";
+import Radio from "@/components/Form/Radio";
 import Button from "@/components/Button";
 import useWindowSize from "@/utils/useWindowSize";
 import {
@@ -565,7 +566,7 @@ const BookingTour = () => {
                   <div
                     key={payment.id}
                     className={classNames(
-                      "form-checkbox items-center justify-content-between flex-wrap border-bottom-light rounded-4 py-10 my-10",
+                      "items-center justify-content-between flex-wrap border-bottom-light rounded-4 py-10 my-10",
                       {
                         "d-flex": !isMobile,
                         "d-block": isMobile,
@@ -573,12 +574,10 @@ const BookingTour = () => {
                     )}
                     onClick={() => handleChoosePaymentTye(payment.code)}
                   >
-                    <Checkbox
-                      name={"paymentMethod"}
+                    <Radio
+                      name="paymentMethod"
                       checked={payment.code === paymentType}
-                      onChange={() => {}}
                       label={payment.title}
-                      isRadio
                     />
                     <div className="text-15 ml-10 d-flex justify-content-end justify-content-md-between align-items-center mt-10 md-md-0 xl:justify-start xl:ml-25">
                       {payment.img.map((img, index) => (

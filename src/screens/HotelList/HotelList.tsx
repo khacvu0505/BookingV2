@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import dynamic from "next/dynamic";
 import BannerHotelList from "@/screens/HotelList/BannerHotelList";
 import MetaComponent from "@/components/MetaComponent";
 import useQueryParams from "@/hooks/useQueryParams";
@@ -19,11 +18,8 @@ import LocationHotel from "./Navbar/LocationHotel";
 import SubLocationHotel from "./Navbar/SubLocationHotel";
 import { useQuery } from "@tanstack/react-query";
 import { hotelKeys } from "@/lib/query-keys";
-
-const Navbar = dynamic(() => import("@/screens/HotelList/Navbar"));
-const HotelListContent = dynamic(() =>
-  import("@/screens/HotelList/HotelListContent")
-);
+import Navbar from "@/screens/HotelList/Navbar";
+import HotelListContent from "@/screens/HotelList/HotelListContent";
 
 const metadata = {
   title: "Hotel List",
@@ -61,7 +57,7 @@ const HotelList = () => {
     sort: sortParam = "",
   } = params || {};
 
-  const { data: hotelListData, isLoading: isLoadingHotels } = useQuery({
+  const { data: hotelListData, isPending: isLoadingHotels } = useQuery({
     queryKey: hotelKeys.list({
       locationParam,
       checkInParam,
@@ -161,7 +157,7 @@ const HotelList = () => {
     if (!roomParam) {
       defaultParams = { ...defaultParams, room: 1 };
     }
-    setSearchParams(defaultParams);
+    setSearchParams(defaultParams, { replace: true });
   }, []);
 
   useEffect(() => {

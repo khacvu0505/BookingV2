@@ -1,0 +1,48 @@
+.okdimall_radio {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+
+  .okdimall_radio__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .okdimall_radio__mark {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-primary-500);
+    background-color: transparent;
+    transition: border-color 0.2s;
+  }
+
+  .okdimall_radio__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: transparent;
+    transition: background-color 0.2s;
+  }
+
+  .okdimall_radio__input:checked ~ .okdimall_radio__mark {
+    border-color: var(--color-primary-500);
+
+    .okdimall_radio__dot {
+      background-color: var(--color-primary-500);
+    }
+  }
+
+  .okdimall_radio__label {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}

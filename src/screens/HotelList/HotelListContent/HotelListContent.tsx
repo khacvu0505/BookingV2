@@ -1,14 +1,13 @@
 /* eslint-disable no-undef */
 import React from "react";
-import dynamic from "next/dynamic";
 import "./HotelListContent.style.scss";
 import { useSelector } from "react-redux";
 import RegisterMember from "@/components/RegisterMember";
-const HotelListContentHeader = dynamic(() => import("./HotelListContentHeader"));
-const HotelListData = dynamic(() => import("./HotelListData"));
-const Pagination = dynamic(() => import("@/components/Pagination"));
-const SkeletonList = dynamic(() => import("@/components/Skeleton/SkeletonList"));
-const SkeletonHeader = dynamic(() => import("@/components/Skeleton/SkeletonHeader"));
+import HotelListContentHeader from "./HotelListContentHeader";
+import HotelListData from "./HotelListData";
+import Pagination from "@/components/Pagination";
+import SkeletonList from "@/components/Skeleton/SkeletonList";
+import SkeletonHeader from "@/components/Skeleton/SkeletonHeader";
 
 interface HotelListContentProps {
   hotels: any[];
@@ -22,7 +21,7 @@ const HotelListContent = ({ hotels, total, totalPages, isLoadingHotels }: HotelL
 
   if (isLoadingHotels) {
     return (
-      <div className="w-3/4 xxl:w-1/1 hotel_list_content">
+      <div className="xxl:w-1/1 w-3/4 hotel_list_content sm:px-12">
         <SkeletonHeader />
         <SkeletonList count={7} />
       </div>

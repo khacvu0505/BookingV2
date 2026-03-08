@@ -8,14 +8,12 @@ import {
 import { useAppDispatch } from "@/store/hooks";
 import { info_booking } from "@/utils/constants";
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { setRoomActive } from "@/features/hotel-detail/hotelDetailSlice";
 import { getServicesByRoom } from "@/api/hotel.api";
 import { useMutation } from "@tanstack/react-query";
-
-const SkeletonList = dynamic(() => import("@/components/Skeleton/SkeletonList"));
-const RoomDetail = dynamic(() => import("./RoomDetail"));
+import SkeletonList from "@/components/Skeleton/SkeletonList";
+import RoomDetail from "./RoomDetail";
 
 const RoomList = ({ hotelsData, isLoadingRoomList = false }) => {
   const [searchParams] = useQueryParams();
